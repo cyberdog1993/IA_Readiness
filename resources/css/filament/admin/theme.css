@@ -6,9 +6,9 @@
 
 body.fi-panel-admin {
     background:
-        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.16), transparent 32%),
-        linear-gradient(135deg, #020617 0%, #0f172a 45%, #111827 100%);
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.14), transparent 32%),
+        linear-gradient(180deg, #f8fbff 0%, #eef6ff 45%, #eaf3ff 100%);
     background-attachment: fixed;
 }
 
@@ -18,28 +18,30 @@ body.fi-panel-admin::before {
     inset: 0;
     pointer-events: none;
     background:
-        linear-gradient(120deg, rgba(255, 255, 255, 0.04), transparent 32%),
-        radial-gradient(circle at 50% 0, rgba(255, 255, 255, 0.06), transparent 18%);
-    opacity: 0.8;
+        linear-gradient(120deg, rgba(255, 255, 255, 0.55), transparent 35%),
+        radial-gradient(circle at 50% 0, rgba(59, 130, 246, 0.08), transparent 18%);
+    opacity: 0.9;
 }
 
 .fi-panel-admin .fi-simple-layout {
     position: relative;
-    padding: 1.5rem;
+    padding: 1.25rem;
 }
 
 .fi-panel-admin .fi-simple-main-ctn {
     padding: 2rem 0;
+    align-items: stretch;
 }
 
 .fi-panel-admin .fi-simple-main {
     position: relative;
-    max-width: 30rem;
+    width: min(100%, 76rem);
+    max-width: 76rem;
     overflow: hidden;
-    border: 1px solid rgba(148, 163, 184, 0.18);
-    background: rgba(15, 23, 42, 0.84);
-    box-shadow: 0 24px 80px rgba(2, 6, 23, 0.6);
-    backdrop-filter: blur(24px);
+    border: 1px solid rgba(59, 130, 246, 0.12);
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
 }
 
 .fi-panel-admin .fi-simple-main::before {
@@ -47,7 +49,7 @@ body.fi-panel-admin::before {
     position: absolute;
     inset: 0 0 auto;
     height: 0.35rem;
-    background: linear-gradient(90deg, #22d3ee, #3b82f6, #10b981);
+    background: linear-gradient(90deg, #2563eb, #0ea5e9, #22c55e);
 }
 
 .fi-panel-admin .fi-simple-header {
@@ -56,11 +58,12 @@ body.fi-panel-admin::before {
 
 .fi-panel-admin .fi-logo {
     margin-bottom: 0.5rem;
-    padding: 0.55rem 1rem;
+    padding: 0.6rem 1rem;
     border-radius: 9999px;
-    border: 1px solid rgba(103, 232, 249, 0.24);
-    background: linear-gradient(135deg, rgba(8, 145, 178, 0.2), rgba(37, 99, 235, 0.12));
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(37, 99, 235, 0.18);
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(14, 165, 233, 0.08));
+    color: #0f172a;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
     letter-spacing: 0.02em;
 }
 
@@ -68,6 +71,7 @@ body.fi-panel-admin::before {
     font-size: 1.85rem;
     line-height: 1.05;
     letter-spacing: -0.04em;
+    color: #0f172a;
 }
 
 .fi-panel-admin .fi-form {
@@ -81,7 +85,7 @@ body.fi-panel-admin::before {
 
 .fi-panel-admin .fi-simple-page,
 .fi-panel-admin .fi-simple-page * {
-    color: rgb(226 232 240);
+    color: #0f172a;
 }
 
 .fi-panel-admin .fi-simple-page h1,
@@ -96,74 +100,81 @@ body.fi-panel-admin::before {
 
 .fi-panel-admin .fi-simple-page .text-gray-950,
 .fi-panel-admin .fi-simple-page .dark\:text-white {
-    color: rgb(248 250 252) !important;
+    color: #0f172a !important;
 }
 
 .fi-panel-admin .fi-simple-page .text-gray-500,
 .fi-panel-admin .fi-simple-page .text-gray-600,
-.fi-panel-admin .fi-simple-page .text-gray-700 {
-    color: rgb(148 163 184) !important;
+.fi-panel-admin .fi-simple-page .text-gray-700,
+.fi-panel-admin .fi-simple-page .text-slate-400,
+.fi-panel-admin .fi-simple-page .text-slate-500,
+.fi-panel-admin .fi-simple-page .text-slate-600 {
+    color: #64748b !important;
 }
 
 .fi-panel-admin .fi-simple-page .text-danger-600,
 .fi-panel-admin .fi-simple-page .text-danger-500,
 .fi-panel-admin .fi-simple-page .text-danger-400 {
-    color: rgb(248 113 113) !important;
+    color: #dc2626 !important;
 }
 
 .fi-panel-admin .fi-input-wrp {
-    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(59, 130, 246, 0.16);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8), 0 18px 40px rgba(37, 99, 235, 0.06);
 }
 
 .fi-panel-admin .fi-input {
-    padding-top: 0.8rem;
-    padding-bottom: 0.8rem;
-    color: rgb(248 250 252);
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+    color: #0f172a;
 }
 
 .fi-panel-admin .fi-input::placeholder {
-    color: rgb(148 163 184);
+    color: #94a3b8;
+}
+
+.fi-panel-admin .fi-input:focus {
+    outline: none;
 }
 
 .fi-panel-admin .fi-fo-field-wrp-label,
-.fi-panel-admin .fi-fo-field-wrp-label span {
-    color: rgb(241 245 249);
+.fi-panel-admin .fi-fo-field-wrp-label span,
+.fi-panel-admin .fi-checkbox-label {
+    color: #0f172a;
 }
 
 .fi-panel-admin .fi-fo-component-ctn,
 .fi-panel-admin .fi-fo-field-wrp,
 .fi-panel-admin .fi-fo-field-wrp-error-message {
-    color: rgb(226 232 240);
+    color: #0f172a;
 }
 
 .fi-panel-admin .fi-btn {
     min-height: 3rem;
     font-weight: 700;
-    box-shadow: 0 12px 35px rgba(37, 99, 235, 0.28);
+    box-shadow: 0 12px 35px rgba(37, 99, 235, 0.22);
 }
 
 .fi-panel-admin .fi-btn-color-primary {
-    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    background: linear-gradient(135deg, #2563eb, #0ea5e9);
+    color: #fff;
 }
 
 .fi-panel-admin .fi-btn-color-primary:hover {
-    background: linear-gradient(135deg, #1d4ed8, #0891b2);
+    background: linear-gradient(135deg, #1d4ed8, #0284c7);
 }
 
 .fi-panel-admin .fi-simple-main a {
-    color: #7dd3fc;
+    color: #2563eb;
 }
 
 .fi-panel-admin .fi-simple-main a:hover {
-    color: #bae6fd;
+    color: #0ea5e9;
 }
 
-.fi-panel-admin .fi-checkbox-label,
 .fi-panel-admin .fi-checkbox,
-.fi-panel-admin .fi-actions {
-    color: rgb(226 232 240);
-}
-
+.fi-panel-admin .fi-actions,
 .fi-panel-admin .fi-section-header {
-    color: rgb(226 232 240);
+    color: #0f172a;
 }
