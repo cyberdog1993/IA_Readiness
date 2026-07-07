@@ -1,15 +1,15 @@
 <x-filament-panels::page class="fi-dashboard-page">
-    <div class="mb-8 overflow-hidden rounded-[2rem] border border-sky-100 bg-gradient-to-br from-white via-sky-50 to-blue-100 p-8 shadow-2xl shadow-sky-100/60">
+    <div class="mb-8 overflow-hidden rounded-[2rem] border border-sky-400/15 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 p-8 shadow-2xl shadow-slate-950/40">
         <div class="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
             <div class="space-y-4">
-                <div class="inline-flex rounded-full border border-sky-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-sky-700">
+                <div class="inline-flex rounded-full border border-sky-300/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-sky-100">
                     Consultores IT Automation Platform
                 </div>
                 <div class="space-y-3">
-                    <h1 class="text-4xl font-semibold tracking-tight text-slate-900">
+                    <h1 class="text-4xl font-semibold tracking-tight text-white">
                         Escritorio operativo para diagnóstico, preventa y ejecución.
                     </h1>
-                    <p class="max-w-2xl text-base leading-7 text-slate-600">
+                    <p class="max-w-2xl text-base leading-7 text-slate-300">
                         Aquí ves los leads entrantes, la madurez promedio, el avance de procesos y las oportunidades priorizadas para automatización.
                     </p>
                 </div>
@@ -24,15 +24,15 @@
             </div>
 
             <div class="grid gap-4 sm:grid-cols-2">
-                <div class="rounded-2xl border border-white/70 bg-white/85 p-4 shadow-sm">
-                    <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Estado</p>
-                    <p class="mt-2 text-2xl font-semibold text-slate-900">Listo para operar</p>
-                    <p class="mt-1 text-sm text-slate-600">Panel interno con datos listos para preventa.</p>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-sm backdrop-blur">
+                    <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Estado</p>
+                    <p class="mt-2 text-2xl font-semibold text-white">Listo para operar</p>
+                    <p class="mt-1 text-sm text-slate-300">Panel interno con datos listos para preventa.</p>
                 </div>
-                <div class="rounded-2xl border border-white/70 bg-white/85 p-4 shadow-sm">
-                    <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">Salida</p>
-                    <p class="mt-2 text-2xl font-semibold text-slate-900">Markdown, Word, Excel</p>
-                    <p class="mt-1 text-sm text-slate-600">Preparado para IA y documentación ejecutiva.</p>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-sm backdrop-blur">
+                    <p class="text-xs font-semibold uppercase tracking-[0.22em] text-slate-400">Salida</p>
+                    <p class="mt-2 text-2xl font-semibold text-white">Markdown, Word, Excel</p>
+                    <p class="mt-1 text-sm text-slate-300">Preparado para IA y documentación ejecutiva.</p>
                 </div>
             </div>
         </div>
