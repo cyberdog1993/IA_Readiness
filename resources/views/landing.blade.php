@@ -73,6 +73,17 @@
                 <div id="stepBar" class="h-full rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-emerald-400 transition-all duration-300" style="width: 25%"></div>
             </div>
         </div>
+
+        <div class="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-6">
+            <p class="text-sm uppercase tracking-[0.25em] text-emerald-200">Levantamiento completo</p>
+            <h2 class="mt-2 text-2xl font-semibold text-white">Ficha de consultoría para cliente o consultor</h2>
+            <p class="mt-2 text-sm leading-6 text-slate-300">
+                Cuando ya quieras levantar el proceso AS-IS, sistemas, problemas, oportunidades y backlog, usa el formulario extendido.
+            </p>
+            <a href="{{ route('consulting-intake.create') }}" class="mt-4 inline-flex rounded-2xl bg-gradient-to-r from-emerald-300 to-cyan-300 px-5 py-3 font-bold text-slate-950 hover:from-emerald-200 hover:to-cyan-200">
+                Abrir formulario completo
+            </a>
+        </div>
     </section>
 
     <section class="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-2xl shadow-blue-950/40 backdrop-blur">
