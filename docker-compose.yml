@@ -1,0 +1,65 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: consultores-it-automation-platform
+    container_name: consultores-it-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    environment:
+      APP_ENV: local
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: consultores_it
+      DB_USERNAME: consultores
+      DB_PASSWORD: secret
+      REDIS_HOST: redis
+    depends_on:
+      - postgres
+      - redis
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: consultores-it-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: consultores-it-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: consultores_it
+      POSTGRES_USER: consultores
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: consultores-it-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  node:
+    image: node:22-alpine
+    container_name: consultores-it-node
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    profiles: ["tools"]
+
+volumes:
+  pgdata:
