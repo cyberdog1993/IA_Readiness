@@ -47,7 +47,7 @@ docker compose --profile tools run --rm node npm run build
 ## Accesos iniciales
 
 - Email: `admin@consultores-it.pe`
-- Password: `cambiar123`
+- Password inicial: configurada en el despliegue del servidor
 
 ## Rutas principales
 
