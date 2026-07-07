@@ -24,6 +24,175 @@ body.fi-panel-admin::before {
     opacity: 0.8;
 }
 
+.fi-panel-admin .fi-layout,
+.fi-panel-admin .fi-main-ctn,
+.fi-panel-admin .fi-page,
+.fi-panel-admin .fi-main {
+    background: transparent !important;
+}
+
+.fi-panel-admin .fi-main {
+    position: relative;
+    z-index: 1;
+}
+
+.fi-panel-admin .fi-topbar,
+.fi-panel-admin .fi-topbar nav {
+    border-color: rgba(148, 163, 184, 0.12) !important;
+    background: rgba(2, 6, 23, 0.82) !important;
+    backdrop-filter: blur(18px);
+}
+
+.fi-panel-admin .fi-sidebar,
+.fi-panel-admin .fi-sidebar-header,
+.fi-panel-admin .fi-sidebar-nav {
+    border-color: rgba(148, 163, 184, 0.14) !important;
+    background:
+        radial-gradient(circle at top left, rgba(34, 211, 238, 0.12), transparent 38%),
+        rgba(2, 6, 23, 0.9) !important;
+}
+
+.fi-panel-admin .fi-sidebar {
+    box-shadow: 18px 0 60px rgba(2, 6, 23, 0.35);
+}
+
+.fi-panel-admin .fi-sidebar-header {
+    border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.fi-panel-admin .fi-sidebar-nav-groups {
+    row-gap: 0.9rem;
+}
+
+.fi-panel-admin .fi-sidebar-group-label {
+    color: rgb(148 163 184) !important;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.fi-panel-admin .fi-sidebar-item a {
+    border: 1px solid transparent;
+    border-radius: 0.9rem;
+    color: rgb(203 213 225) !important;
+}
+
+.fi-panel-admin .fi-sidebar-item a:hover {
+    border-color: rgba(103, 232, 249, 0.18);
+    background: rgba(15, 23, 42, 0.72) !important;
+    color: rgb(248 250 252) !important;
+}
+
+.fi-panel-admin .fi-sidebar-item-active a,
+.fi-panel-admin .fi-sidebar-item-active a:hover {
+    border-color: rgba(103, 232, 249, 0.28);
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.22), rgba(37, 99, 235, 0.18)) !important;
+    color: rgb(248 250 252) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.fi-panel-admin .fi-sidebar-item-icon,
+.fi-panel-admin .fi-sidebar-item-label,
+.fi-panel-admin .fi-sidebar-group-button,
+.fi-panel-admin .fi-sidebar-group-collapse-button,
+.fi-panel-admin .fi-sidebar-collapse-button,
+.fi-panel-admin .fi-topbar button,
+.fi-panel-admin .fi-topbar svg {
+    color: inherit !important;
+}
+
+.fi-panel-admin .fi-header-heading {
+    color: rgb(248 250 252) !important;
+    letter-spacing: -0.035em;
+}
+
+.fi-panel-admin .fi-header-subheading {
+    color: rgb(148 163 184) !important;
+}
+
+.fi-panel-admin .fi-section,
+.fi-panel-admin .fi-wi-stats-overview-stat,
+.fi-panel-admin .fi-wi-chart,
+.fi-panel-admin .fi-ta-ctn,
+.fi-panel-admin .fi-fo-component-ctn,
+.fi-panel-admin .fi-modal-window,
+.fi-panel-admin .fi-dropdown-panel {
+    border: 1px solid rgba(148, 163, 184, 0.14) !important;
+    background: rgba(15, 23, 42, 0.86) !important;
+    color: rgb(226 232 240) !important;
+    box-shadow: 0 22px 70px rgba(2, 6, 23, 0.28) !important;
+    backdrop-filter: blur(16px);
+}
+
+.fi-panel-admin .fi-wi-stats-overview-stat {
+    min-height: 7rem;
+}
+
+.fi-panel-admin .fi-wi-stats-overview-stat-label,
+.fi-panel-admin .fi-section-header-heading,
+.fi-panel-admin .fi-ta-header-heading,
+.fi-panel-admin .fi-modal-heading {
+    color: rgb(226 232 240) !important;
+}
+
+.fi-panel-admin .fi-wi-stats-overview-stat-value,
+.fi-panel-admin .fi-wi-chart-heading,
+.fi-panel-admin .fi-ta-text,
+.fi-panel-admin .fi-ta-text-item-label {
+    color: rgb(248 250 252) !important;
+}
+
+.fi-panel-admin .fi-wi-stats-overview-stat-description,
+.fi-panel-admin .fi-section-header-description,
+.fi-panel-admin .fi-ta-header-description,
+.fi-panel-admin .fi-ta-empty-state-description {
+    color: rgb(148 163 184) !important;
+}
+
+.fi-panel-admin .fi-ta-table {
+    background: transparent !important;
+}
+
+.fi-panel-admin .fi-ta-header,
+.fi-panel-admin .fi-ta-row,
+.fi-panel-admin .fi-ta-summary-row,
+.fi-panel-admin .fi-ta-content,
+.fi-panel-admin .fi-ta-footer,
+.fi-panel-admin .fi-pagination {
+    border-color: rgba(148, 163, 184, 0.12) !important;
+    background: transparent !important;
+}
+
+.fi-panel-admin .fi-ta-row:hover {
+    background: rgba(14, 165, 233, 0.08) !important;
+}
+
+.fi-panel-admin .fi-ta-header-cell,
+.fi-panel-admin .fi-ta-cell,
+.fi-panel-admin .fi-ta-summary-header-cell,
+.fi-panel-admin .fi-ta-summary-cell {
+    border-color: rgba(148, 163, 184, 0.12) !important;
+    color: rgb(226 232 240) !important;
+}
+
+.fi-panel-admin .fi-badge {
+    border-color: rgba(103, 232, 249, 0.16) !important;
+    background: rgba(14, 165, 233, 0.12) !important;
+    color: rgb(186 230 253) !important;
+}
+
+.fi-panel-admin .fi-tabs,
+.fi-panel-admin .fi-tabs-item {
+    border-color: rgba(148, 163, 184, 0.14) !important;
+    background: rgba(15, 23, 42, 0.72) !important;
+}
+
+.fi-panel-admin .fi-tabs-item-active {
+    background: rgba(14, 165, 233, 0.16) !important;
+    color: rgb(248 250 252) !important;
+}
+
 .fi-panel-admin .fi-simple-layout {
     position: relative;
     padding: 1.25rem;

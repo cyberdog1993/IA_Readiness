@@ -9,11 +9,19 @@ class Dashboard extends BaseDashboard
 {
     protected static string $view = 'filament.pages.dashboard';
 
-    protected function getHeaderWidgets(): array
+    public function getWidgets(): array
     {
         return [
             AutomationStatsOverview::class,
             \App\Filament\Widgets\OpportunitiesByPriorityChart::class,
+        ];
+    }
+
+    public function getColumns(): int | string | array
+    {
+        return [
+            'md' => 2,
+            'xl' => 3,
         ];
     }
 }
