@@ -5,6 +5,8 @@
   "license": "proprietary",
   "require": {
     "php": "^8.2",
+    "ext-gd": "*",
+    "ext-intl": "*",
     "laravel/framework": "^11.0",
     "filament/filament": "^3.2",
     "maatwebsite/excel": "^3.1",
