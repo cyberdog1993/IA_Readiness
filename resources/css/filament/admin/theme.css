@@ -79,6 +79,38 @@ body.fi-panel-admin::before {
     border-radius: 1rem;
 }
 
+.fi-panel-admin .fi-simple-page,
+.fi-panel-admin .fi-simple-page * {
+    color: rgb(226 232 240);
+}
+
+.fi-panel-admin .fi-simple-page h1,
+.fi-panel-admin .fi-simple-page h2,
+.fi-panel-admin .fi-simple-page h3,
+.fi-panel-admin .fi-simple-page p,
+.fi-panel-admin .fi-simple-page span,
+.fi-panel-admin .fi-simple-page label,
+.fi-panel-admin .fi-simple-page a {
+    color: inherit;
+}
+
+.fi-panel-admin .fi-simple-page .text-gray-950,
+.fi-panel-admin .fi-simple-page .dark\:text-white {
+    color: rgb(248 250 252) !important;
+}
+
+.fi-panel-admin .fi-simple-page .text-gray-500,
+.fi-panel-admin .fi-simple-page .text-gray-600,
+.fi-panel-admin .fi-simple-page .text-gray-700 {
+    color: rgb(148 163 184) !important;
+}
+
+.fi-panel-admin .fi-simple-page .text-danger-600,
+.fi-panel-admin .fi-simple-page .text-danger-500,
+.fi-panel-admin .fi-simple-page .text-danger-400 {
+    color: rgb(248 113 113) !important;
+}
+
 .fi-panel-admin .fi-input-wrp {
     background: rgba(15, 23, 42, 0.9);
 }
@@ -86,6 +118,22 @@ body.fi-panel-admin::before {
 .fi-panel-admin .fi-input {
     padding-top: 0.8rem;
     padding-bottom: 0.8rem;
+    color: rgb(248 250 252);
+}
+
+.fi-panel-admin .fi-input::placeholder {
+    color: rgb(148 163 184);
+}
+
+.fi-panel-admin .fi-fo-field-wrp-label,
+.fi-panel-admin .fi-fo-field-wrp-label span {
+    color: rgb(241 245 249);
+}
+
+.fi-panel-admin .fi-fo-component-ctn,
+.fi-panel-admin .fi-fo-field-wrp,
+.fi-panel-admin .fi-fo-field-wrp-error-message {
+    color: rgb(226 232 240);
 }
 
 .fi-panel-admin .fi-btn {
@@ -108,4 +156,14 @@ body.fi-panel-admin::before {
 
 .fi-panel-admin .fi-simple-main a:hover {
     color: #bae6fd;
+}
+
+.fi-panel-admin .fi-checkbox-label,
+.fi-panel-admin .fi-checkbox,
+.fi-panel-admin .fi-actions {
+    color: rgb(226 232 240);
+}
+
+.fi-panel-admin .fi-section-header {
+    color: rgb(226 232 240);
 }

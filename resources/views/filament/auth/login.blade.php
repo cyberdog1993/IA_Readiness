@@ -47,6 +47,11 @@
                 <p class="text-sm leading-6 text-slate-400">Usa tu correo corporativo autorizado para acceder al panel.</p>
             </div>
 
+            <div class="mb-6 rounded-2xl border border-amber-400/20 bg-amber-500/10 p-4 text-sm leading-6 text-amber-50">
+                <p class="font-semibold text-white">Correo autorizado</p>
+                <p class="mt-1">Usa exactamente <span class="font-semibold">admin@consultores-it.pe</span>. Si el navegador te propone otra dirección, elimínala antes de continuar.</p>
+            </div>
+
             {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::AUTH_LOGIN_FORM_BEFORE, scopes: $this->getRenderHookScopes()) }}
 
             <x-filament-panels::form id="form" wire:submit="authenticate" class="space-y-6">
