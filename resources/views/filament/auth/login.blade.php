@@ -12,7 +12,7 @@
                         Panel interno para diagnóstico, preventa y automatización.
                     </h1>
                     <p class="max-w-xl text-base leading-7 text-slate-300">
-                        Accede para gestionar leads, clientes, procesos, exportaciones y backlog técnico desde una sola plataforma.
+                        Accede para gestionar prospectos, clientes, procesos, exportaciones y tareas técnicas desde una sola plataforma.
                     </p>
                 </div>
 

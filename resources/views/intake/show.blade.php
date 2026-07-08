@@ -3,19 +3,19 @@
 @section('content')
 <div class="mx-auto max-w-5xl">
     <div class="rounded-[2rem] border border-emerald-400/20 bg-emerald-500/10 p-8 shadow-2xl shadow-emerald-950/20">
-        <p class="text-xs uppercase tracking-[0.25em] text-emerald-200">Levantamiento guardado</p>
+        <p class="text-xs uppercase tracking-[0.25em] text-emerald-200">Ficha guardada</p>
         <h1 class="mt-3 text-4xl font-semibold tracking-tight text-white">
             {{ $process->name }}
         </h1>
         <p class="mt-3 max-w-3xl text-slate-300">
-            La ficha de consultoría quedó registrada para {{ $process->client?->business_name }}. Ya puedes revisarla desde el panel interno y usarla para exportar diagnóstico, propuesta, backlog o insumos para agentes.
+            La ficha del proceso quedó registrada para {{ $process->client?->business_name }}. Si este cliente quiere automatizar otro proceso, puedes abrir una nueva ficha desde el mismo expediente.
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
             <a href="{{ \App\Filament\Resources\ProcessResource::getUrl('edit', ['record' => $process]) }}" class="rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 px-5 py-3 font-bold text-slate-950">
                 Abrir en panel interno
             </a>
-            <a href="{{ route('consulting-intake.create') }}" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-white">
-                Crear otro levantamiento
+            <a href="{{ route('consulting-intake.section', ['section' => 'cliente', 'ruc' => $process->client?->ruc]) }}" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-white">
+                Crear otro proceso para este cliente
             </a>
             <a href="{{ route('landing') }}" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-white">
                 Volver al inicio
@@ -37,7 +37,7 @@
             <p class="mt-2 text-3xl font-semibold text-white">{{ $process->problems->count() }}</p>
         </div>
         <div class="rounded-3xl border border-white/10 bg-white/5 p-5">
-            <p class="text-sm text-slate-400">Backlog</p>
+            <p class="text-sm text-slate-400">Tareas</p>
             <p class="mt-2 text-3xl font-semibold text-white">{{ $process->backlogItems->count() }}</p>
         </div>
     </div>

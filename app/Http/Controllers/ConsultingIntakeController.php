@@ -19,12 +19,77 @@ use Illuminate\View\View;
 
 class ConsultingIntakeController extends Controller
 {
-    public function create(): View
+    private const SECTIONS = [
+        'cliente',
+        'proceso',
+        'as-is',
+        'documentos',
+        'automatizacion',
+        'tareas',
+    ];
+
+    public function section(Request $request, string $section): View|RedirectResponse
     {
-        return view('intake.create');
+        abort_unless(in_array($section, self::SECTIONS, true), 404);
+
+        if ($section !== 'cliente' && ! $this->currentClient()) {
+            return redirect()->route('consulting-intake.section', ['section' => 'cliente']);
+        }
+
+        if (in_array($section, ['as-is', 'documentos', 'automatizacion', 'tareas'], true) && ! $this->currentProcess()) {
+            return redirect()->route('consulting-intake.section', ['section' => 'proceso']);
+        }
+
+        $client = $this->currentClient();
+        $process = $this->currentProcess();
+
+        if ($section === 'cliente') {
+            $ruc = trim((string) $request->query('ruc', ''));
+
+            if ($ruc !== '') {
+                $client = Client::withCount('processes')->where('ruc', $ruc)->first() ?: $client;
+            }
+        }
+
+        if ($process) {
+            $process->load(['steps', 'systems', 'documents', 'problems', 'opportunities', 'evaluations', 'backlogItems']);
+        }
+
+        return view('intake.create', compact('section', 'client', 'process'));
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, string $section): RedirectResponse
+    {
+        abort_unless(in_array($section, self::SECTIONS, true), 404);
+
+        return match ($section) {
+            'cliente' => $this->storeClient($request),
+            'proceso' => $this->storeProcess($request),
+            'as-is' => $this->storeAsIs($request),
+            'documentos' => $this->storeDocuments($request),
+            'automatizacion' => $this->storeAutomation($request),
+            'tareas' => $this->storeBacklog($request),
+            default => abort(404),
+        };
+    }
+
+    public function show(ProcessModel $process): View
+    {
+        $process->load([
+            'client',
+            'steps',
+            'systems',
+            'documents',
+            'problems',
+            'opportunities',
+            'evaluations',
+            'backlogItems',
+        ]);
+
+        return view('intake.show', compact('process'));
+    }
+
+    private function storeClient(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'business_name' => ['required', 'string', 'max:255'],
@@ -36,6 +101,36 @@ class ConsultingIntakeController extends Controller
             'email' => ['nullable', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:30'],
             'client_notes' => ['nullable', 'string'],
+        ]);
+
+        $client = Client::updateOrCreate(
+            ['ruc' => $validated['ruc']],
+            [
+                'business_name' => $validated['business_name'],
+                'industry' => $validated['industry'],
+                'address' => $validated['address'] ?? null,
+                'main_contact' => $validated['main_contact'] ?? null,
+                'contact_role' => $validated['contact_role'] ?? null,
+                'email' => $validated['email'] ?? null,
+                'phone' => $validated['phone'] ?? null,
+                'status' => 'active',
+                'notes' => $validated['client_notes'] ?? null,
+            ]
+        );
+
+        session([
+            'consulting_intake_client_id' => $client->id,
+            'consulting_intake_process_id' => null,
+        ]);
+
+        return redirect()->route('consulting-intake.section', ['section' => 'proceso']);
+    }
+
+    private function storeProcess(Request $request): RedirectResponse
+    {
+        $client = $this->currentClientOrFail();
+
+        $validated = $request->validate([
             'process_name' => ['required', 'string', 'max:255'],
             'area' => ['nullable', 'string', 'max:255'],
             'owner' => ['nullable', 'string', 'max:255'],
@@ -44,6 +139,41 @@ class ConsultingIntakeController extends Controller
             'expected_result' => ['nullable', 'string'],
             'trigger_event' => ['nullable', 'string'],
             'validation_method' => ['nullable', 'string'],
+        ]);
+
+        $process = DB::transaction(function () use ($client, $validated): ProcessModel {
+            $process = new ProcessModel();
+            $process->fill([
+                'name' => $validated['process_name'],
+                'area' => $validated['area'] ?? null,
+                'owner' => $validated['owner'] ?? null,
+                'frequency' => $validated['frequency'] ?? null,
+                'objective' => $validated['objective'] ?? null,
+                'expected_result' => $validated['expected_result'] ?? null,
+                'trigger_event' => $validated['trigger_event'] ?? null,
+                'validation_method' => $validated['validation_method'] ?? null,
+                'status' => 'intake',
+            ]);
+            $process->client()->associate($client);
+            if ($client->lead_id) {
+                $process->lead()->associate($client->lead_id);
+            }
+            $process->save();
+
+            return $process;
+        });
+
+        session(['consulting_intake_process_id' => $process->id]);
+
+        return redirect()->route('consulting-intake.section', ['section' => 'as-is']);
+    }
+
+    private function storeAsIs(Request $request): RedirectResponse
+    {
+        $process = $this->currentProcessOrFail();
+        $client = $this->currentClientOrFail();
+
+        $validated = $request->validate([
             'steps' => ['nullable', 'array'],
             'steps.*.description' => ['nullable', 'string'],
             'steps.*.owner' => ['nullable', 'string', 'max:255'],
@@ -55,40 +185,11 @@ class ConsultingIntakeController extends Controller
             'steps.*.problems' => ['nullable', 'string'],
             'steps.*.automatable' => ['nullable', 'in:si,no,parcial'],
             'systems' => ['nullable', 'array'],
-            'documents' => ['nullable', 'array'],
-            'problems' => ['nullable', 'array'],
-            'opportunities' => ['nullable', 'array'],
-            'evaluation' => ['nullable', 'array'],
-            'backlog' => ['nullable', 'array'],
         ]);
 
-        $process = DB::transaction(function () use ($request, $validated): ProcessModel {
-            $client = Client::updateOrCreate(
-                ['ruc' => $validated['ruc']],
-                [
-                    'business_name' => $validated['business_name'],
-                    'industry' => $validated['industry'],
-                    'address' => $validated['address'] ?? null,
-                    'main_contact' => $validated['main_contact'] ?? null,
-                    'contact_role' => $validated['contact_role'] ?? null,
-                    'email' => $validated['email'] ?? null,
-                    'phone' => $validated['phone'] ?? null,
-                    'status' => 'active',
-                    'notes' => $validated['client_notes'] ?? null,
-                ]
-            );
-
-            $process = $client->processes()->create([
-                'name' => $validated['process_name'],
-                'area' => $validated['area'] ?? null,
-                'owner' => $validated['owner'] ?? null,
-                'frequency' => $validated['frequency'] ?? null,
-                'objective' => $validated['objective'] ?? null,
-                'expected_result' => $validated['expected_result'] ?? null,
-                'trigger_event' => $validated['trigger_event'] ?? null,
-                'validation_method' => $validated['validation_method'] ?? null,
-                'status' => 'intake',
-            ]);
+        DB::transaction(function () use ($process, $client, $validated, $request): void {
+            $process->steps()->delete();
+            $process->systems()->delete();
 
             foreach ($request->input('steps', []) as $index => $step) {
                 if (! filled(Arr::get($step, 'description'))) {
@@ -129,6 +230,23 @@ class ConsultingIntakeController extends Controller
                     'notes' => Arr::get($system, 'notes'),
                 ]);
             }
+        });
+
+        return redirect()->route('consulting-intake.section', ['section' => 'documentos']);
+    }
+
+    private function storeDocuments(Request $request): RedirectResponse
+    {
+        $process = $this->currentProcessOrFail();
+
+        $request->validate([
+            'documents' => ['nullable', 'array'],
+            'problems' => ['nullable', 'array'],
+        ]);
+
+        DB::transaction(function () use ($process, $request): void {
+            $process->documents()->delete();
+            $process->problems()->delete();
 
             foreach ($request->input('documents', []) as $document) {
                 if (! filled(Arr::get($document, 'name'))) {
@@ -161,6 +279,23 @@ class ConsultingIntakeController extends Controller
                     'comments' => Arr::get($problem, 'comments'),
                 ]);
             }
+        });
+
+        return redirect()->route('consulting-intake.section', ['section' => 'automatizacion']);
+    }
+
+    private function storeAutomation(Request $request): RedirectResponse
+    {
+        $process = $this->currentProcessOrFail();
+
+        $request->validate([
+            'opportunities' => ['nullable', 'array'],
+            'evaluation' => ['nullable', 'array'],
+        ]);
+
+        DB::transaction(function () use ($process, $request): void {
+            $process->opportunities()->delete();
+            $process->evaluations()->delete();
 
             foreach ($request->input('opportunities', []) as $opportunity) {
                 if (! filled(Arr::get($opportunity, 'activity'))) {
@@ -200,6 +335,21 @@ class ConsultingIntakeController extends Controller
                     'technical_notes' => Arr::get($evaluation, 'technical_notes'),
                 ]);
             }
+        });
+
+        return redirect()->route('consulting-intake.section', ['section' => 'tareas']);
+    }
+
+    private function storeBacklog(Request $request): RedirectResponse
+    {
+        $process = $this->currentProcessOrFail();
+
+        $request->validate([
+            'backlog' => ['nullable', 'array'],
+        ]);
+
+        DB::transaction(function () use ($process, $request): void {
+            $process->backlogItems()->delete();
 
             foreach ($request->input('backlog', []) as $item) {
                 if (! filled(Arr::get($item, 'title'))) {
@@ -218,26 +368,42 @@ class ConsultingIntakeController extends Controller
                     'estimated_hours' => (int) Arr::get($item, 'estimated_hours', 0),
                 ]);
             }
-
-            return $process;
         });
+
+        session()->forget(['consulting_intake_client_id', 'consulting_intake_process_id']);
 
         return redirect()->route('consulting-intake.show', $process);
     }
 
-    public function show(ProcessModel $process): View
+    private function currentClient(): ?Client
     {
-        $process->load([
-            'client',
-            'steps',
-            'systems',
-            'documents',
-            'problems',
-            'opportunities',
-            'evaluations',
-            'backlogItems',
-        ]);
+        $clientId = session('consulting_intake_client_id');
 
-        return view('intake.show', compact('process'));
+        return $clientId ? Client::withCount('processes')->find($clientId) : null;
+    }
+
+    private function currentProcess(): ?ProcessModel
+    {
+        $processId = session('consulting_intake_process_id');
+
+        return $processId ? ProcessModel::with(['steps', 'systems', 'documents', 'problems', 'opportunities', 'evaluations', 'backlogItems'])->find($processId) : null;
+    }
+
+    private function currentClientOrFail(): Client
+    {
+        $client = $this->currentClient();
+
+        abort_unless($client, 404);
+
+        return $client;
+    }
+
+    private function currentProcessOrFail(): ProcessModel
+    {
+        $process = $this->currentProcess();
+
+        abort_unless($process, 404);
+
+        return $process;
     }
 }

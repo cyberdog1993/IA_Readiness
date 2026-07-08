@@ -16,21 +16,24 @@ class InternalEvaluationResource extends Resource
 {
     protected static ?string $model = InternalEvaluation::class;
     protected static ?string $navigationGroup = 'Automatización';
+    protected static ?string $navigationLabel = 'Evaluación interna';
+    protected static ?string $modelLabel = 'evaluación interna';
+    protected static ?string $pluralModelLabel = 'evaluaciones internas';
 
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Select::make('process_id')->relationship('process', 'name'),
-            TextInput::make('complexity')->numeric(),
-            TextInput::make('risk')->numeric(),
-            TextInput::make('impact')->numeric(),
-            Toggle::make('requires_mcp'),
-            Toggle::make('requires_hermes_skill'),
-            Toggle::make('requires_n8n'),
-            Toggle::make('requires_ai'),
-            Toggle::make('requires_ocr'),
-            TextInput::make('estimated_hours')->numeric(),
-            Textarea::make('technical_notes')->columnSpanFull(),
+            Select::make('process_id')->label('Proceso')->relationship('process', 'name'),
+            TextInput::make('complexity')->label('Complejidad')->numeric(),
+            TextInput::make('risk')->label('Riesgo')->numeric(),
+            TextInput::make('impact')->label('Impacto')->numeric(),
+            Toggle::make('requires_mcp')->label('Requiere MCP'),
+            Toggle::make('requires_hermes_skill')->label('Requiere Skill Hermes'),
+            Toggle::make('requires_n8n')->label('Requiere n8n'),
+            Toggle::make('requires_ai')->label('Requiere IA'),
+            Toggle::make('requires_ocr')->label('Requiere OCR'),
+            TextInput::make('estimated_hours')->label('Horas estimadas')->numeric(),
+            Textarea::make('technical_notes')->label('Observaciones técnicas')->columnSpanFull(),
         ])->columns(2);
     }
 
@@ -38,12 +41,12 @@ class InternalEvaluationResource extends Resource
     {
         return $table->columns([
             Tables\Columns\TextColumn::make('process.name')->label('Proceso'),
-            Tables\Columns\TextColumn::make('complexity'),
-            Tables\Columns\TextColumn::make('risk'),
-            Tables\Columns\TextColumn::make('impact'),
-            Tables\Columns\TextColumn::make('estimated_hours'),
+            Tables\Columns\TextColumn::make('complexity')->label('Complejidad'),
+            Tables\Columns\TextColumn::make('risk')->label('Riesgo'),
+            Tables\Columns\TextColumn::make('impact')->label('Impacto'),
+            Tables\Columns\TextColumn::make('estimated_hours')->label('Horas estimadas'),
         ])->actions([
-            Tables\Actions\EditAction::make(),
+            Tables\Actions\EditAction::make()->label('Editar'),
         ]);
     }
 

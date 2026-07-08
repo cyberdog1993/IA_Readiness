@@ -69,7 +69,7 @@ class DiagnosisWorkbookExport implements WithMultipleSheets
                 $step->comments,
             ])->all() : [])),
             new Sheets\SimpleArraySheet('Sistemas', $this->rows([
-                ['Cliente', 'Proceso', 'Sistema', 'URL', 'Tipo', 'API', 'Auth', 'Responsable', 'Estado', 'Observaciones'],
+                ['Cliente', 'Proceso', 'Sistema', 'URL', 'Tipo', 'API', 'Autenticación', 'Responsable', 'Estado', 'Observaciones'],
             ], $process ? $process->systems->map(fn ($system) => [
                 $lead->company_name,
                 $process->name,
@@ -121,7 +121,7 @@ class DiagnosisWorkbookExport implements WithMultipleSheets
                 $evaluation->estimated_hours,
                 $evaluation->technical_notes,
             ])->all() : [])),
-            new Sheets\SimpleArraySheet('Backlog', $this->rows([
+            new Sheets\SimpleArraySheet('Tareas', $this->rows([
                 ['Proceso', 'Tipo', 'Título', 'Descripción', 'Criterios', 'Prioridad', 'Responsable', 'Estado', 'Horas'],
             ], $process ? $process->backlogItems->map(fn ($item) => [
                 $process->name,
@@ -142,4 +142,3 @@ class DiagnosisWorkbookExport implements WithMultipleSheets
         return array_merge($header, $rows);
     }
 }
-

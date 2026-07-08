@@ -16,36 +16,39 @@ class LeadResource extends Resource
 {
     protected static ?string $model = Lead::class;
     protected static ?string $navigationGroup = 'Ventas';
+    protected static ?string $navigationLabel = 'Prospectos';
+    protected static ?string $modelLabel = 'prospecto';
+    protected static ?string $pluralModelLabel = 'prospectos';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Section::make('Datos del lead')->schema([
-                TextInput::make('company_name')->required(),
-                TextInput::make('ruc')->required(),
-                TextInput::make('industry')->required(),
-                TextInput::make('contact_name')->required(),
-                TextInput::make('contact_role')->required(),
-                TextInput::make('email')->email()->required(),
-                TextInput::make('phone')->required(),
-                TextInput::make('company_size')->required(),
-                TextInput::make('repetitive_process_count')->numeric()->required(),
-                TextInput::make('manual_hours_weekly')->numeric()->required(),
-                TextInput::make('process_documentation_level')->numeric()->required(),
-                TextInput::make('digital_system_usage')->numeric()->required(),
-                TextInput::make('excel_dependency')->numeric()->required(),
-                TextInput::make('system_integration_level')->numeric()->required(),
-                TextInput::make('manual_report_generation')->numeric()->required(),
-                Toggle::make('has_kpis'),
-                TextInput::make('key_person_dependency')->numeric()->required(),
-                TextInput::make('automation_interest')->numeric()->required(),
-                TextInput::make('maturity_score')->numeric(),
-                TextInput::make('maturity_level'),
-                Textarea::make('diagnosis_brief')->columnSpanFull(),
-                Textarea::make('opportunities_summary')->columnSpanFull(),
-                Textarea::make('recommendation')->columnSpanFull(),
-                TextInput::make('status'),
+            Section::make('Datos del prospecto')->schema([
+                TextInput::make('company_name')->label('Empresa')->required(),
+                TextInput::make('ruc')->label('RUC')->required(),
+                TextInput::make('industry')->label('Rubro')->required(),
+                TextInput::make('contact_name')->label('Contacto')->required(),
+                TextInput::make('contact_role')->label('Cargo')->required(),
+                TextInput::make('email')->label('Correo')->email()->required(),
+                TextInput::make('phone')->label('Teléfono')->required(),
+                TextInput::make('company_size')->label('Tamaño de empresa')->required(),
+                TextInput::make('repetitive_process_count')->label('Procesos repetitivos')->numeric()->required(),
+                TextInput::make('manual_hours_weekly')->label('Horas manuales semanales')->numeric()->required(),
+                TextInput::make('process_documentation_level')->label('Nivel de documentación')->numeric()->required(),
+                TextInput::make('digital_system_usage')->label('Uso de sistemas digitales')->numeric()->required(),
+                TextInput::make('excel_dependency')->label('Dependencia de Excel')->numeric()->required(),
+                TextInput::make('system_integration_level')->label('Nivel de integración')->numeric()->required(),
+                TextInput::make('manual_report_generation')->label('Reportes manuales')->numeric()->required(),
+                Toggle::make('has_kpis')->label('Tiene KPIs'),
+                TextInput::make('key_person_dependency')->label('Dependencia de personas clave')->numeric()->required(),
+                TextInput::make('automation_interest')->label('Interés en automatizar')->numeric()->required(),
+                TextInput::make('maturity_score')->label('Puntaje de madurez')->numeric(),
+                TextInput::make('maturity_level')->label('Nivel de madurez'),
+                Textarea::make('diagnosis_brief')->label('Diagnóstico breve')->columnSpanFull(),
+                Textarea::make('opportunities_summary')->label('Oportunidades principales')->columnSpanFull(),
+                Textarea::make('recommendation')->label('Recomendación')->columnSpanFull(),
+                TextInput::make('status')->label('Estado'),
             ])->columns(2),
         ]);
     }
@@ -53,16 +56,16 @@ class LeadResource extends Resource
     public static function table(Table $table): Table
     {
         return $table->columns([
-            Tables\Columns\TextColumn::make('company_name')->searchable()->sortable(),
-            Tables\Columns\TextColumn::make('ruc')->searchable(),
-            Tables\Columns\TextColumn::make('maturity_score')->sortable(),
-            Tables\Columns\TextColumn::make('maturity_level'),
-            Tables\Columns\TextColumn::make('status'),
-            Tables\Columns\TextColumn::make('created_at')->dateTime()->since(),
+            Tables\Columns\TextColumn::make('company_name')->label('Empresa')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('ruc')->label('RUC')->searchable(),
+            Tables\Columns\TextColumn::make('maturity_score')->label('Puntaje')->sortable(),
+            Tables\Columns\TextColumn::make('maturity_level')->label('Nivel'),
+            Tables\Columns\TextColumn::make('status')->label('Estado'),
+            Tables\Columns\TextColumn::make('created_at')->label('Recibido')->dateTime()->since(),
         ])->actions([
-            Tables\Actions\EditAction::make(),
+            Tables\Actions\EditAction::make()->label('Editar'),
         ])->bulkActions([
-            Tables\Actions\DeleteBulkAction::make(),
+            Tables\Actions\DeleteBulkAction::make()->label('Eliminar seleccionados'),
         ]);
     }
 

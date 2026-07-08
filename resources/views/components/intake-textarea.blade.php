@@ -4,6 +4,7 @@
     'placeholder' => null,
     'required' => false,
     'wrapperClass' => '',
+    'value' => null,
 ])
 
 <label class="grid gap-2 {{ $wrapperClass }}">
@@ -19,5 +20,5 @@
         placeholder="{{ $placeholder ?? $label }}"
         @required($required)
         class="rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none placeholder:text-slate-500 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
-    >{{ old($name) }}</textarea>
+    >{{ old($name, $value) }}</textarea>
 </label>

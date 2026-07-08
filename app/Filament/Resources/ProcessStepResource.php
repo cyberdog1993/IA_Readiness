@@ -15,22 +15,25 @@ class ProcessStepResource extends Resource
 {
     protected static ?string $model = ProcessStep::class;
     protected static ?string $navigationGroup = 'Automatización';
+    protected static ?string $navigationLabel = 'Pasos AS-IS';
+    protected static ?string $modelLabel = 'paso AS-IS';
+    protected static ?string $pluralModelLabel = 'pasos AS-IS';
 
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Select::make('process_id')->relationship('process', 'name')->required(),
-            TextInput::make('step_number')->numeric()->required(),
-            Textarea::make('description')->columnSpanFull()->required(),
-            TextInput::make('owner'),
-            TextInput::make('system_used'),
-            Textarea::make('input')->columnSpanFull(),
-            Textarea::make('output')->columnSpanFull(),
-            TextInput::make('estimated_minutes')->numeric(),
-            Textarea::make('evidence_generated')->columnSpanFull(),
-            Textarea::make('problems')->columnSpanFull(),
-            TextInput::make('automatable'),
-            Textarea::make('comments')->columnSpanFull(),
+            Select::make('process_id')->label('Proceso')->relationship('process', 'name')->required(),
+            TextInput::make('step_number')->label('Número de paso')->numeric()->required(),
+            Textarea::make('description')->label('Descripción')->columnSpanFull()->required(),
+            TextInput::make('owner')->label('Responsable'),
+            TextInput::make('system_used')->label('Sistema usado'),
+            Textarea::make('input')->label('Entrada')->columnSpanFull(),
+            Textarea::make('output')->label('Salida')->columnSpanFull(),
+            TextInput::make('estimated_minutes')->label('Minutos estimados')->numeric(),
+            Textarea::make('evidence_generated')->label('Evidencia generada')->columnSpanFull(),
+            Textarea::make('problems')->label('Problemas')->columnSpanFull(),
+            TextInput::make('automatable')->label('Automatizable'),
+            Textarea::make('comments')->label('Comentarios')->columnSpanFull(),
         ])->columns(2);
     }
 
@@ -38,13 +41,13 @@ class ProcessStepResource extends Resource
     {
         return $table->columns([
             Tables\Columns\TextColumn::make('process.name')->label('Proceso'),
-            Tables\Columns\TextColumn::make('step_number'),
-            Tables\Columns\TextColumn::make('description')->limit(50),
-            Tables\Columns\TextColumn::make('system_used'),
-            Tables\Columns\TextColumn::make('estimated_minutes'),
-            Tables\Columns\TextColumn::make('automatable'),
+            Tables\Columns\TextColumn::make('step_number')->label('Paso'),
+            Tables\Columns\TextColumn::make('description')->label('Descripción')->limit(50),
+            Tables\Columns\TextColumn::make('system_used')->label('Sistema'),
+            Tables\Columns\TextColumn::make('estimated_minutes')->label('Minutos'),
+            Tables\Columns\TextColumn::make('automatable')->label('Automatizable'),
         ])->actions([
-            Tables\Actions\EditAction::make(),
+            Tables\Actions\EditAction::make()->label('Editar'),
         ]);
     }
 

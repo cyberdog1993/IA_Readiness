@@ -20,7 +20,7 @@ class AutomationStatsOverview extends StatsOverviewWidget
         $savings = max(0, $currentMinutes - $expectedMinutes);
 
         return [
-            Stat::make('Leads recibidos', $leads),
+            Stat::make('Prospectos recibidos', $leads),
             Stat::make('Promedio de madurez', $averageMaturity.' / 100'),
             Stat::make('Procesos registrados', $processes),
             Stat::make('Horas actuales estimadas', number_format($currentMinutes / 60, 1)),
@@ -29,4 +29,3 @@ class AutomationStatsOverview extends StatsOverviewWidget
         ];
     }
 }
-

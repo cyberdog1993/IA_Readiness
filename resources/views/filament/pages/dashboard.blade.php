@@ -1,3 +1,8 @@
+@php
+    $prospectsUrl = \App\Filament\Resources\LeadResource::getUrl();
+    $clientsUrl = \App\Filament\Resources\ClientResource::getUrl();
+@endphp
+
 <x-filament-panels::page class="fi-dashboard-page">
     <div class="mb-8 overflow-hidden rounded-[2rem] border border-sky-400/15 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 p-8 shadow-2xl shadow-slate-950/40">
         <div class="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
@@ -10,14 +15,14 @@
                         Escritorio operativo para diagnóstico, preventa y ejecución.
                     </h1>
                     <p class="max-w-2xl text-base leading-7 text-slate-300">
-                        Aquí ves los leads entrantes, la madurez promedio, el avance de procesos y las oportunidades priorizadas para automatización.
+                        Aquí ves los prospectos entrantes, la madurez promedio, el avance de procesos y las oportunidades priorizadas para automatización.
                     </p>
                 </div>
                 <div class="flex flex-wrap gap-3">
-                    <a href="{{ url('/admin/leads') }}" class="rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-200 transition hover:bg-blue-500">
-                        Revisar leads
+                    <a href="{{ $prospectsUrl }}" class="rounded-full bg-blue-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-200 transition hover:bg-blue-500">
+                        Revisar prospectos
                     </a>
-                    <a href="{{ url('/admin/clients') }}" class="rounded-full border border-sky-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-sky-50">
+                    <a href="{{ $clientsUrl }}" class="rounded-full border border-sky-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-sky-50">
                         Ver clientes
                     </a>
                 </div>

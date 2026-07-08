@@ -15,19 +15,22 @@ class BacklogItemResource extends Resource
 {
     protected static ?string $model = BacklogItem::class;
     protected static ?string $navigationGroup = 'Administración';
+    protected static ?string $navigationLabel = 'Tareas';
+    protected static ?string $modelLabel = 'tarea';
+    protected static ?string $pluralModelLabel = 'tareas';
 
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Select::make('process_id')->relationship('process', 'name'),
-            TextInput::make('type')->required(),
-            TextInput::make('title')->required(),
-            Textarea::make('description')->columnSpanFull(),
-            Textarea::make('acceptance_criteria')->columnSpanFull(),
-            TextInput::make('priority'),
-            TextInput::make('responsible'),
-            TextInput::make('status'),
-            TextInput::make('estimated_hours')->numeric(),
+            Select::make('process_id')->label('Proceso')->relationship('process', 'name'),
+            TextInput::make('type')->label('Tipo')->required(),
+            TextInput::make('title')->label('Título')->required(),
+            Textarea::make('description')->label('Descripción')->columnSpanFull(),
+            Textarea::make('acceptance_criteria')->label('Criterios de aceptación')->columnSpanFull(),
+            TextInput::make('priority')->label('Prioridad'),
+            TextInput::make('responsible')->label('Responsable'),
+            TextInput::make('status')->label('Estado'),
+            TextInput::make('estimated_hours')->label('Horas estimadas')->numeric(),
         ])->columns(2);
     }
 
@@ -35,12 +38,12 @@ class BacklogItemResource extends Resource
     {
         return $table->columns([
             Tables\Columns\TextColumn::make('process.name')->label('Proceso'),
-            Tables\Columns\TextColumn::make('title')->searchable(),
-            Tables\Columns\TextColumn::make('type'),
-            Tables\Columns\TextColumn::make('priority'),
-            Tables\Columns\TextColumn::make('status'),
+            Tables\Columns\TextColumn::make('title')->label('Título')->searchable(),
+            Tables\Columns\TextColumn::make('type')->label('Tipo'),
+            Tables\Columns\TextColumn::make('priority')->label('Prioridad'),
+            Tables\Columns\TextColumn::make('status')->label('Estado'),
         ])->actions([
-            Tables\Actions\EditAction::make(),
+            Tables\Actions\EditAction::make()->label('Editar'),
         ]);
     }
 

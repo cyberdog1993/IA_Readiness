@@ -35,7 +35,7 @@
                 Diagnóstico de automatización con lectura comercial, técnica y ejecutiva.
             </h1>
             <p class="max-w-2xl text-lg leading-8 text-slate-300">
-                Captura leads, calcula madurez, prepara la preventa y deja todo listo para exportar a Markdown, JSON, Excel y Word.
+                Captura prospectos, calcula madurez, prepara la preventa y deja todo listo para exportar a Markdown, JSON, Excel y Word.
             </p>
         </div>
 
@@ -76,12 +76,12 @@
 
         <div class="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-6">
             <p class="text-sm uppercase tracking-[0.25em] text-emerald-200">Levantamiento completo</p>
-            <h2 class="mt-2 text-2xl font-semibold text-white">Ficha de consultoría para cliente o consultor</h2>
+            <h2 class="mt-2 text-2xl font-semibold text-white">Ficha de consultoría por cliente</h2>
             <p class="mt-2 text-sm leading-6 text-slate-300">
-                Cuando ya quieras levantar el proceso AS-IS, sistemas, problemas, oportunidades y backlog, usa el formulario extendido.
+                Cuando quieras levantar el proceso AS-IS, sistemas, problemas, oportunidades y tareas de un cliente, usa el formulario interno. Requiere usuario y contraseña.
             </p>
-            <a href="{{ route('consulting-intake.create') }}" class="mt-4 inline-flex rounded-2xl bg-gradient-to-r from-emerald-300 to-cyan-300 px-5 py-3 font-bold text-slate-950 hover:from-emerald-200 hover:to-cyan-200">
-                Abrir formulario completo
+            <a href="{{ route('consulting-intake.section', ['section' => 'cliente']) }}" class="mt-4 inline-flex rounded-2xl bg-gradient-to-r from-emerald-300 to-cyan-300 px-5 py-3 font-bold text-slate-950 hover:from-emerald-200 hover:to-cyan-200">
+                Acceder al formulario interno
             </a>
         </div>
     </section>
@@ -260,7 +260,7 @@
                             <li>• Puntaje de madurez sobre 100</li>
                             <li>• Diagnóstico breve y oportunidades principales</li>
                             <li>• Recomendación para avanzar a preventa o ejecución</li>
-                            <li>• Base para propuestas, backlog y exports</li>
+                <li>• Base para propuestas, tareas y exportaciones</li>
                         </ul>
                     </div>
 

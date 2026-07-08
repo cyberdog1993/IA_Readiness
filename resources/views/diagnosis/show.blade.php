@@ -5,7 +5,7 @@
     <section class="rounded-3xl border border-white/10 bg-slate-900/80 p-8">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
             <div>
-                <p class="text-sm uppercase tracking-[0.2em] text-blue-300">Diagnóstico generado</p>
+                <p class="text-sm uppercase tracking-[0.2em] text-blue-300">Ficha de diagnóstico generada</p>
                 <h1 class="mt-2 text-4xl font-semibold text-white">{{ $lead->company_name }}</h1>
                 <p class="mt-3 max-w-3xl text-slate-300">{{ $lead->diagnosis_brief }}</p>
             </div>
@@ -28,7 +28,7 @@
         </div>
         <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
             <p class="text-sm text-slate-400">Siguiente paso</p>
-            <p class="mt-2 text-slate-100">Registrar el proceso AS-IS y priorizar las oportunidades de automatización.</p>
+            <p class="mt-2 text-slate-100">Registrar el proceso AS-IS y priorizar las oportunidades de automatización por cliente.</p>
         </div>
         <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
             <p class="text-sm text-slate-400">Consultoría</p>

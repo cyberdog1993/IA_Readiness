@@ -15,20 +15,23 @@ class AutomationOpportunityResource extends Resource
 {
     protected static ?string $model = AutomationOpportunity::class;
     protected static ?string $navigationGroup = 'Automatización';
+    protected static ?string $navigationLabel = 'Oportunidades';
+    protected static ?string $modelLabel = 'oportunidad';
+    protected static ?string $pluralModelLabel = 'oportunidades';
 
     public static function form(Form $form): Form
     {
         return $form->schema([
-            Select::make('process_id')->relationship('process', 'name'),
-            TextInput::make('activity')->required(),
-            TextInput::make('current_time_minutes')->numeric(),
-            TextInput::make('expected_time_minutes')->numeric(),
-            TextInput::make('estimated_savings_minutes')->numeric(),
-            TextInput::make('suggested_technology'),
-            TextInput::make('priority'),
-            TextInput::make('complexity')->numeric(),
-            TextInput::make('status'),
-            Textarea::make('notes')->columnSpanFull(),
+            Select::make('process_id')->label('Proceso')->relationship('process', 'name'),
+            TextInput::make('activity')->label('Actividad')->required(),
+            TextInput::make('current_time_minutes')->label('Tiempo actual en minutos')->numeric(),
+            TextInput::make('expected_time_minutes')->label('Tiempo esperado en minutos')->numeric(),
+            TextInput::make('estimated_savings_minutes')->label('Ahorro estimado en minutos')->numeric(),
+            TextInput::make('suggested_technology')->label('Tecnología sugerida'),
+            TextInput::make('priority')->label('Prioridad'),
+            TextInput::make('complexity')->label('Complejidad')->numeric(),
+            TextInput::make('status')->label('Estado'),
+            Textarea::make('notes')->label('Observaciones')->columnSpanFull(),
         ])->columns(2);
     }
 
@@ -36,12 +39,12 @@ class AutomationOpportunityResource extends Resource
     {
         return $table->columns([
             Tables\Columns\TextColumn::make('process.name')->label('Proceso'),
-            Tables\Columns\TextColumn::make('activity'),
-            Tables\Columns\TextColumn::make('priority'),
-            Tables\Columns\TextColumn::make('estimated_savings_minutes'),
-            Tables\Columns\TextColumn::make('status'),
+            Tables\Columns\TextColumn::make('activity')->label('Actividad'),
+            Tables\Columns\TextColumn::make('priority')->label('Prioridad'),
+            Tables\Columns\TextColumn::make('estimated_savings_minutes')->label('Ahorro min.'),
+            Tables\Columns\TextColumn::make('status')->label('Estado'),
         ])->actions([
-            Tables\Actions\EditAction::make(),
+            Tables\Actions\EditAction::make()->label('Editar'),
         ]);
     }
 

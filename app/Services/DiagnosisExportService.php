@@ -181,7 +181,7 @@ class DiagnosisExportService
             $markdown[] = '- Requiere Skill Hermes: Sí/No según evaluación técnica.';
         }
         $markdown[] = '';
-        $markdown[] = '## Backlog sugerido';
+        $markdown[] = '## Tareas sugeridas';
         if ($process && $process->backlogItems->isNotEmpty()) {
             foreach ($process->backlogItems as $item) {
                 $markdown[] = '- ['.$item->priority.'] '.$item->title.' ('.$item->type.')';
