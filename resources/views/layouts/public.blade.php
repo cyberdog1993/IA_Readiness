@@ -44,7 +44,7 @@
                     <a href="https://wa.me/51941108521" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-slate-100 transition hover:border-cyan-300/40 hover:bg-white/10">
                         WhatsApp +51 941 108 521
                     </a>
-                    <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs uppercase tracking-[0.22em] text-slate-300">Formulario v1.0.1</span>
+                    <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs uppercase tracking-[0.22em] text-slate-300">Formulario v1.0.3</span>
                 </div>
             </div>
         </footer>
