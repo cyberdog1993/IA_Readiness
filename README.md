@@ -66,6 +66,11 @@ Las exportaciones están disponibles solo para usuarios autenticados:
 - Excel: `/exports/lead/{lead}/excel`
 - Word: `/exports/lead/{lead}/word`
 
+## Documentación del proyecto
+
+- [Manual de usuario](docs/manual-usuario.docx)
+- [Manual de arquitectura](docs/manual-arquitectura.docx)
+
 ## Estructura funcional
 
 - `leads`: captura del formulario público.
