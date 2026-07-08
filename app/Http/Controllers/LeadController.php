@@ -11,6 +11,11 @@ use Illuminate\View\View;
 
 class LeadController extends Controller
 {
+    public function home(): View
+    {
+        return view('home');
+    }
+
     public function create(): View
     {
         return view('landing', [

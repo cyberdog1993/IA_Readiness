@@ -45,12 +45,7 @@
             <div class="mb-6 space-y-2">
                 <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-400">Acceso</p>
                 <h2 class="text-2xl font-semibold text-white">Ingresa a tu cuenta</h2>
-                <p class="text-sm leading-6 text-slate-400">Usa tu correo corporativo autorizado para acceder al panel.</p>
-            </div>
-
-            <div class="mb-6 rounded-2xl border border-white/10 bg-white/5 p-4 text-sm leading-6 text-slate-300">
-                <p class="font-semibold text-white">Correo autorizado</p>
-                <p class="mt-1">Usa exactamente <span class="font-semibold">admin@consultores-it.pe</span>. Si el navegador te propone otra dirección, elimínala antes de continuar.</p>
+                <p class="text-sm leading-6 text-slate-400">Acceso restringido para usuarios autorizados del equipo interno.</p>
             </div>
 
             {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::AUTH_LOGIN_FORM_BEFORE, scopes: $this->getRenderHookScopes()) }}

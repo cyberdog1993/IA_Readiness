@@ -1,6 +1,16 @@
 <?php
 
 return [
+    'analytics' => [
+        'google' => env('GOOGLE_ANALYTICS_ID'),
+        'plausible' => env('PLAUSIBLE_DOMAIN'),
+    ],
+    'meta' => [
+        'pixel' => env('META_PIXEL_ID'),
+    ],
+    'linkedin' => [
+        'insight_tag' => env('LINKEDIN_INSIGHT_TAG'),
+    ],
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
@@ -10,4 +20,3 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 ];
-

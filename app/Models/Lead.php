@@ -32,6 +32,7 @@ class Lead extends Model
         'has_kpis',
         'key_person_dependency',
         'automation_interest',
+        'privacy_consent',
         'maturity_score',
         'maturity_level',
         'diagnosis_brief',
@@ -52,9 +53,41 @@ class Lead extends Model
         'has_kpis' => 'boolean',
         'key_person_dependency' => 'integer',
         'automation_interest' => 'integer',
+        'privacy_consent' => 'boolean',
         'maturity_score' => 'integer',
         'consulting_requested_at' => 'datetime',
     ];
+
+    public function estimatedSavingsHours(): float
+    {
+        $manualHours = (int) $this->manual_hours_weekly;
+        $score = (int) $this->maturity_score;
+
+        return round($manualHours * max(0.15, min(0.85, $score / 130)), 1);
+    }
+
+    public function recommendedProcesses(): array
+    {
+        $recommendations = [];
+
+        if ((int) $this->manual_report_generation >= 50 || (int) $this->excel_dependency >= 50) {
+            $recommendations[] = 'Reportes operativos y control gerencial';
+        }
+
+        if ((int) $this->system_integration_level < 60) {
+            $recommendations[] = 'Integración entre sistemas y consolidación de datos';
+        }
+
+        if ((int) $this->repetitive_process_count >= 10 || (int) $this->manual_hours_weekly >= 20) {
+            $recommendations[] = 'Tareas repetitivas de alto volumen';
+        }
+
+        if ($recommendations === []) {
+            $recommendations[] = 'Primer piloto de automatización de bajo riesgo';
+        }
+
+        return array_values(array_unique($recommendations));
+    }
 
     public function client(): HasOne
     {
@@ -66,4 +99,3 @@ class Lead extends Model
         return $this->hasMany(ProcessModel::class, 'lead_id');
     }
 }
-

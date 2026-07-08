@@ -23,7 +23,7 @@ class Login extends BaseLogin
     {
         return parent::getEmailFormComponent()
             ->autocomplete('off')
-            ->placeholder('admin@consultores-it.pe')
+            ->placeholder('Correo corporativo')
             ->extraInputAttributes([
                 'autocapitalize' => 'none',
                 'spellcheck' => 'false',

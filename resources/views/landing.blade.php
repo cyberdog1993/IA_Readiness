@@ -1,5 +1,10 @@
 @extends('layouts.public')
 
+@section('title', 'Diagnóstico de automatización - ¿Cómo está tu empresa?')
+@section('meta_description', 'Completa el diagnóstico por partes, obtiene un puntaje de madurez y recibe una salida comercial lista para consultoría.')
+@section('og_title', 'Diagnóstico de automatización - ¿Cómo está tu empresa?')
+@section('og_description', 'Formulario guiado para evaluar madurez de automatización, detectar oportunidades y preparar una propuesta comercial.')
+
 @section('content')
 @php
     $old = [
@@ -90,24 +95,6 @@
             </div>
         </div>
 
-        <div class="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-6">
-            <p class="text-sm uppercase tracking-[0.25em] text-emerald-200">Accesos internos</p>
-            <h2 class="mt-2 text-2xl font-semibold text-white">Consultoría y administración</h2>
-            <p class="mt-2 text-sm leading-6 text-slate-300">
-                El consultor interno llena la ficha por cliente y por proceso. El administrador entra al panel para revisar resultados, administrar datos y armar propuestas.
-            </p>
-            <div class="mt-5 grid gap-3 sm:grid-cols-2">
-                <a href="{{ route('consulting-intake.section', ['section' => 'cliente']) }}" class="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-emerald-300 to-cyan-300 px-5 py-3 font-bold text-slate-950 hover:from-emerald-200 hover:to-cyan-200">
-                    Formulario consultor interno
-                </a>
-                <a href="{{ route('portal.login') }}" class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-bold text-white hover:border-cyan-300/40 hover:bg-white/10">
-                    Portal cliente
-                </a>
-                <a href="{{ url('/admin') }}" class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-bold text-white hover:border-cyan-300/40 hover:bg-white/10">
-                    Administración
-                </a>
-            </div>
-        </div>
     </section>
 
     <section class="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-2xl shadow-blue-950/40 backdrop-blur">
@@ -141,7 +128,7 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ route('leads.store') }}" class="space-y-6" data-wizard-form>
+        <form method="POST" action="{{ route('leads.store') }}" class="space-y-6" data-wizard-form data-track-form="diagnostico">
             @csrf
 
             <input type="hidden" name="wizard_step" value="{{ old('wizard_step', 1) }}" data-wizard-step-input>
@@ -293,10 +280,15 @@
                     </div>
 
                     <label class="grid gap-2">
-                        <span class="text-sm font-medium text-slate-200">Acepto que me contacten para el diagnóstico</span>
-                        <div class="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300">
-                            <input type="checkbox" checked disabled class="h-4 w-4 rounded border-white/20 bg-slate-800 text-cyan-500" />
-                            Confirmo interés en recibir seguimiento comercial y técnico.
+                        <span class="text-sm font-medium text-slate-200">Consentimiento comercial y privacidad</span>
+                        <div class="space-y-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300">
+                            <label class="flex items-start gap-3">
+                                <input name="privacy_consent" type="checkbox" value="1" class="mt-1 h-4 w-4 rounded border-white/20 bg-slate-800 text-cyan-500" @checked(old('privacy_consent')) />
+                                <span>Acepto la <a href="{{ url('/privacidad') }}" class="text-cyan-200 underline">política de privacidad</a> y autorizo que me contacten sobre este diagnóstico.</span>
+                            </label>
+                            @error('privacy_consent')
+                                <span class="text-sm text-red-300">{{ $message }}</span>
+                            @enderror
                         </div>
                     </label>
                 </div>

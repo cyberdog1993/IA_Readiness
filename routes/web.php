@@ -7,11 +7,13 @@ use App\Http\Controllers\LeadController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [LeadController::class, 'create'])->name('landing');
+Route::get('/', [LeadController::class, 'home'])->name('landing');
+Route::get('/diagnostico', [LeadController::class, 'create'])->name('diagnosis.form');
 Route::get('/login', function () {
     return redirect()->route('filament.admin.auth.login');
 })->name('login');
 Route::get('/acceso-cliente', [ClientPortalAuthController::class, 'create'])->name('portal.login');
+Route::redirect('/cliente', '/acceso-cliente');
 Route::post('/acceso-cliente', [ClientPortalAuthController::class, 'store'])->name('portal.login.store');
 Route::post('/logout', function () {
     Auth::logout();
@@ -24,6 +26,8 @@ Route::post('/logout', function () {
 Route::post('/lead-submissions', [LeadController::class, 'store'])->name('leads.store');
 Route::get('/diagnostico/{lead}', [LeadController::class, 'show'])->name('diagnosis.show');
 Route::redirect('/levantamiento', '/levantamiento/cliente');
+Route::view('/privacidad', 'legal.privacy')->name('privacy');
+Route::view('/tratamiento-datos', 'legal.data-processing')->name('data-processing');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/levantamiento/{section}', [ConsultingIntakeController::class, 'section'])->name('consulting-intake.section');

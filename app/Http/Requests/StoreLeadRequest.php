@@ -32,7 +32,7 @@ class StoreLeadRequest extends FormRequest
             'has_kpis' => ['required', 'boolean'],
             'key_person_dependency' => ['required', 'integer', 'min:0', 'max:100'],
             'automation_interest' => ['required', 'integer', 'min:0', 'max:100'],
+            'privacy_consent' => ['accepted'],
         ];
     }
 }
-

@@ -3,7 +3,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name') }}</title>
+    <title>@yield('title', config('app.name'))</title>
+    <meta name="description" content="@yield('meta_description', 'Diagnóstico de automatización para consultoría comercial, técnica y ejecutiva.')">
+    <meta property="og:locale" content="es_PE">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="@yield('og_title', config('app.name'))">
+    <meta property="og:description" content="@yield('og_description', 'Diagnóstico de automatización para consultoría comercial, técnica y ejecutiva.')">
+    <meta property="og:image" content="@yield('og_image', asset('images/consultores-it-logo.jpeg'))">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="{{ asset('images/consultores-it-logo.jpeg') }}">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100">
@@ -45,9 +54,137 @@
                         WhatsApp +51 941 108 521
                     </a>
                     <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs uppercase tracking-[0.22em] text-slate-300">Formulario v1.0.3</span>
+                    <a href="{{ url('/privacidad') }}" class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-slate-100 transition hover:border-cyan-300/40 hover:bg-white/10">
+                        Privacidad
+                    </a>
+                    <a href="{{ url('/tratamiento-datos') }}" class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-slate-100 transition hover:border-cyan-300/40 hover:bg-white/10">
+                        Datos personales
+                    </a>
                 </div>
             </div>
         </footer>
     </main>
+
+    <script>
+        (function () {
+            const analyticsId = @json(config('services.analytics.google'));
+            const plausibleDomain = @json(config('services.analytics.plausible'));
+            const metaPixelId = @json(config('services.meta.pixel'));
+            const linkedInTag = @json(config('services.linkedin.insight_tag'));
+
+            window.consultoresTrackEvent = function (name, params = {}) {
+                if (window.gtag) {
+                    window.gtag('event', name, params);
+                }
+
+                if (window.fbq) {
+                    window.fbq('trackCustom', name, params);
+                }
+
+                if (window._linkedin_data_partner_ids && window.lintrk) {
+                    window.lintrk('track', { conversion_id: linkedInTag || name });
+                }
+
+                if (window.plausible) {
+                    window.plausible(name, { props: params });
+                }
+            };
+
+            if (analyticsId && !document.getElementById('google-analytics-loader')) {
+                const script = document.createElement('script');
+                script.id = 'google-analytics-loader';
+                script.async = true;
+                script.src = `https://www.googletagmanager.com/gtag/js?id=${analyticsId}`;
+                document.head.appendChild(script);
+
+                window.dataLayer = window.dataLayer || [];
+                window.gtag = function () { window.dataLayer.push(arguments); };
+                window.gtag('js', new Date());
+                window.gtag('config', analyticsId);
+            }
+
+            if (plausibleDomain && !document.getElementById('plausible-loader')) {
+                const script = document.createElement('script');
+                script.id = 'plausible-loader';
+                script.defer = true;
+                script.setAttribute('data-domain', plausibleDomain);
+                script.src = 'https://plausible.io/js/script.js';
+                document.head.appendChild(script);
+            }
+
+            if (metaPixelId && !document.getElementById('meta-pixel-loader')) {
+                !function(f,b,e,v,n,t,s){
+                    if(f.fbq)return;
+                    n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                    if(!f._fbq)f._fbq=n;
+                    n.push=n;
+                    n.loaded=!0;
+                    n.version='2.0';
+                    n.queue=[];
+                    t=b.createElement(e);
+                    t.async=!0;
+                    t.src=v;
+                    t.id='meta-pixel-loader';
+                    s=b.getElementsByTagName(e)[0];
+                    s.parentNode.insertBefore(t,s);
+                }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+                window.fbq('init', metaPixelId);
+                window.fbq('track', 'PageView');
+            }
+
+            if (linkedInTag && !document.getElementById('linkedin-insight-loader')) {
+                window._linkedin_partner_id = linkedInTag;
+                window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+                window._linkedin_data_partner_ids.push(linkedInTag);
+                const script = document.createElement('script');
+                script.id = 'linkedin-insight-loader';
+                script.type = 'text/javascript';
+                script.async = true;
+                script.src = 'https://snap.licdn.com/li.lms-analytics/insight.min.js';
+                document.head.appendChild(script);
+            }
+
+            const bindEventTracking = () => {
+                document.querySelectorAll('[data-track-event]').forEach((element) => {
+                    element.addEventListener('click', () => {
+                        window.consultoresTrackEvent(element.dataset.trackEvent, {
+                            label: element.dataset.trackLabel || element.textContent.trim(),
+                        });
+                    });
+                });
+
+                document.querySelectorAll('a[href^="https://wa.me/"], a[href^="mailto:"]').forEach((element) => {
+                    element.addEventListener('click', () => {
+                        window.consultoresTrackEvent('contact_click', {
+                            channel: element.getAttribute('href').startsWith('mailto:') ? 'email' : 'whatsapp',
+                            label: element.textContent.trim(),
+                        });
+                    });
+                });
+
+                document.querySelectorAll('form[data-track-form]').forEach((form) => {
+                    let started = false;
+                    form.addEventListener('focusin', () => {
+                        if (started) return;
+                        started = true;
+                        window.consultoresTrackEvent('form_start', {
+                            form: form.dataset.trackForm,
+                        });
+                    });
+                    form.addEventListener('submit', () => {
+                        window.consultoresTrackEvent('form_complete', {
+                            form: form.dataset.trackForm,
+                        });
+                    });
+                });
+            };
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', bindEventTracking);
+            } else {
+                bindEventTracking();
+            }
+        })();
+    </script>
 </body>
 </html>

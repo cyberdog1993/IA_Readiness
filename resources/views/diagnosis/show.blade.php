@@ -1,6 +1,14 @@
 @extends('layouts.public')
 
+@section('title', 'Resultado del diagnóstico - '.$lead->company_name)
+@section('meta_description', 'Resultado comercial y técnico del diagnóstico de automatización para '.$lead->company_name.'.')
+
 @section('content')
+@php
+    $recommendedProcesses = $lead->recommendedProcesses();
+    $estimatedSavings = $lead->estimatedSavingsHours();
+@endphp
+
 <div class="space-y-8">
     <section class="rounded-3xl border border-white/10 bg-slate-900/80 p-8">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
@@ -27,13 +35,18 @@
             <p class="mt-2 text-slate-100">{{ $lead->recommendation }}</p>
         </div>
         <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p class="text-sm text-slate-400">Siguiente paso</p>
-            <p class="mt-2 text-slate-100">Registrar el proceso AS-IS y priorizar las oportunidades de automatización por cliente.</p>
+            <p class="text-sm text-slate-400">Procesos recomendados</p>
+            <ul class="mt-2 space-y-2 text-slate-100">
+                @foreach ($recommendedProcesses as $process)
+                    <li>• {{ $process }}</li>
+                @endforeach
+            </ul>
         </div>
         <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p class="text-sm text-slate-400">Consultoría</p>
-            <button type="button" data-open-consultancy-modal class="mt-3 inline-flex rounded-xl bg-emerald-500 px-4 py-2 font-semibold text-white transition hover:bg-emerald-400">
-                Solicitar consultoría
+            <p class="text-sm text-slate-400">Ahorro estimado</p>
+            <p class="mt-2 text-3xl font-semibold text-white">{{ number_format($estimatedSavings, 1) }} h/semana</p>
+            <button type="button" data-open-consultancy-modal class="mt-4 inline-flex rounded-xl bg-emerald-500 px-4 py-2 font-semibold text-white transition hover:bg-emerald-400">
+                Agendar reunión
             </button>
         </div>
     </section>
@@ -45,6 +58,7 @@
                 <a class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white" href="{{ route('exports.json', $lead) }}">Exportar JSON</a>
                 <a class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white" href="{{ route('exports.excel', $lead) }}">Exportar Excel</a>
                 <a class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white" href="{{ route('exports.word', $lead) }}">Exportar Word</a>
+                <a class="rounded-xl border border-cyan-300/30 bg-cyan-500/10 px-4 py-2 text-sm text-cyan-100" href="https://wa.me/51941108521?text=Hola%2C%20quiero%20agendar%20una%20reuni%C3%B3n%20sobre%20mi%20diagn%C3%B3stico" target="_blank" rel="noreferrer">Agendar reunión</a>
             </div>
         @endauth
     </section>
@@ -69,7 +83,7 @@
                 Ir a la web principal
             </a>
             <a href="https://wa.me/51941108521" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-2xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-emerald-400">
-                Contactar por WhatsApp
+                Agendar reunión
             </a>
         </div>
 
