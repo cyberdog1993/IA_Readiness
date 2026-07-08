@@ -75,14 +75,19 @@
         </div>
 
         <div class="rounded-3xl border border-emerald-400/20 bg-emerald-500/10 p-6">
-            <p class="text-sm uppercase tracking-[0.25em] text-emerald-200">Levantamiento completo</p>
-            <h2 class="mt-2 text-2xl font-semibold text-white">Ficha de consultoría por cliente</h2>
+            <p class="text-sm uppercase tracking-[0.25em] text-emerald-200">Accesos internos</p>
+            <h2 class="mt-2 text-2xl font-semibold text-white">Consultoría y administración</h2>
             <p class="mt-2 text-sm leading-6 text-slate-300">
-                Cuando quieras levantar el proceso AS-IS, sistemas, problemas, oportunidades y tareas de un cliente, usa el formulario interno. Requiere usuario y contraseña.
+                El consultor interno llena la ficha por cliente y por proceso. El administrador entra al panel para revisar resultados, administrar datos y armar propuestas.
             </p>
-            <a href="{{ route('consulting-intake.section', ['section' => 'cliente']) }}" class="mt-4 inline-flex rounded-2xl bg-gradient-to-r from-emerald-300 to-cyan-300 px-5 py-3 font-bold text-slate-950 hover:from-emerald-200 hover:to-cyan-200">
-                Acceder al formulario interno
-            </a>
+            <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                <a href="{{ route('consulting-intake.section', ['section' => 'cliente']) }}" class="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-emerald-300 to-cyan-300 px-5 py-3 font-bold text-slate-950 hover:from-emerald-200 hover:to-cyan-200">
+                    Formulario consultor interno
+                </a>
+                <a href="{{ url('/admin') }}" class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-bold text-white hover:border-cyan-300/40 hover:bg-white/10">
+                    Administración
+                </a>
+            </div>
         </div>
     </section>
 
