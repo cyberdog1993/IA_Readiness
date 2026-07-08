@@ -21,6 +21,31 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?int $navigationSort = 30;
 
+    public static function canViewAny(): bool
+    {
+        return auth()->user()?->role === 'admin';
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->role === 'admin';
+    }
+
+    public static function canEdit($record): bool
+    {
+        return auth()->user()?->role === 'admin';
+    }
+
+    public static function canDelete($record): bool
+    {
+        return auth()->user()?->role === 'admin';
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return auth()->user()?->role === 'admin';
+    }
+
     public static function form(Form $form): Form
     {
         return $form->schema([
