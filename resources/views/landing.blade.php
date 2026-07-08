@@ -36,7 +36,7 @@
 
         <div class="space-y-5">
             <h1 class="max-w-3xl text-4xl font-semibold tracking-tight text-white md:text-6xl">
-                Diagnóstico de automatización con lectura comercial, técnica y ejecutiva.
+                Diagnóstico de automatización - ¿Como está tu empresa?
             </h1>
             <p class="max-w-2xl text-lg leading-8 text-slate-300">
                 Captura prospectos, calcula madurez, prepara la preventa y deja todo listo para exportar a Markdown, JSON, Excel y Word.
