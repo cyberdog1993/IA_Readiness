@@ -18,15 +18,26 @@
         </div>
         @yield('content')
 
-        <footer class="mt-12 rounded-3xl border border-white/10 bg-white/5 px-6 py-5 text-sm text-slate-300">
-            <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                <div class="space-y-1">
-                    <p class="font-semibold text-white">Consultores IT</p>
-                    <p>consultores-it.pe · julio.valdez@consultores.it · WhatsApp +51 941 108 521</p>
+        <footer class="mt-12 rounded-3xl border border-cyan-400/20 bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 px-6 py-5 text-sm text-slate-300 shadow-lg shadow-slate-950/20">
+            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div class="space-y-2">
+                    <p class="text-xs uppercase tracking-[0.28em] text-cyan-200">Consultores IT</p>
+                    <p class="font-semibold text-white">Plataforma de diagnóstico, preventa y consultoría</p>
+                    <div class="flex flex-wrap gap-3 text-sm">
+                        <a href="https://www.consultores-it.pe" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 transition hover:border-cyan-300/40 hover:bg-white/10">
+                            consultores-it.pe
+                        </a>
+                        <a href="mailto:julio.valdez@consultores.it" class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 transition hover:border-cyan-300/40 hover:bg-white/10">
+                            julio.valdez@consultores.it
+                        </a>
+                        <a href="https://wa.me/51941108521" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 transition hover:border-cyan-300/40 hover:bg-white/10">
+                            WhatsApp +51 941 108 521
+                        </a>
+                    </div>
                 </div>
                 <div class="flex flex-wrap gap-3 text-xs uppercase tracking-[0.22em] text-slate-400">
-                    <span>Formulario v1.0.0</span>
-                    <span>Diagnóstico de automatización</span>
+                    <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">Formulario v1.0.0</span>
+                    <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">Diagnóstico de automatización</span>
                 </div>
             </div>
         </footer>
