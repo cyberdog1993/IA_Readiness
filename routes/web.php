@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ConsultingIntakeController;
+use App\Http\Controllers\ClientPortalAuthController;
 use App\Http\Controllers\LeadController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -10,6 +11,8 @@ Route::get('/', [LeadController::class, 'create'])->name('landing');
 Route::get('/login', function () {
     return redirect()->route('filament.admin.auth.login');
 })->name('login');
+Route::get('/acceso-cliente', [ClientPortalAuthController::class, 'create'])->name('portal.login');
+Route::post('/acceso-cliente', [ClientPortalAuthController::class, 'store'])->name('portal.login.store');
 Route::post('/logout', function () {
     Auth::logout();
 

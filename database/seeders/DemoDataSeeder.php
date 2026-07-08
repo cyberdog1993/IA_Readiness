@@ -12,6 +12,7 @@ use App\Models\Lead;
 use App\Models\ProcessModel;
 use App\Models\ProcessStep;
 use App\Models\SystemIntegration;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DemoDataSeeder extends Seeder
@@ -62,6 +63,19 @@ class DemoDataSeeder extends Seeder
                 'notes' => 'Caso demo inicial para diagnóstico de automatización.',
             ]
         );
+
+        $portalPassword = env('NUVO_PORTAL_PASSWORD');
+        if (filled($portalPassword)) {
+            User::updateOrCreate(
+                ['email' => 'cliente@nuvocloud.pe'],
+                [
+                    'name' => 'Portal NUVO',
+                    'role' => 'client',
+                    'client_id' => $client->id,
+                    'password' => $portalPassword,
+                ]
+            );
+        }
 
         $process = ProcessModel::updateOrCreate(
             ['name' => 'Gestión de Reportes', 'client_id' => $client->id],

@@ -11,6 +11,7 @@ use Filament\Enums\ThemeMode;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsRenderHook;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
@@ -35,6 +36,10 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Blue,
             ])
+            ->renderHook(PanelsRenderHook::TOPBAR_BEFORE, fn () => view('filament.partials.site-header'))
+            ->renderHook(PanelsRenderHook::FOOTER, fn () => view('filament.partials.site-footer'))
+            ->renderHook(PanelsRenderHook::SIMPLE_PAGE_START, fn () => view('filament.partials.site-header'))
+            ->renderHook(PanelsRenderHook::SIMPLE_PAGE_END, fn () => view('filament.partials.site-footer'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')

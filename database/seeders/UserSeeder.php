@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
             ['email' => 'admin@consultores-it.pe'],
             [
                 'name' => 'Administrador',
+                'role' => 'admin',
                 'password' => $password,
             ]
         );

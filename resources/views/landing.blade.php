@@ -100,6 +100,9 @@
                 <a href="{{ route('consulting-intake.section', ['section' => 'cliente']) }}" class="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-emerald-300 to-cyan-300 px-5 py-3 font-bold text-slate-950 hover:from-emerald-200 hover:to-cyan-200">
                     Formulario consultor interno
                 </a>
+                <a href="{{ route('portal.login') }}" class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-bold text-white hover:border-cyan-300/40 hover:bg-white/10">
+                    Portal cliente
+                </a>
                 <a href="{{ url('/admin') }}" class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-bold text-white hover:border-cyan-300/40 hover:bg-white/10">
                     Administración
                 </a>

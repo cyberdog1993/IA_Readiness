@@ -11,6 +11,7 @@ body.fi-panel-admin {
         linear-gradient(135deg, #020617 0%, #0f172a 48%, #111827 100%);
     background-attachment: fixed;
     color: rgb(226 232 240);
+    padding-bottom: 5.5rem;
 }
 
 body.fi-panel-admin::before {
@@ -34,6 +35,7 @@ body.fi-panel-admin::before {
 .fi-panel-admin .fi-main {
     position: relative;
     z-index: 1;
+    padding-bottom: 5.5rem;
 }
 
 .fi-panel-admin .fi-topbar,
@@ -199,7 +201,7 @@ body.fi-panel-admin::before {
 }
 
 .fi-panel-admin .fi-simple-main-ctn {
-    padding: 2rem 0;
+    padding: 2rem 0 5.5rem;
 }
 
 .fi-panel-admin .fi-simple-main {
@@ -253,6 +255,20 @@ body.fi-panel-admin::before {
 .fi-panel-admin .fi-simple-page,
 .fi-panel-admin .fi-simple-page * {
     color: rgb(226 232 240);
+}
+
+.ci-shell-header {
+    margin: 0 auto 1rem;
+    padding: 1rem;
+}
+
+.ci-shell-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    padding: 1rem;
 }
 
 .fi-panel-admin .fi-simple-page h1,

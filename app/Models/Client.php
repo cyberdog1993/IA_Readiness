@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Client extends Model
@@ -26,7 +27,7 @@ class Client extends Model
         'notes',
     ];
 
-    public function lead()
+    public function lead(): BelongsTo
     {
         return $this->belongsTo(Lead::class);
     }
@@ -35,5 +36,9 @@ class Client extends Model
     {
         return $this->hasMany(ProcessModel::class);
     }
-}
 
+    public function users(): HasMany
+    {
+        return $this->hasMany(User::class);
+    }
+}

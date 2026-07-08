@@ -122,22 +122,28 @@ class ConsultingIntakeController extends Controller
         ]);
 
         $lead = ! empty($validated['lead_id']) ? Lead::find($validated['lead_id']) : null;
+        $client = $this->currentClient();
+        $payload = [
+            'lead_id' => $lead?->id,
+            'business_name' => $validated['business_name'],
+            'industry' => $validated['industry'],
+            'address' => $validated['address'] ?? null,
+            'main_contact' => $validated['main_contact'] ?? null,
+            'contact_role' => $validated['contact_role'] ?? null,
+            'email' => $validated['email'] ?? null,
+            'phone' => $validated['phone'] ?? null,
+            'status' => 'active',
+            'notes' => $validated['client_notes'] ?? null,
+        ];
 
-        $client = Client::updateOrCreate(
-            ['ruc' => $validated['ruc']],
-            [
-                'lead_id' => $lead?->id,
-                'business_name' => $validated['business_name'],
-                'industry' => $validated['industry'],
-                'address' => $validated['address'] ?? null,
-                'main_contact' => $validated['main_contact'] ?? null,
-                'contact_role' => $validated['contact_role'] ?? null,
-                'email' => $validated['email'] ?? null,
-                'phone' => $validated['phone'] ?? null,
-                'status' => 'active',
-                'notes' => $validated['client_notes'] ?? null,
-            ]
-        );
+        if ($client) {
+            $client->update($payload + ['ruc' => $validated['ruc']]);
+        } else {
+            $client = Client::updateOrCreate(
+                ['ruc' => $validated['ruc']],
+                $payload
+            );
+        }
 
         session([
             'consulting_intake_client_id' => $client->id,
@@ -398,7 +404,7 @@ class ConsultingIntakeController extends Controller
 
     private function currentClient(): ?Client
     {
-        $clientId = session('consulting_intake_client_id');
+        $clientId = session('consulting_intake_client_id') ?: auth()->user()?->client_id;
 
         return $clientId ? Client::withCount('processes')->find($clientId) : null;
     }
