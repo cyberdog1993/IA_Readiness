@@ -17,6 +17,19 @@
             </div>
         </div>
         @yield('content')
+
+        <footer class="mt-12 rounded-3xl border border-white/10 bg-white/5 px-6 py-5 text-sm text-slate-300">
+            <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                <div class="space-y-1">
+                    <p class="font-semibold text-white">Consultores IT</p>
+                    <p>consultores-it.pe · julio.valdez@consultores.it · WhatsApp +51 941 108 521</p>
+                </div>
+                <div class="flex flex-wrap gap-3 text-xs uppercase tracking-[0.22em] text-slate-400">
+                    <span>Formulario v1.0.0</span>
+                    <span>Diagnóstico de automatización</span>
+                </div>
+            </div>
+        </footer>
     </main>
 </body>
 </html>
