@@ -75,6 +75,8 @@ class DemoDataSeeder extends Seeder
                     'password' => $portalPassword,
                 ]
             );
+        } else {
+            $this->command?->warn('NUVO_PORTAL_PASSWORD no está definido; el usuario cliente demo no se creó.');
         }
 
         $process = ProcessModel::updateOrCreate(
