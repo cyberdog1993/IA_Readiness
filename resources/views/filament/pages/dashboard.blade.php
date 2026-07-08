@@ -7,8 +7,9 @@
     <div class="mb-8 overflow-hidden rounded-[2rem] border border-sky-400/15 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 p-8 shadow-2xl shadow-slate-950/40">
         <div class="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
             <div class="space-y-4">
-                <div class="inline-flex rounded-full border border-sky-300/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-sky-100">
-                    Consultores IT Automation Platform
+                <div class="inline-flex items-center gap-3 rounded-full border border-sky-300/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-sky-100">
+                    <img src="{{ asset('images/consultores-it-logo.jpeg') }}" alt="Consultores IT" class="h-8 w-8 rounded-full bg-white/90 object-cover p-0.5">
+                    <span>Consultores IT Automation Platform</span>
                 </div>
                 <div class="space-y-3">
                     <h1 class="text-4xl font-semibold tracking-tight text-white">

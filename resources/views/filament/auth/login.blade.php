@@ -3,8 +3,9 @@
         <section class="relative overflow-hidden rounded-[2rem] border border-sky-400/15 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 p-8 text-white shadow-2xl shadow-slate-950/40">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(34,211,238,.16),_transparent_30%),radial-gradient(circle_at_bottom_left,_rgba(59,130,246,.16),_transparent_28%)]"></div>
             <div class="relative space-y-6">
-                <div class="inline-flex rounded-full border border-sky-300/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-sky-100">
-                    Consultores IT
+                <div class="inline-flex items-center gap-3 rounded-full border border-sky-300/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-sky-100">
+                    <img src="{{ asset('images/consultores-it-logo.jpeg') }}" alt="Consultores IT" class="h-8 w-8 rounded-full bg-white/90 object-cover p-0.5">
+                    <span>Consultores IT</span>
                 </div>
 
                 <div class="space-y-4">

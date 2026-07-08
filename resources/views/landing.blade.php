@@ -26,8 +26,9 @@
 
 <div class="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
     <section class="space-y-8">
-        <div class="inline-flex rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-200">
-            Consultores IT Automation Platform
+        <div class="inline-flex items-center gap-3 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-200">
+            <img src="{{ asset('images/consultores-it-logo.jpeg') }}" alt="Consultores IT" class="h-7 w-7 rounded-full object-cover bg-white/90 p-0.5">
+            <span>Consultores IT Automation Platform</span>
         </div>
 
         <div class="space-y-5">
