@@ -1,10 +1,10 @@
 <div class="ci-shell-header">
-    <div class="mx-auto flex max-w-7xl flex-col gap-3 rounded-[1.75rem] border border-sky-400/15 bg-slate-950/92 px-5 py-4 shadow-2xl shadow-slate-950/35 backdrop-blur sm:flex-row sm:items-center sm:justify-between">
-        <div class="flex items-center gap-4">
-            <img src="{{ asset('images/consultores-it-logo.jpeg') }}" alt="Consultores IT" class="h-12 w-12 rounded-2xl bg-white/90 object-cover p-1 shadow-lg shadow-slate-950/20">
+    <div class="mx-auto flex max-w-7xl flex-col gap-2 rounded-[1.5rem] border border-sky-400/15 bg-slate-950/92 px-4 py-3 shadow-2xl shadow-slate-950/35 backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+        <div class="flex items-center gap-2.5">
+            <img src="{{ asset('images/consultores-it-logo.jpeg') }}" alt="Consultores IT" class="h-8 w-8 rounded-lg bg-white/90 object-cover p-1 shadow-lg shadow-slate-950/20">
             <div>
-                <p class="text-xs uppercase tracking-[0.28em] text-cyan-200">Consultores IT</p>
-                <p class="text-sm text-slate-300">Plataforma de diagnóstico y consultoría</p>
+                <p class="text-[0.6rem] uppercase tracking-[0.28em] text-cyan-200">Consultores IT</p>
+                <p class="text-[0.72rem] text-slate-300">Plataforma de diagnóstico y consultoría</p>
             </div>
         </div>
         <div class="flex flex-wrap items-center gap-2">
