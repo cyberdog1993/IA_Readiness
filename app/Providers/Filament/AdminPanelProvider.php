@@ -30,6 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->login(Login::class)
             ->darkMode(true, true)
             ->defaultThemeMode(ThemeMode::Dark)
+            ->collapsibleNavigationGroups(false)
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->colors([
                 'primary' => Color::Blue,

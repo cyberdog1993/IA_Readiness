@@ -28,6 +28,7 @@ composer install
 npm install
 php artisan key:generate
 php artisan migrate --seed
+php artisan filament:assets
 npm run build
 php artisan serve
 ```
@@ -40,6 +41,7 @@ docker compose up -d --build
 docker compose exec app composer install
 docker compose exec app php artisan key:generate
 docker compose exec app php artisan migrate --seed
+docker compose exec app php artisan filament:assets
 docker compose --profile tools run --rm node npm install
 docker compose --profile tools run --rm node npm run build
 ```
