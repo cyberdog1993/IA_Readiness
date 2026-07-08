@@ -26,9 +26,12 @@
 
 <div class="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
     <section class="space-y-8">
-        <div class="inline-flex items-center gap-3 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-200">
-            <img src="{{ asset('images/consultores-it-logo.jpeg') }}" alt="Consultores IT" class="h-7 w-7 rounded-full object-cover bg-white/90 p-0.5">
-            <span>Consultores IT Automation Platform</span>
+        <div class="flex items-center gap-4 rounded-3xl border border-cyan-500/20 bg-cyan-500/10 px-5 py-4 shadow-lg shadow-cyan-950/20">
+            <img src="{{ asset('images/consultores-it-logo.jpeg') }}" alt="Consultores IT" class="h-16 w-16 rounded-2xl bg-white/90 object-cover p-1 shadow-lg shadow-slate-950/20" loading="eager">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200">Consultores IT</p>
+                <p class="mt-1 text-base font-medium text-white">Consultores IT Automation Platform</p>
+            </div>
         </div>
 
         <div class="space-y-5">
