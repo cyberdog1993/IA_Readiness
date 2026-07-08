@@ -18,6 +18,19 @@
     $next = $position < $total ? $order[$position] : null;
     $client = $client ?? null;
     $process = $process ?? null;
+    $selectedLead = $selectedLead ?? null;
+
+    $prefill = [
+        'business_name' => old('business_name', $client?->business_name ?? $selectedLead?->company_name ?? ''),
+        'ruc' => old('ruc', $client?->ruc ?? $selectedLead?->ruc ?? ''),
+        'industry' => old('industry', $client?->industry ?? $selectedLead?->industry ?? ''),
+        'address' => old('address', $client?->address ?? ''),
+        'main_contact' => old('main_contact', $client?->main_contact ?? $selectedLead?->contact_name ?? ''),
+        'contact_role' => old('contact_role', $client?->contact_role ?? $selectedLead?->contact_role ?? ''),
+        'email' => old('email', $client?->email ?? $selectedLead?->email ?? ''),
+        'phone' => old('phone', $client?->phone ?? $selectedLead?->phone ?? ''),
+        'client_notes' => old('client_notes', $client?->notes ?? ''),
+    ];
 @endphp
 
 <div class="mx-auto max-w-5xl">
@@ -80,17 +93,67 @@
 
         @if ($section === 'cliente')
             <x-intake-section step="1" title="Cliente y contacto" subtitle="Datos base para registrar o actualizar el cliente.">
-                <div class="grid gap-4 md:grid-cols-2">
-                    <x-intake-input name="business_name" label="Razón social" value="{{ old('business_name', $client?->business_name) }}" required />
-                    <x-intake-input name="ruc" label="RUC" value="{{ old('ruc', $client?->ruc) }}" required />
-                    <x-intake-input name="industry" label="Rubro" value="{{ old('industry', $client?->industry) }}" required />
-                    <x-intake-input name="address" label="Dirección" value="{{ old('address', $client?->address) }}" />
-                    <x-intake-input name="main_contact" label="Contacto principal" value="{{ old('main_contact', $client?->main_contact) }}" />
-                    <x-intake-input name="contact_role" label="Cargo" value="{{ old('contact_role', $client?->contact_role) }}" />
-                    <x-intake-input name="email" label="Correo" type="email" value="{{ old('email', $client?->email) }}" />
-                    <x-intake-input name="phone" label="Teléfono" value="{{ old('phone', $client?->phone) }}" />
+                <input type="hidden" name="lead_id" value="{{ old('lead_id', $selectedLead?->id) }}">
+
+                <div class="rounded-3xl border border-cyan-400/20 bg-cyan-500/10 p-5">
+                    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                        <div>
+                            <p class="text-xs uppercase tracking-[0.25em] text-cyan-200">Traer datos del pre-formulario</p>
+                            <h3 class="mt-2 text-xl font-semibold text-white">Selecciona un lead para continuar la consultoría</h3>
+                            <p class="mt-1 text-sm text-cyan-50/80">Si el cliente ya completó el diagnóstico rápido, puedes reutilizar esa información y ahorrar tiempo.</p>
+                        </div>
+                        <div class="min-w-[280px]">
+                            <label class="grid gap-2">
+                                <span class="text-sm font-semibold text-cyan-100">Lead disponible</span>
+                                <select data-lead-picker class="rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none focus:border-cyan-400">
+                                    <option value="">Elegir un lead reciente</option>
+                                    @foreach ($leads as $lead)
+                                        <option value="{{ $lead->id }}" @selected($selectedLead?->id === $lead->id)>
+                                            {{ $lead->company_name }} - {{ $lead->maturity_score }} pts
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    @if ($selectedLead)
+                        <div class="mt-5 grid gap-4 md:grid-cols-4">
+                            <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+                                <p class="text-xs uppercase tracking-[0.22em] text-slate-400">Empresa</p>
+                                <p class="mt-2 text-lg font-semibold text-white">{{ $selectedLead->company_name }}</p>
+                                <p class="mt-1 text-sm text-slate-300">RUC {{ $selectedLead->ruc }}</p>
+                            </div>
+                            <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+                                <p class="text-xs uppercase tracking-[0.22em] text-slate-400">Puntaje</p>
+                                <p class="mt-2 text-lg font-semibold text-white">{{ $selectedLead->maturity_score ?? 0 }} / 100</p>
+                                <p class="mt-1 text-sm text-slate-300">{{ $selectedLead->maturity_level }}</p>
+                            </div>
+                            <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+                                <p class="text-xs uppercase tracking-[0.22em] text-slate-400">Contacto</p>
+                                <p class="mt-2 text-lg font-semibold text-white">{{ $selectedLead->contact_name }}</p>
+                                <p class="mt-1 text-sm text-slate-300">{{ $selectedLead->contact_role }}</p>
+                            </div>
+                            <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+                                <p class="text-xs uppercase tracking-[0.22em] text-slate-400">Estado</p>
+                                <p class="mt-2 text-lg font-semibold text-white">{{ $selectedLead->status }}</p>
+                                <p class="mt-1 text-sm text-slate-300">{{ $selectedLead->email }}</p>
+                            </div>
+                        </div>
+                    @endif
                 </div>
-                <x-intake-textarea name="client_notes" label="Observaciones del cliente" value="{{ old('client_notes', $client?->notes) }}" />
+
+                <div class="grid gap-4 md:grid-cols-2">
+                    <x-intake-input name="business_name" label="Razón social" value="{{ $prefill['business_name'] }}" required />
+                    <x-intake-input name="ruc" label="RUC" value="{{ $prefill['ruc'] }}" required />
+                    <x-intake-input name="industry" label="Rubro" value="{{ $prefill['industry'] }}" required />
+                    <x-intake-input name="address" label="Dirección" value="{{ $prefill['address'] }}" />
+                    <x-intake-input name="main_contact" label="Contacto principal" value="{{ $prefill['main_contact'] }}" />
+                    <x-intake-input name="contact_role" label="Cargo" value="{{ $prefill['contact_role'] }}" />
+                    <x-intake-input name="email" label="Correo" type="email" value="{{ $prefill['email'] }}" />
+                    <x-intake-input name="phone" label="Teléfono" value="{{ $prefill['phone'] }}" />
+                </div>
+                <x-intake-textarea name="client_notes" label="Observaciones del cliente" value="{{ $prefill['client_notes'] }}" />
             </x-intake-section>
         @elseif ($section === 'proceso')
             <x-intake-section step="2" title="Proceso" subtitle="Define el proceso que será diagnosticado.">
@@ -380,8 +443,24 @@
     </form>
 </div>
 
-@if (in_array($section, ['as-is', 'documentos', 'automatizacion', 'tareas'], true))
+@if (in_array($section, ['cliente', 'as-is', 'documentos', 'automatizacion', 'tareas'], true))
 <script>
+    const leadPicker = document.querySelector('[data-lead-picker]');
+    if (leadPicker) {
+        leadPicker.addEventListener('change', (event) => {
+            const leadId = event.target.value;
+            const currentUrl = new URL(window.location.href);
+
+            if (leadId) {
+                currentUrl.searchParams.set('lead', leadId);
+            } else {
+                currentUrl.searchParams.delete('lead');
+            }
+
+            window.location.href = currentUrl.toString();
+        });
+    }
+
     document.querySelectorAll('[data-repeater]').forEach((repeater) => {
         const rows = repeater.querySelector('[data-rows]');
         const firstRow = rows.querySelector('[data-row]');

@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\CurrentProblem;
 use App\Models\DocumentEvidence;
 use App\Models\InternalEvaluation;
+use App\Models\Lead;
 use App\Models\ProcessModel;
 use App\Models\ProcessStep;
 use App\Models\SystemIntegration;
@@ -42,12 +43,28 @@ class ConsultingIntakeController extends Controller
 
         $client = $this->currentClient();
         $process = $this->currentProcess();
+        $leads = collect();
+        $selectedLead = null;
 
         if ($section === 'cliente') {
+            $leadId = trim((string) $request->query('lead', ''));
             $ruc = trim((string) $request->query('ruc', ''));
+            $leads = Lead::latest()->limit(25)->get();
 
-            if ($ruc !== '') {
-                $client = Client::withCount('processes')->where('ruc', $ruc)->first() ?: $client;
+            if ($leadId !== '') {
+                $selectedLead = Lead::with('client.processes')->find($leadId);
+                if ($selectedLead?->client) {
+                    $client = $selectedLead->client->loadCount('processes');
+                }
+            }
+
+            if (! $selectedLead && $ruc !== '') {
+                $client = Client::withCount('processes')->with('lead')->where('ruc', $ruc)->first() ?: $client;
+                $selectedLead = $client?->lead;
+            }
+
+            if (! $selectedLead) {
+                $selectedLead = $client?->lead;
             }
         }
 
@@ -55,7 +72,7 @@ class ConsultingIntakeController extends Controller
             $process->load(['steps', 'systems', 'documents', 'problems', 'opportunities', 'evaluations', 'backlogItems']);
         }
 
-        return view('intake.create', compact('section', 'client', 'process'));
+        return view('intake.create', compact('section', 'client', 'process', 'leads', 'selectedLead'));
     }
 
     public function store(Request $request, string $section): RedirectResponse
@@ -92,6 +109,7 @@ class ConsultingIntakeController extends Controller
     private function storeClient(Request $request): RedirectResponse
     {
         $validated = $request->validate([
+            'lead_id' => ['nullable', 'string', 'exists:leads,id'],
             'business_name' => ['required', 'string', 'max:255'],
             'ruc' => ['required', 'string', 'max:20'],
             'industry' => ['required', 'string', 'max:255'],
@@ -103,9 +121,12 @@ class ConsultingIntakeController extends Controller
             'client_notes' => ['nullable', 'string'],
         ]);
 
+        $lead = ! empty($validated['lead_id']) ? Lead::find($validated['lead_id']) : null;
+
         $client = Client::updateOrCreate(
             ['ruc' => $validated['ruc']],
             [
+                'lead_id' => $lead?->id,
                 'business_name' => $validated['business_name'],
                 'industry' => $validated['industry'],
                 'address' => $validated['address'] ?? null,
