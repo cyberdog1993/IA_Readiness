@@ -1,6 +1,8 @@
 @php
     $prospectsUrl = \App\Filament\Resources\LeadResource::getUrl();
     $clientsUrl = \App\Filament\Resources\ClientResource::getUrl();
+    $usersUrl = \App\Filament\Resources\UserResource::getUrl();
+    $isAdmin = auth()->user()?->role === 'admin';
 @endphp
 
 <x-filament-panels::page class="fi-dashboard-page">
@@ -26,6 +28,11 @@
                     <a href="{{ $clientsUrl }}" class="rounded-full border border-sky-200 bg-white px-5 py-3 text-sm font-semibold text-slate-700 transition hover:bg-sky-50">
                         Ver clientes
                     </a>
+                    @if ($isAdmin)
+                        <a href="{{ $usersUrl }}" class="rounded-full border border-cyan-300/20 bg-cyan-500/10 px-5 py-3 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-500/20">
+                            Administrar usuarios
+                        </a>
+                    @endif
                 </div>
             </div>
 
