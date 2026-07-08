@@ -39,25 +39,37 @@
                 Diagnóstico de automatización - ¿Cómo está tu empresa?
             </h1>
             <p class="max-w-2xl text-lg leading-8 text-slate-300">
-                Captura prospectos, calcula madurez, prepara la preventa y deja todo listo para exportar a Markdown, JSON, Excel y Word.
+                Descubre dónde está tu operación hoy, qué se puede automatizar primero y cómo convertirlo en una propuesta concreta con impacto real.
             </p>
+
+            <div class="flex flex-wrap gap-3">
+                <a href="https://www.consultores-it.pe" target="_blank" rel="noreferrer" class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                    Visitar web principal
+                </a>
+                <a href="mailto:julio.valdez@consultores.it" class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                    Escribir por correo
+                </a>
+                <a href="https://wa.me/51941108521" target="_blank" rel="noreferrer" class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                    Abrir WhatsApp
+                </a>
+            </div>
         </div>
 
         <div class="grid gap-4 sm:grid-cols-3">
             <div class="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-                <p class="text-sm text-slate-400">Madurez</p>
-                <p class="mt-2 text-3xl font-semibold text-white">100 pts</p>
-                <p class="mt-1 text-sm text-slate-400">Escala visible al usuario en tiempo real.</p>
+                <p class="text-sm text-slate-400">Primera lectura</p>
+                <p class="mt-2 text-3xl font-semibold text-white">Verás tu punto de partida</p>
+                <p class="mt-1 text-sm text-slate-400">Entiende rápido si tu operación está lista para automatizar o si conviene ordenar primero.</p>
             </div>
             <div class="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-                <p class="text-sm text-slate-400">Salida</p>
-                <p class="mt-2 text-3xl font-semibold text-white">Markdown / Excel</p>
-                <p class="mt-1 text-sm text-slate-400">Listo para ChatGPT, Claude y Hermes.</p>
+                <p class="text-sm text-slate-400">Ahorro posible</p>
+                <p class="mt-2 text-3xl font-semibold text-white">Detecta tiempo perdido</p>
+                <p class="mt-1 text-sm text-slate-400">Identifica tareas manuales, duplicidad de trabajo y oportunidades con retorno tangible.</p>
             </div>
             <div class="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-                <p class="text-sm text-slate-400">Panel</p>
-                <p class="mt-2 text-3xl font-semibold text-white">Filament</p>
-                <p class="mt-1 text-sm text-slate-400">Acceso interno con login.</p>
+                <p class="text-sm text-slate-400">Siguiente paso</p>
+                <p class="mt-2 text-3xl font-semibold text-white">Recibe una ruta clara</p>
+                <p class="mt-1 text-sm text-slate-400">Obtén un enfoque para consultoría, propuesta y ejecución sin perder tiempo.</p>
             </div>
         </div>
 
