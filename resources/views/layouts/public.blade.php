@@ -8,7 +8,7 @@
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100">
     <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_left,_rgba(59,130,246,.22),_transparent_30%),radial-gradient(circle_at_bottom_right,_rgba(16,185,129,.16),_transparent_35%)]"></div>
-    <main class="mx-auto max-w-7xl px-6 py-10">
+    <main class="mx-auto max-w-7xl px-6 py-10 pb-32">
         <div class="mb-8 flex items-center gap-4">
             <img src="{{ asset('images/consultores-it-logo.jpeg') }}" alt="Consultores IT" class="h-14 w-14 rounded-2xl bg-white/90 object-cover p-1 shadow-lg shadow-slate-950/30" loading="eager">
             <div>
@@ -18,26 +18,23 @@
         </div>
         @yield('content')
 
-        <footer class="mt-12 rounded-3xl border border-cyan-400/20 bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 px-6 py-5 text-sm text-slate-300 shadow-lg shadow-slate-950/20">
-            <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div class="space-y-2">
-                    <p class="text-xs uppercase tracking-[0.28em] text-cyan-200">Consultores IT</p>
-                    <p class="font-semibold text-white">Plataforma de diagnóstico, preventa y consultoría</p>
-                    <div class="flex flex-wrap gap-3 text-sm">
-                        <a href="https://www.consultores-it.pe" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 transition hover:border-cyan-300/40 hover:bg-white/10">
-                            consultores-it.pe
-                        </a>
-                        <a href="mailto:julio.valdez@consultores.it" class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 transition hover:border-cyan-300/40 hover:bg-white/10">
-                            julio.valdez@consultores.it
-                        </a>
-                        <a href="https://wa.me/51941108521" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 transition hover:border-cyan-300/40 hover:bg-white/10">
-                            WhatsApp +51 941 108 521
-                        </a>
-                    </div>
+        <footer class="fixed inset-x-0 bottom-0 z-40 border-t border-cyan-400/20 bg-slate-950/95 px-4 py-3 shadow-[0_-12px_40px_rgba(2,6,23,0.45)] backdrop-blur">
+            <div class="mx-auto flex max-w-7xl flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+                <div class="flex flex-wrap items-center gap-3 text-sm">
+                    <span class="text-xs uppercase tracking-[0.28em] text-cyan-200">Consultores IT</span>
+                    <span class="text-slate-300">Plataforma de diagnóstico, preventa y consultoría</span>
                 </div>
-                <div class="flex flex-wrap gap-3 text-xs uppercase tracking-[0.22em] text-slate-400">
-                    <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">Formulario v1.0.0</span>
-                    <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5">Diagnóstico de automatización</span>
+                <div class="flex flex-wrap gap-2">
+                    <a href="https://www.consultores-it.pe" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-slate-100 transition hover:border-cyan-300/40 hover:bg-white/10">
+                        Web principal
+                    </a>
+                    <a href="mailto:julio.valdez@consultores.it" class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-slate-100 transition hover:border-cyan-300/40 hover:bg-white/10">
+                        julio.valdez@consultores.it
+                    </a>
+                    <a href="https://wa.me/51941108521" target="_blank" rel="noreferrer" class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-slate-100 transition hover:border-cyan-300/40 hover:bg-white/10">
+                        WhatsApp +51 941 108 521
+                    </a>
+                    <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs uppercase tracking-[0.22em] text-slate-300">Formulario v1.0.0</span>
                 </div>
             </div>
         </footer>
