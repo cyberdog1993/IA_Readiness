@@ -9,7 +9,7 @@
 <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
     <section class="space-y-8">
         <div class="inline-flex items-center rounded-full border border-cyan-400/20 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-100">
-            Consultores IT Automation Platform
+            Plataforma de Automatización
         </div>
 
         <div class="space-y-5">
