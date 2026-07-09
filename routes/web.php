@@ -3,6 +3,7 @@
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ConsultingIntakeController;
 use App\Http\Controllers\ClientPortalAuthController;
+use App\Http\Controllers\LeadAutomationController;
 use App\Http\Controllers\LeadController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -41,4 +42,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/exports/lead/{lead}/cliente-pdf', [ExportController::class, 'clientPdf'])->name('exports.client-pdf');
     Route::get('/exports/lead/{lead}/interno-pdf', [ExportController::class, 'internalPdf'])->name('exports.internal-pdf');
     Route::get('/integraciones/lead/{lead}/payload', [ExportController::class, 'automationPayload'])->name('exports.payload');
+    Route::post('/integraciones/lead/{lead}/dispatch', [LeadAutomationController::class, 'dispatch'])->name('lead-automation.dispatch');
 });

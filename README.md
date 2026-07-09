@@ -84,6 +84,18 @@ Para activar analítica agregada, define estas variables en `.env`:
 - `PLAUSIBLE_DOMAIN`
 - `META_PIXEL_ID`
 - `LINKEDIN_INSIGHT_TAG`
+- `LEAD_CREATED_WEBHOOK_URL`
+- `N8N_WEBHOOK_URL`
+- `CRM_WEBHOOK_URL`
+- `INTERNAL_NOTIFY_WEBHOOK_URL`
+
+## Hooks de automatización
+
+El sistema envía el payload estructurado de cada lead a los webhooks configurados al momento de crear el registro.
+
+También puedes re-disparar manualmente el envío desde:
+
+- `POST /integraciones/lead/{lead}/dispatch`
 
 ## Documentación del proyecto
 

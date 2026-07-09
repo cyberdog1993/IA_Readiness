@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLeadRequest;
 use App\Models\Lead;
+use App\Services\LeadAutomationDispatcher;
 use App\Services\MaturityCalculator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
@@ -23,13 +24,15 @@ class LeadController extends Controller
         ]);
     }
 
-    public function store(StoreLeadRequest $request, MaturityCalculator $calculator): RedirectResponse
+    public function store(StoreLeadRequest $request, MaturityCalculator $calculator, LeadAutomationDispatcher $dispatcher): RedirectResponse
     {
         $lead = $calculator->updateLead(new Lead(), $request->validated());
         $lead->update([
             'status' => 'new',
             'consulting_requested_at' => Carbon::now(),
         ]);
+
+        $dispatcher->dispatch($lead);
 
         return redirect()->route('diagnosis.show', $lead);
     }

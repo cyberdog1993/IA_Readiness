@@ -11,6 +11,12 @@ return [
     'linkedin' => [
         'insight_tag' => env('LINKEDIN_INSIGHT_TAG'),
     ],
+    'automation' => [
+        'lead_created_webhook' => env('LEAD_CREATED_WEBHOOK_URL'),
+        'n8n_webhook' => env('N8N_WEBHOOK_URL'),
+        'crm_webhook' => env('CRM_WEBHOOK_URL'),
+        'internal_notify_webhook' => env('INTERNAL_NOTIFY_WEBHOOK_URL'),
+    ],
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],
