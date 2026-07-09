@@ -35,5 +35,19 @@ class ExportController extends Controller
     {
         return $this->exports->downloadWord($lead);
     }
-}
 
+    public function clientPdf(Lead $lead): BinaryFileResponse
+    {
+        return $this->exports->downloadClientPdf($lead);
+    }
+
+    public function internalPdf(Lead $lead): BinaryFileResponse
+    {
+        return $this->exports->downloadInternalPdf($lead);
+    }
+
+    public function automationPayload(Lead $lead): JsonResponse
+    {
+        return response()->json($this->exports->toAutomationPayload($lead), 200, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+}

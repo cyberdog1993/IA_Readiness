@@ -32,11 +32,9 @@ class MaturityCalculator
 
         $score = (int) round(max(0, min(100, $weighted)));
         $level = match (true) {
-            $score <= 30 => 'Bajo',
-            $score <= 55 => 'Inicial',
-            $score <= 75 => 'Intermedio',
-            $score <= 90 => 'Avanzado',
-            default => 'Listo para automatizar',
+            $score <= 39 => 'Bajo',
+            $score <= 69 => 'Medio',
+            default => 'Alto',
         };
 
         [$diagnosis, $opportunities, $recommendation] = $this->composeNarrative($score, $level, $data);
@@ -122,11 +120,9 @@ class MaturityCalculator
     private function composeNarrative(int $score, string $level, array $data): array
     {
         $diagnosis = match ($level) {
-            'Bajo' => 'La operación muestra baja preparación para automatizar; conviene ordenar procesos y datos antes de invertir en automatización compleja.',
-            'Inicial' => 'Existen señales tempranas de automatización, pero todavía hay dependencia manual alta y poca estandarización.',
-            'Intermedio' => 'Hay una base viable para automatización selectiva con quick wins y mejora de integraciones.',
-            'Avanzado' => 'La organización está cerca de capturar valor rápido con automatizaciones asistidas por IA, n8n y MCP.',
-            default => 'La organización está lista para automatizar con un enfoque por oleadas, gobierno y medición de impacto.',
+            'Bajo' => 'La operación requiere ordenar procesos, datos y criterios de trabajo antes de automatizar con mayor alcance.',
+            'Medio' => 'Existen señales claras de mejora; conviene automatizar por partes con foco en impacto y reducción de riesgo.',
+            'Alto' => 'La organización está lista para automatizar con IA, integraciones y automatización asistida por agentes.',
         };
 
         $opportunities = [];

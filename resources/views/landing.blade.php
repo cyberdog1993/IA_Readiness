@@ -1,8 +1,8 @@
 @extends('layouts.public')
 
-@section('title', 'Diagnóstico de automatización - ¿Cómo está tu empresa?')
+@section('title', 'Diagnóstico de Madurez para Automatización con IA')
 @section('meta_description', 'Completa el diagnóstico por partes, obtiene un puntaje de madurez y recibe una salida comercial lista para consultoría.')
-@section('og_title', 'Diagnóstico de automatización - ¿Cómo está tu empresa?')
+@section('og_title', 'Diagnóstico de Madurez para Automatización con IA')
 @section('og_description', 'Formulario guiado para evaluar madurez de automatización, detectar oportunidades y preparar una propuesta comercial.')
 
 @section('content')
@@ -41,7 +41,7 @@
 
         <div class="space-y-5">
             <h1 class="max-w-3xl text-4xl font-semibold tracking-tight text-white md:text-6xl">
-                Diagnóstico de automatización - ¿Cómo está tu empresa?
+                Diagnóstico de Madurez para Automatización con IA
             </h1>
             <p class="max-w-2xl text-lg leading-8 text-slate-300">
                 Descubre dónde está tu operación hoy, qué se puede automatizar primero y cómo convertirlo en una propuesta concreta con impacto real.
@@ -111,8 +111,8 @@
 
         <div class="mb-6">
             <div class="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-slate-400">
-                <span>Muy bajo</span>
-                <span>Listo para automatizar</span>
+                <span>Bajo</span>
+                <span>Alto</span>
             </div>
             <div class="mt-2 h-3 overflow-hidden rounded-full bg-slate-800">
                 <div id="scoreBar" class="h-full w-0 rounded-full bg-gradient-to-r from-rose-500 via-amber-400 to-emerald-400 transition-all duration-300"></div>
@@ -405,21 +405,15 @@
         let level = 'Bajo';
         let diagnosis = 'Responde el primer bloque para empezar a ver la lectura de madurez.';
 
-        if (score <= 30) {
+        if (score <= 39) {
             level = 'Bajo';
-            diagnosis = 'La operación muestra baja preparación para automatizar; conviene ordenar procesos y datos antes de invertir en automatización compleja.';
-        } else if (score <= 55) {
-            level = 'Inicial';
-            diagnosis = 'Existen señales tempranas de automatización, pero todavía hay dependencia manual alta y poca estandarización.';
-        } else if (score <= 75) {
-            level = 'Intermedio';
-            diagnosis = 'Hay una base viable para automatización selectiva con quick wins y mejora de integraciones.';
-        } else if (score <= 90) {
-            level = 'Avanzado';
-            diagnosis = 'La organización está cerca de capturar valor rápido con automatizaciones asistidas por IA, n8n y MCP.';
+            diagnosis = 'La operación requiere ordenar procesos, datos y criterios de trabajo antes de automatizar con mayor alcance.';
+        } else if (score <= 69) {
+            level = 'Medio';
+            diagnosis = 'Existen señales claras de mejora; conviene automatizar por partes con foco en impacto y reducción de riesgo.';
         } else {
-            level = 'Listo para automatizar';
-            diagnosis = 'La organización está lista para automatizar con un enfoque por oleadas, gobierno y medición de impacto.';
+            level = 'Alto';
+            diagnosis = 'La organización está lista para automatizar con IA, integraciones y automatización asistida por agentes.';
         }
 
         return { score, level, diagnosis };
@@ -433,16 +427,12 @@
         diagnosisPreview.textContent = diagnosis;
         scoreBar.className = 'h-full rounded-full transition-all duration-300';
 
-        if (score <= 30) {
+        if (score <= 39) {
             scoreBar.classList.add('bg-rose-500');
-        } else if (score <= 55) {
+        } else if (score <= 69) {
             scoreBar.classList.add('bg-amber-400');
-        } else if (score <= 75) {
-            scoreBar.classList.add('bg-sky-400');
-        } else if (score <= 90) {
-            scoreBar.classList.add('bg-emerald-400');
         } else {
-            scoreBar.classList.add('bg-cyan-300');
+            scoreBar.classList.add('bg-emerald-400');
         }
     };
 
@@ -467,6 +457,10 @@
         stepCounter.textContent = currentStep.toString();
         stepBar.style.width = `${(currentStep / totalSteps) * 100}%`;
         hiddenStep.value = currentStep.toString();
+        window.consultoresTrackEvent?.('step_view', {
+            step: currentStep,
+            form: form.dataset.trackForm,
+        });
     };
 
     prevButton?.addEventListener('click', () => showStep(currentStep - 1));

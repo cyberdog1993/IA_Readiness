@@ -6,12 +6,14 @@ use App\Exports\DiagnosisWorkbookExport;
 use App\Models\Lead;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
-use PhpOffice\PhpWord\PhpWord;
-use PhpOffice\PhpWord\IOFactory;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class DiagnosisExportService
 {
+    public function __construct(private readonly SimplePdfWriter $pdfWriter)
+    {
+    }
+
     public function toArray(Lead $lead): array
     {
         $lead->loadMissing([
@@ -37,6 +39,10 @@ class DiagnosisExportService
                 'diagnosis_brief' => $lead->diagnosis_brief,
                 'opportunities_summary' => $lead->opportunities_summary,
                 'recommendation' => $lead->recommendation,
+                'lead_score_label' => $lead->leadScoreLabel(),
+                'next_step' => $lead->nextStepRecommendation(),
+                'strengths' => $lead->strengthsSummary(),
+                'risks' => $lead->risksSummary(),
             ],
             'processes' => $lead->processes()->with([
                 'steps',
@@ -107,6 +113,7 @@ class DiagnosisExportService
                 'status',
                 'estimated_hours',
             ])))->values(),
+            'automation_payload' => $this->toAutomationPayload($lead),
         ];
     }
 
@@ -197,6 +204,8 @@ class DiagnosisExportService
         $markdown[] = '## Datos para propuesta';
         $markdown[] = '- Madurez: '.$lead->maturity_score.'/100';
         $markdown[] = '- Nivel: '.$lead->maturity_level;
+        $markdown[] = '- Lead scoring: '.$lead->leadScoreLabel();
+        $markdown[] = '- Próximo paso: '.$lead->nextStepRecommendation();
 
         return implode("\n", $markdown);
     }
@@ -206,9 +215,29 @@ class DiagnosisExportService
         return Excel::download(new DiagnosisWorkbookExport($lead), 'diagnostico-'.$lead->ruc.'.xlsx');
     }
 
+    public function downloadClientPdf(Lead $lead): BinaryFileResponse
+    {
+        return $this->pdfWriter->download(
+            'diagnostico-cliente-'.$lead->ruc.'.pdf',
+            'Informe del cliente - '.$lead->company_name,
+            $this->clientPdfLines($lead)
+        );
+    }
+
+    public function downloadInternalPdf(Lead $lead): BinaryFileResponse
+    {
+        return $this->pdfWriter->download(
+            'diagnostico-interno-'.$lead->ruc.'.pdf',
+            'Informe interno - '.$lead->company_name,
+            $this->internalPdfLines($lead)
+        );
+    }
+
     public function downloadWord(Lead $lead): BinaryFileResponse
     {
-        $phpWord = new PhpWord();
+        $path = storage_path('app/diagnostico-'.$lead->ruc.'.docx');
+
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
         $section = $phpWord->addSection();
         $section->addTitle('Diagnóstico de Automatización - '.$lead->company_name, 1);
         $section->addText('Resumen ejecutivo');
@@ -218,10 +247,131 @@ class DiagnosisExportService
         $section->addText('Recomendación');
         $section->addText($lead->recommendation ?? '');
 
-        $path = storage_path('app/diagnostico-'.$lead->ruc.'.docx');
-        $writer = IOFactory::createWriter($phpWord, 'Word2007');
+        $writer = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $writer->save($path);
 
         return response()->download($path)->deleteFileAfterSend(true);
+    }
+
+    public function toAutomationPayload(Lead $lead): array
+    {
+        $lead->loadMissing([
+            'processes.steps',
+            'processes.systems',
+            'processes.problems',
+            'processes.opportunities',
+            'processes.evaluations',
+            'processes.backlogItems',
+        ]);
+
+        return [
+            'summary' => [
+                'company_name' => $lead->company_name,
+                'ruc' => $lead->ruc,
+                'industry' => $lead->industry,
+                'maturity_score' => $lead->maturity_score,
+                'maturity_level' => $lead->maturity_level,
+                'lead_score_label' => $lead->leadScoreLabel(),
+                'next_step' => $lead->nextStepRecommendation(),
+                'estimated_savings_hours' => $lead->estimatedSavingsHours(),
+            ],
+            'narrative' => [
+                'diagnosis_brief' => $lead->diagnosis_brief,
+                'strengths' => $lead->strengthsSummary(),
+                'opportunities' => $lead->opportunities_summary,
+                'risks' => $lead->risksSummary(),
+                'recommendation' => $lead->recommendation,
+            ],
+            'processes' => $lead->processes->map(fn ($process) => [
+                'name' => $process->name,
+                'area' => $process->area,
+                'owner' => $process->owner,
+                'frequency' => $process->frequency,
+                'objective' => $process->objective,
+                'expected_result' => $process->expected_result,
+                'steps' => $process->steps->map(fn ($step) => [
+                    'step_number' => $step->step_number,
+                    'description' => $step->description,
+                    'owner' => $step->owner,
+                    'system_used' => $step->system_used,
+                    'input' => $step->input,
+                    'output' => $step->output,
+                    'estimated_minutes' => $step->estimated_minutes,
+                    'automatable' => $step->automatable,
+                ]),
+            ]),
+            'routing' => [
+                'whatsapp' => 'https://wa.me/51941108521',
+                'web' => 'https://www.consultores-it.pe',
+                'portal_login' => route('portal.login'),
+                'diagnosis' => route('diagnosis.show', $lead),
+            ],
+        ];
+    }
+
+    private function clientPdfLines(Lead $lead): array
+    {
+        return [
+            'Resumen ejecutivo',
+            'Cliente: '.$lead->company_name,
+            'Puntaje: '.$lead->maturity_score.'/100',
+            'Nivel: '.$lead->maturity_level,
+            'Lead scoring: '.$lead->leadScoreLabel(),
+            '',
+            'Fortalezas',
+            ...array_map(fn ($item) => '- '.$item, $lead->strengthsSummary()),
+            '',
+            'Oportunidades',
+            '- '.$lead->opportunities_summary,
+            '',
+            'Riesgos detectados',
+            ...array_map(fn ($item) => '- '.$item, $lead->risksSummary()),
+            '',
+            'Próximo paso recomendado',
+            $lead->nextStepRecommendation(),
+        ];
+    }
+
+    private function internalPdfLines(Lead $lead): array
+    {
+        $lead->loadMissing([
+            'processes.steps',
+            'processes.systems',
+            'processes.problems',
+            'processes.opportunities',
+            'processes.evaluations',
+            'processes.backlogItems',
+        ]);
+
+        $lines = [
+            'Informe interno del consultor',
+            'Cliente: '.$lead->company_name,
+            'Lead scoring: '.$lead->leadScoreLabel(),
+            'Próximo paso: '.$lead->nextStepRecommendation(),
+            '',
+            'Resumen ejecutivo',
+            $lead->diagnosis_brief ?? '',
+            '',
+            'Fortalezas',
+            ...array_map(fn ($item) => '- '.$item, $lead->strengthsSummary()),
+            '',
+            'Riesgos',
+            ...array_map(fn ($item) => '- '.$item, $lead->risksSummary()),
+            '',
+            'Procesos',
+        ];
+
+        foreach ($lead->processes as $process) {
+            $lines[] = '- '.$process->name.' / '.$process->area;
+            foreach ($process->steps as $step) {
+                $lines[] = '  Paso '.$step->step_number.': '.$step->description;
+            }
+        }
+
+        $lines[] = '';
+        $lines[] = 'Recomendación técnica';
+        $lines[] = $lead->recommendation ?? '';
+
+        return $lines;
     }
 }

@@ -14,7 +14,7 @@ Route::get('/login', function () {
 })->name('login');
 Route::get('/acceso-cliente', [ClientPortalAuthController::class, 'create'])->name('portal.login');
 Route::redirect('/cliente', '/acceso-cliente');
-Route::post('/acceso-cliente', [ClientPortalAuthController::class, 'store'])->name('portal.login.store');
+Route::post('/acceso-cliente', [ClientPortalAuthController::class, 'store'])->middleware('throttle:10,1')->name('portal.login.store');
 Route::post('/logout', function () {
     Auth::logout();
 
@@ -23,7 +23,7 @@ Route::post('/logout', function () {
 
     return redirect()->route('landing');
 })->middleware('auth')->name('logout');
-Route::post('/lead-submissions', [LeadController::class, 'store'])->name('leads.store');
+Route::post('/lead-submissions', [LeadController::class, 'store'])->middleware('throttle:5,1')->name('leads.store');
 Route::get('/diagnostico/{lead}', [LeadController::class, 'show'])->name('diagnosis.show');
 Route::redirect('/levantamiento', '/levantamiento/cliente');
 Route::view('/privacidad', 'legal.privacy')->name('privacy');
@@ -38,4 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/exports/lead/{lead}/json', [ExportController::class, 'json'])->name('exports.json');
     Route::get('/exports/lead/{lead}/excel', [ExportController::class, 'excel'])->name('exports.excel');
     Route::get('/exports/lead/{lead}/word', [ExportController::class, 'word'])->name('exports.word');
+    Route::get('/exports/lead/{lead}/cliente-pdf', [ExportController::class, 'clientPdf'])->name('exports.client-pdf');
+    Route::get('/exports/lead/{lead}/interno-pdf', [ExportController::class, 'internalPdf'])->name('exports.internal-pdf');
+    Route::get('/integraciones/lead/{lead}/payload', [ExportController::class, 'automationPayload'])->name('exports.payload');
 });

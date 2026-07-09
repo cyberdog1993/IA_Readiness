@@ -7,6 +7,8 @@
 @php
     $recommendedProcesses = $lead->recommendedProcesses();
     $estimatedSavings = $lead->estimatedSavingsHours();
+    $strengths = $lead->strengthsSummary();
+    $risks = $lead->risksSummary();
 @endphp
 
 <div class="space-y-8">
@@ -27,13 +29,34 @@
 
     <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p class="text-sm text-slate-400">Principales oportunidades</p>
+            <p class="text-sm text-slate-400">Fortalezas</p>
+            <ul class="mt-2 space-y-2 text-slate-100">
+                @foreach ($strengths as $strength)
+                    <li>• {{ $strength }}</li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p class="text-sm text-slate-400">Oportunidades de automatización</p>
             <p class="mt-2 text-slate-100">{{ $lead->opportunities_summary }}</p>
         </div>
         <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
-            <p class="text-sm text-slate-400">Recomendación</p>
-            <p class="mt-2 text-slate-100">{{ $lead->recommendation }}</p>
+            <p class="text-sm text-slate-400">Riesgos detectados</p>
+            <ul class="mt-2 space-y-2 text-slate-100">
+                @foreach ($risks as $risk)
+                    <li>• {{ $risk }}</li>
+                @endforeach
+            </ul>
         </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p class="text-sm text-slate-400">Próximo paso</p>
+            <p class="mt-2 text-slate-100">{{ $lead->nextStepRecommendation() }}</p>
+            <p class="mt-4 text-sm text-slate-400">Lead scoring</p>
+            <p class="mt-1 text-lg font-semibold text-white">{{ $lead->leadScoreLabel() }}</p>
+        </div>
+    </section>
+
+    <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
             <p class="text-sm text-slate-400">Procesos recomendados</p>
             <ul class="mt-2 space-y-2 text-slate-100">
@@ -45,9 +68,10 @@
         <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
             <p class="text-sm text-slate-400">Ahorro estimado</p>
             <p class="mt-2 text-3xl font-semibold text-white">{{ number_format($estimatedSavings, 1) }} h/semana</p>
-            <button type="button" data-open-consultancy-modal class="mt-4 inline-flex rounded-xl bg-emerald-500 px-4 py-2 font-semibold text-white transition hover:bg-emerald-400">
-                Agendar reunión
-            </button>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+            <p class="text-sm text-slate-400">Recomendación</p>
+            <p class="mt-2 text-slate-100">{{ $lead->recommendation }}</p>
         </div>
     </section>
 
@@ -58,6 +82,8 @@
                 <a class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white" href="{{ route('exports.json', $lead) }}">Exportar JSON</a>
                 <a class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white" href="{{ route('exports.excel', $lead) }}">Exportar Excel</a>
                 <a class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white" href="{{ route('exports.word', $lead) }}">Exportar Word</a>
+                <a class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white" href="{{ route('exports.client-pdf', $lead) }}">Informe cliente PDF</a>
+                <a class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white" href="{{ route('exports.internal-pdf', $lead) }}">Informe interno PDF</a>
                 <a class="rounded-xl border border-cyan-300/30 bg-cyan-500/10 px-4 py-2 text-sm text-cyan-100" href="https://wa.me/51941108521?text=Hola%2C%20quiero%20agendar%20una%20reuni%C3%B3n%20sobre%20mi%20diagn%C3%B3stico" target="_blank" rel="noreferrer">Agendar reunión</a>
             </div>
         @endauth

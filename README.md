@@ -4,11 +4,14 @@ Plataforma interna/comercial para Consultores IT orientada a diagnóstico, preve
 
 ## Incluye
 
-- Landing pública con pre-formulario.
-- Cálculo de nota de madurez sobre 100.
+- Landing comercial pública separada del formulario.
+- Cálculo de madurez sobre 100 y salida comercial inmediata.
 - Registro de clientes, procesos, pasos AS-IS, sistemas, documentos, problemas, oportunidades, evaluación interna y backlog.
 - Panel interno con Filament.
-- Exportación a Markdown, JSON, Excel y Word.
+- Exportación a Markdown, JSON, Excel, Word y PDF.
+- Payload estructurado para n8n, agentes y automatizaciones.
+- Página de privacidad y aviso de tratamiento de datos.
+- Tracking opcional para Google Analytics, Plausible, Meta Pixel y LinkedIn Insight Tag.
 - Datos demo de NUVO.
 - Preparado para Docker, PostgreSQL y Redis opcional.
 
@@ -54,8 +57,12 @@ docker compose --profile tools run --rm node npm run build
 ## Rutas principales
 
 - Landing pública: `/`
+- Diagnóstico público: `/diagnostico`
 - Resultado del diagnóstico: `/diagnostico/{lead}`
+- Portal cliente: `/cliente`
 - Panel interno: `/admin`
+- Privacidad: `/privacidad`
+- Tratamiento de datos: `/tratamiento-datos`
 
 ## Exportaciones
 
@@ -65,6 +72,18 @@ Las exportaciones están disponibles solo para usuarios autenticados:
 - JSON: `/exports/lead/{lead}/json`
 - Excel: `/exports/lead/{lead}/excel`
 - Word: `/exports/lead/{lead}/word`
+- PDF cliente: `/exports/lead/{lead}/cliente-pdf`
+- PDF interno: `/exports/lead/{lead}/interno-pdf`
+- Payload para IA/n8n: `/integraciones/lead/{lead}/payload`
+
+## Variables opcionales
+
+Para activar analítica agregada, define estas variables en `.env`:
+
+- `GOOGLE_ANALYTICS_ID`
+- `PLAUSIBLE_DOMAIN`
+- `META_PIXEL_ID`
+- `LINKEDIN_INSIGHT_TAG`
 
 ## Documentación del proyecto
 
@@ -86,5 +105,5 @@ Las exportaciones están disponibles solo para usuarios autenticados:
 
 ## Nota sobre el primer entregable
 
-La primera versión deja preparada la arquitectura, el dominio, el formulario público, el panel Filament, el cálculo de madurez y el exportador Markdown/JSON/Excel/Word.
-Cuando instales dependencias reales podrás ejecutar el proyecto completo y ampliar el panel con relaciones y acciones avanzadas.
+La primera versión deja preparada la arquitectura, el dominio, el formulario público, el panel Filament, el cálculo de madurez, la salida comercial inmediata y los exportadores Markdown/JSON/Excel/Word/PDF.
+También incluye estructura para automatizaciones posteriores con n8n y agentes de IA.

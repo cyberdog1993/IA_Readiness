@@ -1,9 +1,9 @@
 @extends('layouts.public')
 
-@section('title', 'Diagnóstico de automatización - ¿Cómo está tu empresa?')
-@section('meta_description', 'Descubre si tu empresa está lista para automatizar, qué procesos generan más pérdida de tiempo y cuál es el siguiente paso comercial.')
-@section('og_title', 'Diagnóstico de automatización - ¿Cómo está tu empresa?')
-@section('og_description', 'Un diagnóstico comercial y técnico para identificar oportunidades de automatización, ahorrar horas y preparar propuestas reales.')
+@section('title', 'Diagnóstico de Madurez para Automatización con IA')
+@section('meta_description', 'Diagnóstico comercial y técnico para evaluar madurez de automatización, detectar oportunidades y preparar una propuesta de consultoría.')
+@section('og_title', 'Diagnóstico de Madurez para Automatización con IA')
+@section('og_description', 'Evalúa la madurez de tu operación, identifica oportunidades y recibe una salida comercial lista para consultoría.')
 
 @section('content')
 <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
@@ -16,7 +16,7 @@
         <div class="space-y-5">
             <p class="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-200">Diagnóstico comercial y técnico</p>
             <h1 class="max-w-3xl text-4xl font-semibold tracking-tight text-white md:text-6xl">
-                Convierte procesos manuales en una ruta clara de automatización.
+                Diagnóstico de Madurez para Automatización con IA.
             </h1>
             <p class="max-w-2xl text-lg leading-8 text-slate-300">
                 Identificamos cuellos de botella, medimos la madurez de tu operación y te devolvemos una salida comercial lista para consultoría, preventa y ejecución.

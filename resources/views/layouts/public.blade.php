@@ -13,6 +13,39 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="{{ asset('images/consultores-it-logo.jpeg') }}">
+    <script type="application/ld+json">
+        {!! json_encode([
+            '@context' => 'https://schema.org',
+            '@type' => 'Organization',
+            'name' => 'Consultores IT',
+            'url' => 'https://www.consultores-it.pe',
+            'logo' => asset('images/consultores-it-logo.jpeg'),
+            'contactPoint' => [
+                [
+                    '@type' => 'ContactPoint',
+                    'contactType' => 'sales',
+                    'email' => 'julio.valdez@consultores.it',
+                    'telephone' => '+51 941 108 521',
+                ],
+            ],
+            'sameAs' => [
+                'https://www.consultores-it.pe',
+            ],
+            'hasOfferCatalog' => [
+                '@type' => 'OfferCatalog',
+                'name' => 'Diagnóstico de automatización',
+                'itemListElement' => [
+                    [
+                        '@type' => 'Offer',
+                        'itemOffered' => [
+                            '@type' => 'Service',
+                            'name' => 'Diagnóstico de Madurez para Automatización con IA',
+                        ],
+                    ],
+                ],
+            ],
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100">
