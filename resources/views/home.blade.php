@@ -8,8 +8,7 @@
 @section('content')
 <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
     <section class="space-y-8">
-        <div class="inline-flex items-center gap-3 rounded-full border border-cyan-400/20 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-100">
-            <img src="{{ asset('images/consultores-it-logo.jpeg') }}" alt="Consultores IT" class="h-8 w-8 rounded-full bg-white/90 object-cover p-0.5">
+        <div class="inline-flex items-center rounded-full border border-cyan-400/20 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-100">
             Consultores IT Automation Platform
         </div>
 
