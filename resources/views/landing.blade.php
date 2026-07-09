@@ -155,9 +155,6 @@
             <a href="{{ route('diagnosis.form') }}" data-track-event="cta_request_diagnosis" class="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3 font-bold text-slate-950 shadow-xl shadow-cyan-950/30">
                 Solicitar diagnóstico
             </a>
-            <a href="https://www.consultores-it.pe" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-3 font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
-                Visitar web principal
-            </a>
         </div>
     </section>
 
@@ -183,7 +180,7 @@
                 </div>
                 <div class="rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3">
                     <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Avance</p>
-                    <p id="progressText" class="mt-1 text-sm font-semibold text-white">25% completado — tiempo estimado restante: 8 minutos</p>
+                    <p id="progressText" class="mt-1 text-sm font-semibold text-white">25% completado — tiempo restante aproximado: 8 minutos</p>
                     <p id="stepText" class="mt-2 text-xs uppercase tracking-[0.2em] text-cyan-200">Paso 1 de 4</p>
                 </div>
                 <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
@@ -493,7 +490,7 @@
         const remaining = Math.max(0, Math.round(((totalSteps - currentStep) / totalSteps) * totalMinutes));
 
         stepText.textContent = `Paso ${currentStep} de ${totalSteps}`;
-        progressText.textContent = `${percent}% completado — tiempo estimado restante: ${remaining} minutos`;
+        progressText.textContent = `${percent}% completado — tiempo restante aproximado: ${remaining} minutos`;
         levelLabel.textContent = level;
         scoreBar.dataset.level = level;
     };

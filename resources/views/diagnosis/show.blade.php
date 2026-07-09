@@ -20,7 +20,7 @@
 
 @if (session('status') === 'datos-completados')
     <div class="mb-6 rounded-3xl border border-emerald-400/20 bg-emerald-500/10 px-5 py-4 text-sm text-emerald-100">
-        Gracias. Ya puedes descargar el informe completo y continuar con la propuesta preliminar.
+        Datos completados. Ya puedes descargar el informe completo y continuar con la propuesta preliminar.
     </div>
 @elseif (session('status') === 'propuesta-generada')
     <div class="mb-6 rounded-3xl border border-cyan-400/20 bg-cyan-500/10 px-5 py-4 text-sm text-cyan-100">

@@ -10,7 +10,7 @@
     <div class="space-y-4 text-sm leading-7 text-slate-300">
         <p>Recopilamos datos de contacto y diagnóstico para evaluar la madurez de automatización, preparar propuestas y brindar seguimiento comercial y técnico.</p>
         <p>Los datos no se comparten con terceros ajenos al servicio, salvo obligación legal o necesidad operativa para ejecutar la consultoría.</p>
-        <p>Puedes solicitar actualización, acceso o eliminación escribiendo a <a class="text-cyan-200 underline" href="mailto:julio.valdez@consultores.it">julio.valdez@consultores.it</a>.</p>
+        <p>Puedes solicitar actualización, acceso o eliminación escribiendo por WhatsApp o mediante la web principal de Consultores IT.</p>
     </div>
 </div>
 @endsection

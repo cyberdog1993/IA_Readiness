@@ -10,11 +10,8 @@
 
                 <div class="space-y-4">
                     <h1 class="max-w-md text-4xl font-semibold tracking-tight text-white">
-                        Panel interno para diagnóstico, preventa y automatización.
+                        Inicie sesión con sus credenciales.
                     </h1>
-                    <p class="max-w-xl text-base leading-7 text-slate-300">
-                        Accede para gestionar prospectos, clientes, procesos, exportaciones y tareas técnicas desde una sola plataforma.
-                    </p>
                 </div>
 
                 <div class="grid gap-4 sm:grid-cols-3">
@@ -44,8 +41,7 @@
         <section class="rounded-[2rem] border border-white/10 bg-slate-900/80 p-8 shadow-2xl shadow-blue-950/30 backdrop-blur">
             <div class="mb-6 space-y-2">
                 <p class="text-xs font-semibold uppercase tracking-[0.28em] text-slate-400">Acceso</p>
-                <h2 class="text-2xl font-semibold text-white">Ingresa a tu cuenta</h2>
-                <p class="text-sm leading-6 text-slate-400">Acceso restringido para usuarios autorizados del equipo interno.</p>
+                <h2 class="text-2xl font-semibold text-white">Ingrese sus credenciales</h2>
             </div>
 
             {{ \Filament\Support\Facades\FilamentView::renderHook(\Filament\View\PanelsRenderHook::AUTH_LOGIN_FORM_BEFORE, scopes: $this->getRenderHookScopes()) }}

@@ -79,10 +79,7 @@
 
         <div class="flex flex-wrap gap-3">
             <a href="{{ route('diagnosis.form') }}" data-track-event="cta_request_diagnosis" class="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3 font-bold text-slate-950 shadow-xl shadow-cyan-950/30">
-                Solicitar diagnóstico
-            </a>
-            <a href="https://www.consultores-it.pe" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-3 font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
-                Visitar web principal
+                Iniciar diagnóstico
             </a>
         </div>
     </section>
@@ -101,9 +98,6 @@
         <div class="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
             <p class="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200">Contacto</p>
             <div class="mt-4 space-y-3 text-sm">
-                <a href="mailto:julio.valdez@consultores.it" class="block rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-white transition hover:border-cyan-300/40 hover:bg-white/10">
-                    julio.valdez@consultores.it
-                </a>
                 <a href="https://wa.me/51941108521" target="_blank" rel="noreferrer" class="block rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3 text-white transition hover:border-cyan-300/40 hover:bg-white/10">
                     WhatsApp +51 941 108 521
                 </a>
@@ -116,7 +110,7 @@
                 Si quieres empezar la consultoría, abre el diagnóstico. El formulario está pensado para avanzar por partes y capturar la información necesaria sin perder foco comercial.
             </p>
             <a href="{{ route('diagnosis.form') }}" data-track-event="cta_request_diagnosis_secondary" class="mt-4 inline-flex w-full items-center justify-center rounded-2xl bg-white px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-100">
-                Abrir diagnóstico
+                Iniciar diagnóstico
             </a>
         </div>
     </aside>

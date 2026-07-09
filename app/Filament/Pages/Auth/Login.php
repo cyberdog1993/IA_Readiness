@@ -11,12 +11,12 @@ class Login extends BaseLogin
 
     public function getHeading(): string
     {
-        return 'Acceso interno';
+        return 'Inicie sesión con sus credenciales.';
     }
 
     public function getSubHeading(): ?string
     {
-        return 'Diagnóstico, preventa y ejecución en un solo lugar.';
+        return null;
     }
 
     protected function getEmailFormComponent(): TextInput
