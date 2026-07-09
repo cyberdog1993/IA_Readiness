@@ -26,6 +26,9 @@ Route::post('/logout', function () {
 })->middleware('auth')->name('logout');
 Route::post('/lead-submissions', [LeadController::class, 'store'])->middleware('throttle:5,1')->name('leads.store');
 Route::get('/diagnostico/{lead}', [LeadController::class, 'show'])->name('diagnosis.show');
+Route::post('/diagnostico/{lead}/contacto', [LeadController::class, 'updateContact'])->middleware('throttle:10,1')->name('diagnosis.contact.update');
+Route::get('/diagnostico/{lead}/informe', [LeadController::class, 'clientPdf'])->name('diagnosis.client-pdf');
+Route::post('/diagnostico/{lead}/propuesta-preliminar', [LeadController::class, 'proposal'])->middleware('throttle:5,1')->name('diagnosis.proposal');
 Route::redirect('/levantamiento', '/levantamiento/cliente');
 Route::view('/privacidad', 'legal.privacy')->name('privacy');
 Route::view('/tratamiento-datos', 'legal.data-processing')->name('data-processing');

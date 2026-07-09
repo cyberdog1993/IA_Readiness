@@ -1,9 +1,9 @@
 @extends('layouts.public')
 
-@section('title', 'Diagnóstico de Madurez para Automatización con IA')
-@section('meta_description', 'Diagnóstico comercial y técnico para evaluar madurez de automatización, detectar oportunidades y preparar una propuesta de consultoría.')
-@section('og_title', 'Diagnóstico de Madurez para Automatización con IA')
-@section('og_description', 'Evalúa la madurez de tu operación, identifica oportunidades y recibe una salida comercial lista para consultoría.')
+@section('title', 'Evaluación de Madurez para Automatización Inteligente')
+@section('meta_description', 'Descubra en 10 minutos qué procesos de su empresa pueden automatizarse con IA y cuál sería el ahorro potencial.')
+@section('og_title', 'Evaluación de Madurez para Automatización Inteligente')
+@section('og_description', 'Diagnóstico comercial y técnico para detectar oportunidades de automatización, estimar ahorro y preparar una propuesta.')
 
 @section('content')
 <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
@@ -13,13 +13,26 @@
         </div>
 
         <div class="space-y-5">
-            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-200">Diagnóstico comercial y técnico</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-200">AI Automation Assessment by Consultores IT</p>
             <h1 class="max-w-3xl text-4xl font-semibold tracking-tight text-white md:text-6xl">
-                Diagnóstico de Madurez para Automatización con IA.
+                Descubra en 10 minutos qué procesos de su empresa pueden automatizarse con IA y cuál sería el ahorro potencial.
             </h1>
             <p class="max-w-2xl text-lg leading-8 text-slate-300">
-                Identificamos cuellos de botella, medimos la madurez de tu operación y te devolvemos una salida comercial lista para consultoría, preventa y ejecución.
+                Obtenga un resultado preliminar, un puntaje de madurez, oportunidades priorizadas y una base comercial lista para avanzar con consultoría.
             </p>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            @foreach ([
+                '10 minutos',
+                'Sin costo',
+                'Informe personalizado',
+                'Recomendaciones con IA',
+            ] as $badge)
+                <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-950/20">
+                    {{ $badge }}
+                </div>
+            @endforeach
         </div>
 
         <div class="grid gap-4 sm:grid-cols-3">

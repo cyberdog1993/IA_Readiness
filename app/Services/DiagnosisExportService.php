@@ -30,12 +30,16 @@ class DiagnosisExportService
                 'company_name' => $lead->company_name,
                 'ruc' => $lead->ruc,
                 'industry' => $lead->industry,
+                'report_date' => $lead->reportDateLabel(),
                 'contact_name' => $lead->contact_name,
                 'contact_role' => $lead->contact_role,
                 'email' => $lead->email,
                 'phone' => $lead->phone,
                 'maturity_score' => $lead->maturity_score,
                 'maturity_level' => $lead->maturity_level,
+                'annual_current_hours' => $lead->annualCurrentHours(),
+                'annual_potential_hours' => $lead->annualPotentialHours(),
+                'annual_savings_hours' => $lead->annualSavingsHours(),
                 'diagnosis_brief' => $lead->diagnosis_brief,
                 'opportunities_summary' => $lead->opportunities_summary,
                 'recommendation' => $lead->recommendation,
@@ -141,6 +145,9 @@ class DiagnosisExportService
         $markdown[] = '- Teléfono: '.$lead->phone;
         $markdown[] = '- Nota de madurez: '.$lead->maturity_score.'/100';
         $markdown[] = '- Nivel: '.$lead->maturity_level;
+        $markdown[] = '- Horas actuales al año: '.$lead->annualCurrentHours();
+        $markdown[] = '- Horas potenciales con automatización: '.$lead->annualPotentialHours();
+        $markdown[] = '- Ahorro estimado anual: '.$lead->annualSavingsHours();
         $markdown[] = '';
         $markdown[] = '## Proceso';
         $markdown[] = '- Proceso principal: '.($process?->name ?? 'Pendiente de levantar');
@@ -273,6 +280,9 @@ class DiagnosisExportService
                 'maturity_level' => $lead->maturity_level,
                 'lead_score_label' => $lead->leadScoreLabel(),
                 'next_step' => $lead->nextStepRecommendation(),
+                'annual_current_hours' => $lead->annualCurrentHours(),
+                'annual_potential_hours' => $lead->annualPotentialHours(),
+                'annual_savings_hours' => $lead->annualSavingsHours(),
                 'estimated_savings_hours' => $lead->estimatedSavingsHours(),
             ],
             'narrative' => [
@@ -317,6 +327,9 @@ class DiagnosisExportService
             'Puntaje: '.$lead->maturity_score.'/100',
             'Nivel: '.$lead->maturity_level,
             'Lead scoring: '.$lead->leadScoreLabel(),
+            'Horas actuales al año: '.$lead->annualCurrentHours(),
+            'Horas potenciales con automatización: '.$lead->annualPotentialHours(),
+            'Ahorro estimado anual: '.$lead->annualSavingsHours(),
             '',
             'Fortalezas',
             ...array_map(fn ($item) => '- '.$item, $lead->strengthsSummary()),
@@ -348,6 +361,9 @@ class DiagnosisExportService
             'Cliente: '.$lead->company_name,
             'Lead scoring: '.$lead->leadScoreLabel(),
             'Próximo paso: '.$lead->nextStepRecommendation(),
+            'Horas actuales al año: '.$lead->annualCurrentHours(),
+            'Horas potenciales con automatización: '.$lead->annualPotentialHours(),
+            'Ahorro estimado anual: '.$lead->annualSavingsHours(),
             '',
             'Resumen ejecutivo',
             $lead->diagnosis_brief ?? '',

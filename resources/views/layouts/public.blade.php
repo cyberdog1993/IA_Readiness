@@ -53,10 +53,12 @@
     <main class="mx-auto max-w-7xl px-6 py-10 pb-32">
         <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div class="flex items-center gap-4">
-                <img src="{{ asset('images/consultores-it-logo.jpeg') }}" alt="Consultores IT" class="h-14 w-14 rounded-2xl bg-white/90 object-cover p-1 shadow-lg shadow-slate-950/30" loading="eager">
+                @if (! request()->routeIs('home'))
+                    <img src="{{ asset('images/consultores-it-logo.jpeg') }}" alt="Consultores IT" class="h-14 w-14 rounded-2xl bg-white/90 object-cover p-1 shadow-lg shadow-slate-950/30" loading="eager">
+                @endif
                 <div>
                     <p class="text-xs uppercase tracking-[0.25em] text-cyan-200">Consultores IT</p>
-                    <p class="text-sm text-slate-300">Plataforma de diagnóstico y consultoría</p>
+                    <p class="text-sm text-slate-300">{{ request()->routeIs('home') ? 'Plataforma de Automatización' : 'Plataforma de diagnóstico y consultoría' }}</p>
                 </div>
             </div>
             @auth

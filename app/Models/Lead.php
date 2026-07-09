@@ -60,10 +60,33 @@ class Lead extends Model
 
     public function estimatedSavingsHours(): float
     {
-        $manualHours = (int) $this->manual_hours_weekly;
-        $score = (int) $this->maturity_score;
+        return round($this->annualSavingsHours() / 48, 1);
+    }
 
-        return round($manualHours * max(0.15, min(0.85, $score / 130)), 1);
+    public function annualCurrentHours(): float
+    {
+        return round(((int) $this->manual_hours_weekly) * 48, 1);
+    }
+
+    public function annualPotentialHours(): float
+    {
+        return round($this->annualCurrentHours() - $this->annualSavingsHours(), 1);
+    }
+
+    public function annualSavingsHours(): float
+    {
+        $rate = $this->automationSavingsRate();
+
+        return round($this->annualCurrentHours() * $rate, 1);
+    }
+
+    public function automationSavingsRate(): float
+    {
+        return match (true) {
+            $this->maturity_score <= 39 => 0.20,
+            $this->maturity_score <= 69 => 0.35,
+            default => 0.50,
+        };
     }
 
     public function recommendedProcesses(): array
@@ -153,6 +176,46 @@ class Lead extends Model
         }
 
         return $risks ?: ['Riesgo bajo detectado, pero se recomienda validar el levantamiento AS-IS.'];
+    }
+
+    public function contactDetailsComplete(): bool
+    {
+        return filled($this->contact_name)
+            && filled($this->contact_role)
+            && filled($this->email)
+            && filled($this->phone);
+    }
+
+    public function reportDateLabel(): string
+    {
+        return optional($this->created_at)->format('d/m/Y') ?? now()->format('d/m/Y');
+    }
+
+    public function automationCandidates(): array
+    {
+        $items = [];
+
+        if ((int) $this->manual_report_generation >= 50) {
+            $items[] = 'Reportes automáticos';
+        }
+
+        if ((int) $this->system_integration_level < 60) {
+            $items[] = 'Consolidación e integración de datos';
+        }
+
+        if ((int) $this->repetitive_process_count >= 10) {
+            $items[] = 'Tareas repetitivas';
+        }
+
+        if ((int) $this->excel_dependency >= 50) {
+            $items[] = 'Control documental y de Excel';
+        }
+
+        if ($items === []) {
+            $items[] = 'Primer piloto de automatización';
+        }
+
+        return array_values(array_unique($items));
     }
 
     public function client(): HasOne

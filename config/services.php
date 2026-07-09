@@ -17,6 +17,10 @@ return [
         'crm_webhook' => env('CRM_WEBHOOK_URL'),
         'internal_notify_webhook' => env('INTERNAL_NOTIFY_WEBHOOK_URL'),
     ],
+    'landing' => [
+        'video_url' => env('LANDING_VIDEO_URL'),
+        'video_mp4' => env('LANDING_VIDEO_MP4'),
+    ],
     'postmark' => [
         'token' => env('POSTMARK_TOKEN'),
     ],

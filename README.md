@@ -84,6 +84,8 @@ Para activar analítica agregada, define estas variables en `.env`:
 - `PLAUSIBLE_DOMAIN`
 - `META_PIXEL_ID`
 - `LINKEDIN_INSIGHT_TAG`
+- `LANDING_VIDEO_URL`
+- `LANDING_VIDEO_MP4`
 - `LEAD_CREATED_WEBHOOK_URL`
 - `N8N_WEBHOOK_URL`
 - `CRM_WEBHOOK_URL`

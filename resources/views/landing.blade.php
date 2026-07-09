@@ -1,9 +1,9 @@
 @extends('layouts.public')
 
-@section('title', 'Diagnóstico de Madurez para Automatización con IA')
-@section('meta_description', 'Completa el diagnóstico por partes, obtiene un puntaje de madurez y recibe una salida comercial lista para consultoría.')
-@section('og_title', 'Diagnóstico de Madurez para Automatización con IA')
-@section('og_description', 'Formulario guiado para evaluar madurez de automatización, detectar oportunidades y preparar una propuesta comercial.')
+@section('title', 'Evaluación de Madurez para Automatización Inteligente')
+@section('meta_description', 'Descubra en 10 minutos qué procesos de su empresa pueden automatizarse con IA y cuál sería el ahorro potencial.')
+@section('og_title', 'Evaluación de Madurez para Automatización Inteligente')
+@section('og_description', 'Diagnóstico comercial y técnico para detectar oportunidades de automatización, estimar ahorro y preparar una propuesta.')
 
 @section('content')
 @php
@@ -11,10 +11,6 @@
         'company_name' => old('company_name', ''),
         'ruc' => old('ruc', ''),
         'industry' => old('industry', ''),
-        'contact_name' => old('contact_name', ''),
-        'contact_role' => old('contact_role', ''),
-        'email' => old('email', ''),
-        'phone' => old('phone', ''),
         'company_size' => old('company_size', ''),
         'repetitive_process_count' => old('repetitive_process_count', 0),
         'manual_hours_weekly' => old('manual_hours_weekly', 0),
@@ -27,130 +23,194 @@
         'key_person_dependency' => old('key_person_dependency', 0),
         'automation_interest' => old('automation_interest', 0),
     ];
+
+    $videoUrl = config('services.landing.video_url');
+    $videoMp4 = config('services.landing.video_mp4');
 @endphp
 
-<div class="grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+<div class="grid gap-10 xl:grid-cols-[1.05fr_0.95fr] xl:items-start">
     <section class="space-y-8">
-        <div class="flex items-center gap-4 rounded-3xl border border-cyan-500/20 bg-cyan-500/10 px-5 py-4 shadow-lg shadow-cyan-950/20">
-            <img src="{{ asset('images/consultores-it-logo.jpeg') }}" alt="Consultores IT" class="h-16 w-16 rounded-2xl bg-white/90 object-cover p-1 shadow-lg shadow-slate-950/20" loading="eager">
-            <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200">Consultores IT</p>
-                <p class="mt-1 text-base font-medium text-white">Consultores IT Automation Platform</p>
-            </div>
+        <div class="inline-flex items-center rounded-full border border-cyan-400/20 bg-cyan-500/10 px-4 py-2 text-sm font-semibold text-cyan-100">
+            Evaluación de Madurez para Automatización Inteligente
         </div>
 
         <div class="space-y-5">
-            <h1 class="max-w-3xl text-4xl font-semibold tracking-tight text-white md:text-6xl">
-                Diagnóstico de Madurez para Automatización con IA
+            <p class="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-200">AI Automation Assessment by Consultores IT</p>
+            <h1 class="max-w-4xl text-4xl font-semibold tracking-tight text-white md:text-6xl">
+                Descubra en 10 minutos qué procesos de su empresa pueden automatizarse con IA y cuál sería el ahorro potencial.
             </h1>
-            <p class="max-w-2xl text-lg leading-8 text-slate-300">
-                Descubre dónde está tu operación hoy, qué se puede automatizar primero y cómo convertirlo en una propuesta concreta con impacto real.
+            <p class="max-w-3xl text-lg leading-8 text-slate-300">
+                Reciba un diagnóstico claro, un puntaje de madurez, recomendaciones con IA y una base comercial lista para consultoría, propuesta o ejecución.
             </p>
+        </div>
 
-            <div class="flex flex-wrap gap-3">
-                <a href="https://www.consultores-it.pe" target="_blank" rel="noreferrer" class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
-                    Visitar web principal
-                </a>
-                <a href="mailto:julio.valdez@consultores.it" class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
-                    Escribir por correo
-                </a>
-                <a href="https://wa.me/51941108521" target="_blank" rel="noreferrer" class="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
-                    Abrir WhatsApp
-                </a>
+        <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            @foreach ([
+                '10 minutos',
+                'Sin costo',
+                'Informe personalizado',
+                'Recomendaciones con IA',
+            ] as $badge)
+                <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-slate-950/20">
+                    {{ $badge }}
+                </div>
+            @endforeach
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-3">
+            <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+                <p class="text-sm text-slate-400">Problema</p>
+                <p class="mt-2 text-xl font-semibold text-white">Tareas manuales, reportes repetidos y trabajo disperso entre sistemas.</p>
+            </div>
+            <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+                <p class="text-sm text-slate-400">Solución</p>
+                <p class="mt-2 text-xl font-semibold text-white">Un diagnóstico guiado que prioriza automatización, ahorro y retorno.</p>
+            </div>
+            <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+                <p class="text-sm text-slate-400">Beneficio</p>
+                <p class="mt-2 text-xl font-semibold text-white">Sale con una lectura comercial útil para avanzar sin perder tiempo.</p>
+            </div>
+        </div>
+
+        <div class="grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+            <div class="rounded-3xl border border-cyan-400/15 bg-cyan-500/10 p-6">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">Ejemplos de automatización</p>
+                        <h2 class="mt-2 text-2xl font-semibold text-white">Procesos que suelen mostrar valor rápido</h2>
+                    </div>
+                </div>
+                <div class="mt-5 flex flex-wrap gap-2">
+                    @foreach ([
+                        'Generación de propuestas comerciales',
+                        'Reportes automáticos',
+                        'Órdenes de compra',
+                        'Atención al cliente',
+                        'Control documental',
+                        'Seguimiento comercial',
+                        'Consolidación de información en Excel',
+                        'Alertas operativas',
+                    ] as $item)
+                        <span class="rounded-full border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-slate-100">{{ $item }}</span>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+                <p class="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">Prueba social</p>
+                <p class="mt-3 text-sm leading-7 text-slate-300">
+                    Empresas de minería, energía, construcción, servicios e industria pueden usar este diagnóstico para identificar oportunidades de automatización.
+                </p>
+                <div class="mt-5 rounded-2xl border border-dashed border-white/15 bg-slate-950/30 p-5">
+                    <p class="text-sm font-semibold text-white">Espacio para logos</p>
+                    <p class="mt-2 text-sm text-slate-400">Si más adelante deseas mostrar clientes o aliados, este bloque ya está preparado.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">Video explicativo</p>
+                    <h2 class="mt-2 text-2xl font-semibold text-white">Espacio para un video de 45 a 60 segundos</h2>
+                </div>
+            </div>
+            <div class="mt-5 overflow-hidden rounded-3xl border border-white/10 bg-slate-950/60">
+                @if ($videoUrl)
+                    <iframe class="aspect-video w-full" src="{{ $videoUrl }}" title="Video explicativo" allowfullscreen></iframe>
+                @elseif ($videoMp4)
+                    <video class="aspect-video w-full" controls>
+                        <source src="{{ $videoMp4 }}" type="video/mp4">
+                    </video>
+                @else
+                    <div class="flex aspect-video items-center justify-center px-6 text-center">
+                        <div>
+                            <p class="text-sm uppercase tracking-[0.28em] text-cyan-200">Placeholder</p>
+                            <p class="mt-3 text-lg text-slate-300">Aquí puedes colocar un video de YouTube, un MP4 o dejar el espacio listo para más adelante.</p>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
 
         <div class="grid gap-4 sm:grid-cols-3">
             <div class="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-                <p class="text-sm text-slate-400">Primera lectura</p>
-                <p class="mt-2 text-3xl font-semibold text-white">Verás tu punto de partida</p>
-                <p class="mt-1 text-sm text-slate-400">Entiende rápido si tu operación está lista para automatizar o si conviene ordenar primero.</p>
+                <p class="text-sm text-slate-400">Lo que entrega</p>
+                <p class="mt-2 text-2xl font-semibold text-white">Resultado preliminar</p>
+                <p class="mt-1 text-sm text-slate-400">Puntaje, nivel, fortalezas, riesgos, oportunidades y próximos pasos.</p>
             </div>
             <div class="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-                <p class="text-sm text-slate-400">Ahorro posible</p>
-                <p class="mt-2 text-3xl font-semibold text-white">Detecta tiempo perdido</p>
-                <p class="mt-1 text-sm text-slate-400">Identifica tareas manuales, duplicidad de trabajo y oportunidades con retorno tangible.</p>
+                <p class="text-sm text-slate-400">Lo que ahorra</p>
+                <p class="mt-2 text-2xl font-semibold text-white">Tiempo y esfuerzo</p>
+                <p class="mt-1 text-sm text-slate-400">Permite ubicar dónde se pierde horas al año y qué automatizar primero.</p>
             </div>
             <div class="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur">
-                <p class="text-sm text-slate-400">Siguiente paso</p>
-                <p class="mt-2 text-3xl font-semibold text-white">Recibe una ruta clara</p>
-                <p class="mt-1 text-sm text-slate-400">Obtén un enfoque para consultoría, propuesta y ejecución sin perder tiempo.</p>
+                <p class="text-sm text-slate-400">Lo que sigue</p>
+                <p class="mt-2 text-2xl font-semibold text-white">Propuesta preliminar</p>
+                <p class="mt-1 text-sm text-slate-400">JSON, Markdown y ruta lista para n8n o un agente IA.</p>
             </div>
         </div>
 
-        <div class="rounded-3xl border border-cyan-400/10 bg-cyan-500/5 p-6">
-            <div class="flex flex-wrap items-center justify-between gap-4">
-                <div>
-                    <p class="text-sm uppercase tracking-[0.25em] text-cyan-200">Cómo se usa</p>
-                    <h2 class="mt-2 text-2xl font-semibold text-white">Formulario guiado en 4 pasos</h2>
-                </div>
-                <div class="rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3">
-                    <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Progreso</p>
-                    <p class="text-lg font-semibold text-white"><span id="stepCounter">1</span>/4</p>
-                </div>
-            </div>
-
-            <div class="mt-5 h-2 overflow-hidden rounded-full bg-white/10">
-                <div id="stepBar" class="h-full rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-emerald-400 transition-all duration-300" style="width: 25%"></div>
-            </div>
+        <div class="flex flex-wrap gap-3">
+            <a href="{{ route('diagnosis.form') }}" data-track-event="cta_request_diagnosis" class="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3 font-bold text-slate-950 shadow-xl shadow-cyan-950/30">
+                Solicitar diagnóstico
+            </a>
+            <a href="https://www.consultores-it.pe" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-6 py-3 font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                Visitar web principal
+            </a>
         </div>
-
     </section>
 
-    <section class="rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-2xl shadow-blue-950/40 backdrop-blur">
-        <div class="mb-6 flex items-start justify-between gap-4">
-            <div>
-                <h2 class="text-2xl font-semibold text-white">Pre-formulario público</h2>
-                <p class="mt-1 text-sm text-slate-400">Completa por partes. El puntaje se ajusta mientras avanzas.</p>
-            </div>
-            <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-right">
-                <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Puntaje</p>
-                <p id="scoreValue" class="text-3xl font-semibold text-white">0</p>
-            </div>
-        </div>
-
-        <div class="mb-6">
-            <div class="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-slate-400">
-                <span>Bajo</span>
-                <span>Alto</span>
-            </div>
-            <div class="mt-2 h-3 overflow-hidden rounded-full bg-slate-800">
-                <div id="scoreBar" class="h-full w-0 rounded-full bg-gradient-to-r from-rose-500 via-amber-400 to-emerald-400 transition-all duration-300"></div>
-            </div>
-            <div class="mt-4 grid gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
+    <aside class="space-y-5 rounded-[2rem] border border-white/10 bg-slate-900/80 p-6 shadow-2xl shadow-blue-950/30 backdrop-blur">
+        <div class="rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+            <div class="flex items-center justify-between gap-4">
                 <div>
-                    <p class="text-sm text-slate-400">Nivel estimado</p>
-                    <p id="levelLabel" class="text-xl font-semibold text-white">Bajo</p>
+                    <p class="text-xs font-semibold uppercase tracking-[0.28em] text-cyan-200">Pre-formulario público</p>
+                    <h2 class="mt-2 text-2xl font-semibold text-white">Empiece por el diagnóstico</h2>
                 </div>
-                <p id="diagnosisPreview" class="text-sm leading-6 text-slate-300">
-                    Responde el primer bloque para empezar a ver la lectura de madurez.
-                </p>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-right">
+                    <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Puntaje</p>
+                    <p id="scoreValue" class="text-3xl font-semibold text-white">0</p>
+                </div>
+            </div>
+            <div class="mt-5 grid gap-3">
+                <div class="flex items-center justify-between text-xs uppercase tracking-[0.2em] text-slate-400">
+                    <span>Bajo</span>
+                    <span>Listo para automatizar</span>
+                </div>
+                <div class="h-3 overflow-hidden rounded-full bg-slate-800">
+                    <div id="scoreBar" class="h-full w-0 rounded-full bg-gradient-to-r from-rose-500 via-amber-400 to-emerald-400 transition-all duration-300"></div>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-slate-950/40 px-4 py-3">
+                    <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Avance</p>
+                    <p id="progressText" class="mt-1 text-sm font-semibold text-white">25% completado — tiempo estimado restante: 8 minutos</p>
+                    <p id="stepText" class="mt-2 text-xs uppercase tracking-[0.2em] text-cyan-200">Paso 1 de 4</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                    <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Nivel estimado</p>
+                    <p id="levelLabel" class="mt-1 text-lg font-semibold text-white">Bajo</p>
+                </div>
             </div>
         </div>
 
         <form method="POST" action="{{ route('leads.store') }}" class="space-y-6" data-wizard-form data-track-form="diagnostico">
             @csrf
-
             <input type="hidden" name="wizard_step" value="{{ old('wizard_step', 1) }}" data-wizard-step-input>
 
             <div class="space-y-6">
                 <div class="space-y-4" data-step-panel data-step-index="1">
                     <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
                         <p class="text-xs uppercase tracking-[0.2em] text-cyan-200">Paso 1</p>
-                        <h3 class="mt-1 text-lg font-semibold text-white">Datos de empresa y contacto</h3>
+                        <h3 class="mt-1 text-lg font-semibold text-white">Datos de empresa</h3>
                     </div>
 
                     @foreach ([
                         ['company_name','Empresa','text','Razón social o nombre comercial.'],
                         ['ruc','RUC','text','Documento tributario o identificador fiscal.'],
                         ['industry','Rubro','text','Actividad principal de la organización.'],
-                        ['contact_name','Nombre del contacto','text','Persona que responderá el diagnóstico.'],
-                        ['contact_role','Cargo','text','Puesto o responsabilidad actual.'],
-                        ['email','Correo','email','Correo para enviar el diagnóstico y seguimiento.'],
-                        ['phone','Teléfono','text','Número móvil o fijo de contacto.'],
                         ['company_size','Tamaño de empresa','text','Ejemplo: 1-10, 11-50, 51-200, 200+.'],
                     ] as [$name, $label, $type, $help])
-                        <label class="grid gap-2" data-field-wrapper="{{ $name }}">
+                        <label class="grid gap-2">
                             <span class="text-sm font-medium text-slate-200">{{ $label }}</span>
                             <input
                                 name="{{ $name }}"
@@ -219,7 +279,7 @@
                 <div class="hidden space-y-4" data-step-panel data-step-index="3">
                     <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
                         <p class="text-xs uppercase tracking-[0.2em] text-cyan-200">Paso 3</p>
-                        <h3 class="mt-1 text-lg font-semibold text-white">Sistemas, integraciones y datos</h3>
+                        <h3 class="mt-1 text-lg font-semibold text-white">Sistemas, integraciones y madurez digital</h3>
                     </div>
 
                     @foreach ([
@@ -262,21 +322,21 @@
                 <div class="hidden space-y-4" data-step-panel data-step-index="4">
                     <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
                         <p class="text-xs uppercase tracking-[0.2em] text-cyan-200">Paso 4</p>
-                        <h3 class="mt-1 text-lg font-semibold text-white">Confirmación y solicitud de consultoría</h3>
+                        <h3 class="mt-1 text-lg font-semibold text-white">Confirmación y envío del diagnóstico</h3>
                     </div>
 
                     <div class="rounded-2xl border border-emerald-500/20 bg-emerald-500/10 p-4 text-sm leading-7 text-emerald-100">
-                        <p class="font-semibold text-white">Qué recibirás</p>
+                        <p class="font-semibold text-white">Qué recibirá</p>
                         <ul class="mt-2 space-y-1 text-emerald-50/90">
                             <li>• Puntaje de madurez sobre 100</li>
-                            <li>• Diagnóstico breve y oportunidades principales</li>
-                            <li>• Recomendación para avanzar a preventa o ejecución</li>
-                <li>• Base para propuestas, tareas y exportaciones</li>
+                            <li>• Nivel estimado: Bajo, Medio o Alto</li>
+                            <li>• Oportunidades principales y riesgos detectados</li>
+                            <li>• Base para propuesta, backlog y exportaciones</li>
                         </ul>
                     </div>
 
                     <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-slate-300">
-                        Revisa tus respuestas y presiona <span class="font-semibold text-white">Solicitar consultoría</span>. El sistema calculará el puntaje automáticamente.
+                        Revise la información y presione <span class="font-semibold text-white">Solicitar diagnóstico</span>. El resultado preliminar se mostrará al instante.
                     </div>
 
                     <label class="grid gap-2">
@@ -302,22 +362,21 @@
                     Siguiente
                 </button>
                 <button type="submit" class="hidden rounded-2xl bg-emerald-500 px-5 py-3 font-semibold text-white transition hover:bg-emerald-400" data-step-submit>
-                    Solicitar consultoría
+                    Solicitar diagnóstico
                 </button>
             </div>
         </form>
-    </section>
+    </aside>
 </div>
 
 <script>
 (function () {
     const panels = Array.from(document.querySelectorAll('[data-step-panel]'));
-    const stepCounter = document.getElementById('stepCounter');
-    const stepBar = document.getElementById('stepBar');
+    const stepText = document.getElementById('stepText');
+    const progressText = document.getElementById('progressText');
+    const levelLabel = document.getElementById('levelLabel');
     const scoreValue = document.getElementById('scoreValue');
     const scoreBar = document.getElementById('scoreBar');
-    const levelLabel = document.getElementById('levelLabel');
-    const diagnosisPreview = document.getElementById('diagnosisPreview');
     const prevButton = document.querySelector('[data-step-prev]');
     const nextButton = document.querySelector('[data-step-next]');
     const submitButton = document.querySelector('[data-step-submit]');
@@ -325,17 +384,18 @@
     const hiddenStep = document.querySelector('[data-wizard-step-input]');
     const rangeInputs = Array.from(document.querySelectorAll('[data-range-input]'));
     const totalSteps = panels.length;
+    const totalMinutes = 10;
     let currentStep = 1;
 
     const getValue = (name) => {
         const field = form.querySelector(`[name="${name}"]`);
         if (!field) return 0;
+
         if (field.type === 'checkbox') {
             return field.checked ? 1 : 0;
         }
 
-        const raw = field.value;
-        const parsed = parseInt(raw, 10);
+        const parsed = parseInt(field.value, 10);
         return Number.isFinite(parsed) ? parsed : 0;
     };
 
@@ -403,28 +463,22 @@
 
         const score = Math.max(0, Math.min(100, Math.round(weighted)));
         let level = 'Bajo';
-        let diagnosis = 'Responde el primer bloque para empezar a ver la lectura de madurez.';
 
         if (score <= 39) {
             level = 'Bajo';
-            diagnosis = 'La operación requiere ordenar procesos, datos y criterios de trabajo antes de automatizar con mayor alcance.';
         } else if (score <= 69) {
             level = 'Medio';
-            diagnosis = 'Existen señales claras de mejora; conviene automatizar por partes con foco en impacto y reducción de riesgo.';
         } else {
             level = 'Alto';
-            diagnosis = 'La organización está lista para automatizar con IA, integraciones y automatización asistida por agentes.';
         }
 
-        return { score, level, diagnosis };
+        return { score, level };
     };
 
     const updateScoreUI = () => {
-        const { score, level, diagnosis } = evaluate();
+        const { score, level } = evaluate();
         scoreValue.textContent = score.toString();
         scoreBar.style.width = `${score}%`;
-        levelLabel.textContent = level;
-        diagnosisPreview.textContent = diagnosis;
         scoreBar.className = 'h-full rounded-full transition-all duration-300';
 
         if (score <= 39) {
@@ -434,6 +488,14 @@
         } else {
             scoreBar.classList.add('bg-emerald-400');
         }
+
+        const percent = Math.round((currentStep / totalSteps) * 100);
+        const remaining = Math.max(0, Math.round(((totalSteps - currentStep) / totalSteps) * totalMinutes));
+
+        stepText.textContent = `Paso ${currentStep} de ${totalSteps}`;
+        progressText.textContent = `${percent}% completado — tiempo estimado restante: ${remaining} minutos`;
+        levelLabel.textContent = level;
+        scoreBar.dataset.level = level;
     };
 
     const syncRangeLabels = () => {
@@ -454,13 +516,8 @@
         prevButton.classList.toggle('hidden', currentStep === 1);
         nextButton.classList.toggle('hidden', currentStep === totalSteps);
         submitButton.classList.toggle('hidden', currentStep !== totalSteps);
-        stepCounter.textContent = currentStep.toString();
-        stepBar.style.width = `${(currentStep / totalSteps) * 100}%`;
         hiddenStep.value = currentStep.toString();
-        window.consultoresTrackEvent?.('step_view', {
-            step: currentStep,
-            form: form.dataset.trackForm,
-        });
+        updateScoreUI();
     };
 
     prevButton?.addEventListener('click', () => showStep(currentStep - 1));
