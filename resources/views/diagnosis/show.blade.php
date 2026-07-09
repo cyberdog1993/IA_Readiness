@@ -54,6 +54,14 @@
                     <a href="{{ url('/diagnostico') }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
                         Hacer otro diagnóstico
                     </a>
+                    @auth
+                        <a href="{{ route('exports.markdown', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                            Markdown para ChatGPT
+                        </a>
+                        <a href="{{ route('exports.json', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                            JSON estructurado
+                        </a>
+                    @endauth
                 </div>
             </div>
 
@@ -102,6 +110,54 @@
         <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
             <p class="text-sm text-slate-400">Próximo paso</p>
             <p class="mt-2 text-slate-100">{{ $lead->nextStepRecommendation() }}</p>
+        </div>
+    </section>
+
+    <section class="rounded-3xl border border-white/10 bg-slate-900/80 p-6">
+        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">Exportar para IA</p>
+        <div class="mt-4 grid gap-4 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+            <div>
+                <h2 class="text-2xl font-semibold text-white">Listo para ChatGPT, Claude o un agente interno</h2>
+                <p class="mt-3 text-sm leading-7 text-slate-300">
+                    Puedes descargar Markdown, JSON o copiar un prompt listo para pegar en un LLM y pedir análisis adicional, propuesta preliminar o roadmap.
+                </p>
+            </div>
+
+            @auth
+                @php
+                    $chatgptPrompt = "Analiza este diagnóstico de automatización y genera un resumen ejecutivo, riesgos, oportunidades, ROI estimado, roadmap y propuesta preliminar.\n\n"
+                        ."Cliente: {$lead->company_name}\n"
+                        ."RUC: {$lead->ruc}\n"
+                        ."Rubro: {$lead->industry}\n"
+                        ."Puntaje: {$lead->maturity_score}/100\n"
+                        ."Nivel: {$lead->maturity_level}\n"
+                        ."Fortalezas: ".implode(', ', $strengths)."\n"
+                        ."Oportunidades: {$lead->opportunities_summary}\n"
+                        ."Riesgos: ".implode(', ', $risks)."\n"
+                        ."Próximo paso: {$lead->nextStepRecommendation()}\n"
+                        ."Horas actuales al año: {$currentHours}\n"
+                        ."Horas potenciales con automatización: {$potentialHours}\n"
+                        ."Ahorro anual estimado: {$savingsHours}\n";
+                @endphp
+                <div class="flex flex-wrap gap-3">
+                    <a href="{{ route('exports.markdown', $lead) }}" class="inline-flex items-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-100">
+                        Descargar Markdown
+                    </a>
+                    <a href="{{ route('exports.json', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                        Descargar JSON
+                    </a>
+                    <button
+                        type="button"
+                        class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10"
+                        data-copy-chatgpt-prompt
+                        data-copy-text="{{ e($chatgptPrompt) }}"
+                    >
+                        Copiar prompt para ChatGPT
+                    </button>
+                </div>
+            @else
+                <p class="text-sm text-slate-400">Las exportaciones para IA están disponibles al iniciar sesión con una cuenta autorizada.</p>
+            @endauth
         </div>
     </section>
 
@@ -155,6 +211,14 @@
                 <a href="{{ route('diagnosis.client-pdf', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
                     Descargar informe
                 </a>
+                @auth
+                    <a href="{{ route('exports.markdown', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                        Markdown para ChatGPT
+                    </a>
+                    <a href="{{ route('exports.json', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                        JSON estructurado
+                    </a>
+                @endauth
             </div>
         </div>
 
@@ -297,7 +361,37 @@
                     Generar propuesta preliminar
                 </button>
             </form>
+            @auth
+                <div class="mt-3 flex flex-wrap gap-2">
+                    <a class="inline-flex rounded-xl border border-white/10 bg-white/5 px-4 py-2 font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10" href="{{ route('exports.markdown', $lead) }}">
+                        Markdown
+                    </a>
+                    <a class="inline-flex rounded-xl border border-white/10 bg-white/5 px-4 py-2 font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10" href="{{ route('exports.json', $lead) }}">
+                        JSON
+                    </a>
+                </div>
+            @endauth
         </div>
     </section>
 </div>
+
+<script>
+(function () {
+    const button = document.querySelector('[data-copy-chatgpt-prompt]');
+    if (!button || !navigator.clipboard) return;
+
+    button.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(button.dataset.copyText || '');
+            const original = button.textContent;
+            button.textContent = 'Copiado';
+            setTimeout(() => {
+                button.textContent = original;
+            }, 1800);
+        } catch (error) {
+            console.error(error);
+        }
+    });
+})();
+</script>
 @endsection
