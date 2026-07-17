@@ -16,6 +16,19 @@
     $savingsHours = $lead->annualSavingsHours();
     $contactComplete = $lead->contactDetailsComplete();
     $reportDate = $lead->reportDateLabel();
+    $chatgptPrompt = "Analiza este diagnóstico de automatización y genera un resumen ejecutivo, riesgos, oportunidades, ROI estimado, roadmap y propuesta preliminar.\n\n"
+        ."Cliente: {$lead->company_name}\n"
+        ."RUC: {$lead->ruc}\n"
+        ."Rubro: {$lead->industry}\n"
+        ."Puntaje: {$lead->maturity_score}/100\n"
+        ."Nivel: {$lead->maturity_level}\n"
+        ."Fortalezas: ".implode(', ', $strengths)."\n"
+        ."Oportunidades: {$lead->opportunities_summary}\n"
+        ."Riesgos: ".implode(', ', $risks)."\n"
+        ."Próximo paso: {$lead->nextStepRecommendation()}\n"
+        ."Horas actuales al año: {$currentHours}\n"
+        ."Horas potenciales con automatización: {$potentialHours}\n"
+        ."Ahorro anual estimado: {$savingsHours}\n";
 @endphp
 
 @if (session('status') === 'datos-completados')
@@ -26,6 +39,23 @@
     <div class="mb-6 rounded-3xl border border-cyan-400/20 bg-cyan-500/10 px-5 py-4 text-sm text-cyan-100">
         La propuesta preliminar se volvió a preparar con la información disponible.
     </div>
+@elseif (session('status') === 'webhook-dispatch')
+    <div class="mb-6 rounded-3xl border border-cyan-400/20 bg-cyan-500/10 px-5 py-4 text-sm text-cyan-100">
+        La información fue enviada al flujo de automatización.
+    </div>
+    @if (session('webhook_results'))
+        <div class="mb-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+            @foreach (session('webhook_results') as $flow => $result)
+                <div class="rounded-3xl border border-white/10 bg-white/5 p-4">
+                    <p class="text-xs uppercase tracking-[0.2em] text-slate-400">{{ $flow }}</p>
+                    <p class="mt-2 text-lg font-semibold {{ ($result['ok'] ?? false) ? 'text-emerald-300' : 'text-rose-300' }}">
+                        {{ ($result['ok'] ?? false) ? 'Enviado' : 'Pendiente' }}
+                    </p>
+                    <p class="mt-1 text-sm text-slate-300">HTTP {{ $result['status'] ?? 'sin respuesta' }}</p>
+                </div>
+            @endforeach
+        </div>
+    @endif
 @endif
 
 <div class="space-y-8">
@@ -123,29 +153,16 @@
                 </p>
             </div>
 
-            @auth
-                @php
-                    $chatgptPrompt = "Analiza este diagnóstico de automatización y genera un resumen ejecutivo, riesgos, oportunidades, ROI estimado, roadmap y propuesta preliminar.\n\n"
-                        ."Cliente: {$lead->company_name}\n"
-                        ."RUC: {$lead->ruc}\n"
-                        ."Rubro: {$lead->industry}\n"
-                        ."Puntaje: {$lead->maturity_score}/100\n"
-                        ."Nivel: {$lead->maturity_level}\n"
-                        ."Fortalezas: ".implode(', ', $strengths)."\n"
-                        ."Oportunidades: {$lead->opportunities_summary}\n"
-                        ."Riesgos: ".implode(', ', $risks)."\n"
-                        ."Próximo paso: {$lead->nextStepRecommendation()}\n"
-                        ."Horas actuales al año: {$currentHours}\n"
-                        ."Horas potenciales con automatización: {$potentialHours}\n"
-                        ."Ahorro anual estimado: {$savingsHours}\n";
-                @endphp
+            <div class="space-y-4">
                 <div class="flex flex-wrap gap-3">
-                    <a href="{{ route('exports.markdown', $lead) }}" class="inline-flex items-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-100">
-                        Descargar Markdown
-                    </a>
-                    <a href="{{ route('exports.json', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
-                        Descargar JSON
-                    </a>
+                    @auth
+                        <a href="{{ route('exports.markdown', $lead) }}" class="inline-flex items-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-100">
+                            Descargar Markdown
+                        </a>
+                        <a href="{{ route('exports.json', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                            Descargar JSON
+                        </a>
+                    @endauth
                     <button
                         type="button"
                         class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10"
@@ -155,9 +172,10 @@
                         Copiar prompt para ChatGPT
                     </button>
                 </div>
-            @else
-                <p class="text-sm text-slate-400">Las exportaciones para IA están disponibles al iniciar sesión con una cuenta autorizada.</p>
-            @endauth
+                @guest
+                    <p class="text-sm text-slate-400">El Markdown y el JSON están disponibles al iniciar sesión con una cuenta autorizada.</p>
+                @endguest
+            </div>
         </div>
     </section>
 
@@ -193,6 +211,48 @@
         </div>
     </section>
 
+    <section class="rounded-3xl border border-cyan-400/15 bg-gradient-to-br from-slate-900 to-slate-950 p-6">
+        <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">Centro de exportación</p>
+                <h2 class="mt-2 text-2xl font-semibold text-white">Descarga o envía toda la información del diagnóstico</h2>
+                <p class="mt-2 max-w-3xl text-sm leading-7 text-slate-300">
+                    Usa este menú para revisar, descargar o enviar el contenido completo a IA, n8n o al equipo interno sin perder estructura.
+                </p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300">
+                Formato recomendado: JSON para IA, Markdown para lectura, Excel para control operativo.
+            </div>
+        </div>
+
+        <div class="mt-5 flex flex-wrap gap-3">
+            <a href="{{ route('diagnosis.client-pdf', $lead) }}" class="inline-flex items-center rounded-2xl bg-white px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-100">
+                PDF cliente
+            </a>
+            @auth
+                <a href="{{ route('exports.word', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                    Word
+                </a>
+                <a href="{{ route('exports.markdown', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                    Markdown
+                </a>
+                <a href="{{ route('exports.json', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                    JSON
+                </a>
+                <a href="{{ route('exports.excel', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                    Excel
+                </a>
+                <a href="{{ route('exports.payload', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                    Payload IA / n8n
+                </a>
+            @else
+                <a href="{{ route('portal.login') }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                    Iniciar sesión para exportación completa
+                </a>
+            @endauth
+        </div>
+    </section>
+
     <section class="grid gap-4 lg:grid-cols-[1fr_0.9fr]">
         <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-6">
             <p class="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">Siguiente paso comercial</p>
@@ -208,6 +268,14 @@
                         Generar propuesta preliminar
                     </button>
                 </form>
+                @auth
+                    <form method="POST" action="{{ route('lead-automation.dispatch', $lead) }}">
+                        @csrf
+                        <button type="submit" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                            Enviar a n8n / webhook
+                        </button>
+                    </form>
+                @endauth
                 <a href="{{ route('diagnosis.client-pdf', $lead) }}" class="inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
                     Descargar informe
                 </a>

@@ -17,6 +17,23 @@
             <a href="{{ route('consulting-intake.section', ['section' => 'cliente', 'ruc' => $process->client?->ruc]) }}" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-white">
                 Crear otro proceso para este cliente
             </a>
+            <a href="{{ route('consulting-intake.pdf', $process) }}" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-white">
+                Descargar PDF
+            </a>
+            <a href="{{ route('consulting-intake.markdown', $process) }}" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-white">
+                Descargar Markdown
+            </a>
+            <a href="{{ route('consulting-intake.json', $process) }}" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-white">
+                Descargar JSON
+            </a>
+            <button
+                type="button"
+                data-copy-prompt
+                data-prompt="{{ e('Analiza este diagnóstico, resume la situación actual, identifica oportunidades de automatización, estima ROI, define riesgos y redacta una propuesta preliminar comercial y técnica para '.$process->client?->business_name.' / '.$process->name.'.') }}"
+                class="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-white"
+            >
+                Copiar prompt
+            </button>
             <a href="{{ route('landing') }}" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-white">
                 Volver al inicio
             </a>
@@ -63,5 +80,46 @@
             </div>
         </dl>
     </div>
+
+    <div class="mt-6 rounded-[2rem] border border-white/10 bg-slate-900/80 p-6">
+        <h2 class="text-2xl font-semibold text-white">Listo para ChatGPT</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-400">
+            Usa el Markdown o el JSON para pedir a ChatGPT un resumen ejecutivo, riesgos, oportunidades, roadmap y una propuesta preliminar.
+        </p>
+        <div class="mt-4 grid gap-4 md:grid-cols-2">
+            <div class="rounded-3xl border border-white/10 bg-white/5 p-4">
+                <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Prompt sugerido</p>
+                <p class="mt-2 text-sm leading-6 text-white">
+                    Analiza este diagnóstico, resume la situación actual, identifica oportunidades de automatización, estima ROI y redacta una propuesta preliminar comercial y técnica.
+                </p>
+            </div>
+            <div class="rounded-3xl border border-white/10 bg-white/5 p-4">
+                <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Salida disponible</p>
+                <ul class="mt-2 space-y-2 text-sm text-slate-200">
+                    <li>• Resumen ejecutivo</li>
+                    <li>• Riesgos y oportunidades</li>
+                    <li>• Roadmap inicial</li>
+                    <li>• Propuesta preliminar</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
+<script>
+    document.querySelectorAll('[data-copy-prompt]').forEach((button) => {
+        button.addEventListener('click', async () => {
+            const text = button.getAttribute('data-prompt') || '';
+            try {
+                await navigator.clipboard.writeText(text);
+                const original = button.textContent;
+                button.textContent = 'Prompt copiado';
+                setTimeout(() => {
+                    button.textContent = original;
+                }, 1800);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    });
+</script>
 @endsection

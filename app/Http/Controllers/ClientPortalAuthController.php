@@ -23,7 +23,9 @@ class ClientPortalAuthController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        $user = User::where('email', $credentials['email'])
+        $email = mb_strtolower(trim((string) $credentials['email']));
+
+        $user = User::where('email', $email)
             ->where('role', 'client')
             ->with('client')
             ->first();
@@ -34,9 +36,19 @@ class ClientPortalAuthController extends Controller
             ])->onlyInput('email');
         }
 
+        if (! $user->client) {
+            return back()->withErrors([
+                'email' => 'Esta cuenta no está vinculada a un cliente activo.',
+            ])->onlyInput('email');
+        }
+
         Auth::login($user, $request->boolean('remember'));
         $request->session()->regenerate();
+        $request->session()->put([
+            'consulting_intake_client_id' => $user->client_id,
+            'consulting_intake_process_id' => null,
+        ]);
 
-        return redirect()->route('consulting-intake.section', ['section' => 'cliente']);
+        return redirect()->route('portal.index');
     }
 }

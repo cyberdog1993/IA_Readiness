@@ -12,11 +12,14 @@ use App\Models\Lead;
 use App\Models\ProcessModel;
 use App\Models\ProcessStep;
 use App\Models\SystemIntegration;
+use App\Services\ProcessExportService;
+use App\Services\SimplePdfWriter;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 class ConsultingIntakeController extends Controller
 {
@@ -92,6 +95,8 @@ class ConsultingIntakeController extends Controller
 
     public function show(ProcessModel $process): View
     {
+        $this->authorizeProcessAccess($process);
+
         $process->load([
             'client',
             'steps',
@@ -104,6 +109,33 @@ class ConsultingIntakeController extends Controller
         ]);
 
         return view('intake.show', compact('process'));
+    }
+
+    public function markdown(ProcessModel $process, ProcessExportService $exports): Response
+    {
+        $this->authorizeProcessAccess($process);
+
+        return response($exports->toMarkdown($process))
+            ->header('Content-Type', 'text/markdown; charset=UTF-8')
+            ->header('Content-Disposition', 'attachment; filename="diagnostico-proceso-'.$process->id.'.md"');
+    }
+
+    public function json(ProcessModel $process, ProcessExportService $exports): Response
+    {
+        $this->authorizeProcessAccess($process);
+
+        return response()->json($exports->toArray($process), 200, [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    }
+
+    public function pdf(ProcessModel $process, ProcessExportService $exports, SimplePdfWriter $pdfWriter): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    {
+        $this->authorizeProcessAccess($process);
+
+        return $pdfWriter->download(
+            'diagnostico-proceso-'.$process->id.'.pdf',
+            'Informe del proceso - '.($process->client?->business_name ?? 'Cliente'),
+            $exports->toPdfLines($process)
+        );
     }
 
     private function storeClient(Request $request): RedirectResponse
@@ -432,5 +464,20 @@ class ConsultingIntakeController extends Controller
         abort_unless($process, 404);
 
         return $process;
+    }
+
+    private function authorizeProcessAccess(ProcessModel $process): void
+    {
+        $user = auth()->user();
+
+        if (! $user) {
+            abort(403);
+        }
+
+        if (in_array($user->role, ['admin', 'internal'], true)) {
+            return;
+        }
+
+        abort_unless($user->role === 'client' && (string) $user->client_id === (string) $process->client_id, 403);
     }
 }

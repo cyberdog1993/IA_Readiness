@@ -9,6 +9,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Section;
 
@@ -62,8 +63,9 @@ class LeadResource extends Resource
             Tables\Columns\TextColumn::make('maturity_level')->label('Nivel'),
             Tables\Columns\TextColumn::make('status')->label('Estado'),
             Tables\Columns\TextColumn::make('created_at')->label('Recibido')->dateTime()->since(),
+            ViewColumn::make('exportar')->label('Exportar')->view('filament.tables.export-actions'),
         ])->actions([
-            Tables\Actions\EditAction::make()->label('Editar'),
+            Tables\Actions\EditAction::make()->label('Editar')->button(),
         ])->bulkActions([
             Tables\Actions\DeleteBulkAction::make()->label('Eliminar seleccionados'),
         ]);

@@ -1,27 +1,75 @@
-# consultores-it-automation-platform
+# IA-readiness
 
 Plataforma interna/comercial para Consultores IT orientada a diagnóstico, preventa y ejecución de proyectos de automatización.
 
-## Incluye
+## Resumen
 
-- Landing comercial pública separada del formulario.
-- Cálculo de madurez sobre 100 y salida comercial inmediata.
-- Registro de clientes, procesos, pasos AS-IS, sistemas, documentos, problemas, oportunidades, evaluación interna y backlog.
-- Panel interno con Filament.
+La aplicación combina tres capas:
+
+1. Landing pública y diagnóstico rápido.
+2. Portal cliente para continuar el levantamiento por proceso.
+3. Panel interno Filament para administrar clientes, procesos, exportaciones y propuestas.
+
+## Funcionalidades
+
+- Landing pública enfocada en conversión comercial.
+- Pre-formulario público con cálculo de madurez sobre 100.
+- Resultado inmediato con puntaje, nivel, fortalezas, riesgos, ROI estimado y siguiente paso.
+- Captura de datos por cliente y por proceso.
+- Portal cliente con vista propia de procesos.
 - Exportación a Markdown, JSON, Excel, Word y PDF.
-- Payload estructurado para n8n, agentes y automatizaciones.
-- Página de privacidad y aviso de tratamiento de datos.
+- Prompts listos para ChatGPT, Claude y agentes internos.
+- Payload estructurado para n8n, CRM y webhooks.
+- Panel interno con Filament.
+- Página de privacidad y tratamiento de datos.
 - Tracking opcional para Google Analytics, Plausible, Meta Pixel y LinkedIn Insight Tag.
 - Datos demo de NUVO.
-- Preparado para Docker, PostgreSQL y Redis opcional.
 
-## Requisitos
+## Roles
 
-- PHP 8.2 o superior.
-- Composer.
-- Node.js 18 o superior.
-- PostgreSQL.
-- Opcional: Docker y Docker Compose.
+- `admin`: administra todo el sistema, usuarios, procesos, exportaciones y configuraciones.
+- `internal`: consultor interno que levanta información, revisa diagnósticos y genera propuestas.
+- `client`: cliente final que entra a su portal, ve sus procesos y descarga sus exportables permitidos.
+
+## Rutas principales
+
+- Landing pública: `/`
+- Diagnóstico público: `/diagnostico`
+- Resultado comercial: `/diagnostico/{lead}`
+- Acceso cliente: `/acceso-cliente`
+- Portal cliente: `/portal`
+- Proceso del cliente: `/portal/procesos/{process}`
+- Panel interno: `/admin`
+- Privacidad: `/privacidad`
+- Tratamiento de datos: `/tratamiento-datos`
+
+## Exportaciones
+
+Para diagnósticos públicos:
+
+- Markdown: `/exports/lead/{lead}/markdown`
+- JSON: `/exports/lead/{lead}/json`
+- Excel: `/exports/lead/{lead}/excel`
+- Word: `/exports/lead/{lead}/word`
+- PDF cliente: `/exports/lead/{lead}/cliente-pdf`
+- PDF interno: `/exports/lead/{lead}/interno-pdf`
+- Payload para IA/n8n: `/integraciones/lead/{lead}/payload`
+
+Para procesos del cliente:
+
+- PDF: `/levantamiento/ficha/{process}/pdf`
+- Markdown: `/levantamiento/ficha/{process}/markdown`
+- JSON: `/levantamiento/ficha/{process}/json`
+
+## Flujo funcional
+
+1. El cliente completa el diagnóstico público.
+2. El sistema calcula la madurez y muestra un resultado comercial.
+3. El usuario puede dejar sus datos para descargar el informe completo.
+4. El consultor o el cliente inician el levantamiento por proceso.
+5. Cada proceso se documenta por secciones para guardar avance parcial.
+6. El cliente accede a su portal y revisa sus procesos.
+7. Desde el portal o el panel interno se exporta la información para IA o para propuestas.
 
 ## Instalación local
 
@@ -51,34 +99,12 @@ docker compose --profile tools run --rm node npm run build
 
 ## Accesos iniciales
 
-- Email: `admin@consultores-it.pe`
-- Password inicial: configurada en el despliegue del servidor
-
-## Rutas principales
-
-- Landing pública: `/`
-- Diagnóstico público: `/diagnostico`
-- Resultado del diagnóstico: `/diagnostico/{lead}`
-- Portal cliente: `/cliente`
-- Panel interno: `/admin`
-- Privacidad: `/privacidad`
-- Tratamiento de datos: `/tratamiento-datos`
-
-## Exportaciones
-
-Las exportaciones están disponibles solo para usuarios autenticados:
-
-- Markdown: `/exports/lead/{lead}/markdown`
-- JSON: `/exports/lead/{lead}/json`
-- Excel: `/exports/lead/{lead}/excel`
-- Word: `/exports/lead/{lead}/word`
-- PDF cliente: `/exports/lead/{lead}/cliente-pdf`
-- PDF interno: `/exports/lead/{lead}/interno-pdf`
-- Payload para IA/n8n: `/integraciones/lead/{lead}/payload`
+- Email admin: `admin@consultores-it.pe`
+- Password inicial: definida en el despliegue del servidor
 
 ## Variables opcionales
 
-Para activar analítica agregada, define estas variables en `.env`:
+Para activar analítica y automatización, define en `.env`:
 
 - `GOOGLE_ANALYTICS_ID`
 - `PLAUSIBLE_DOMAIN`
@@ -91,7 +117,7 @@ Para activar analítica agregada, define estas variables en `.env`:
 - `CRM_WEBHOOK_URL`
 - `INTERNAL_NOTIFY_WEBHOOK_URL`
 
-## Hooks de automatización
+## Automatizaciones
 
 El sistema envía el payload estructurado de cada lead a los webhooks configurados al momento de crear el registro.
 
@@ -99,12 +125,7 @@ También puedes re-disparar manualmente el envío desde:
 
 - `POST /integraciones/lead/{lead}/dispatch`
 
-## Documentación del proyecto
-
-- [Manual de usuario](docs/manual-usuario.docx)
-- [Manual de arquitectura](docs/manual-arquitectura.docx)
-
-## Estructura funcional
+## Estructura de datos
 
 - `leads`: captura del formulario público.
 - `clients`: clientes internos.
@@ -117,7 +138,17 @@ También puedes re-disparar manualmente el envío desde:
 - `internal_evaluations`: evaluación técnica interna.
 - `backlog_items`: backlog sugerido.
 
-## Nota sobre el primer entregable
+## Documentación adicional
 
-La primera versión deja preparada la arquitectura, el dominio, el formulario público, el panel Filament, el cálculo de madurez, la salida comercial inmediata y los exportadores Markdown/JSON/Excel/Word/PDF.
+- [Manual de usuario en Markdown](docs/manual-usuario.md)
+- [Manual de arquitectura en Markdown](docs/manual-arquitectura.md)
+- [Auditoría inicial](docs/auditoria-inicial-plataforma.md)
+- [Checklist de implementación](docs/checklist-plataforma-diagnostico.md)
+- [Plan de ejecución](docs/plan-ejecucion-plataforma-diagnostico.md)
+- [Manual de usuario en Word](docs/manual-usuario.docx)
+- [Manual de arquitectura en Word](docs/manual-arquitectura.docx)
+
+## Nota de alcance
+
+La primera versión deja preparada la arquitectura, el dominio, el formulario público, el portal cliente, el panel Filament, el cálculo de madurez, la salida comercial inmediata y los exportadores Markdown/JSON/Excel/Word/PDF.
 También incluye estructura para automatizaciones posteriores con n8n y agentes de IA.

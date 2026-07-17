@@ -1,3 +1,5 @@
+name: ia-readiness
+
 services:
   app:
     build:

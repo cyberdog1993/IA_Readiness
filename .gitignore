@@ -11,4 +11,5 @@
 /storage/framework/views/*
 /storage/logs/*
 /public/build
-
+/backups
+/exports

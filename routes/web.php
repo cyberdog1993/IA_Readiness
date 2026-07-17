@@ -3,6 +3,7 @@
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ConsultingIntakeController;
 use App\Http\Controllers\ClientPortalAuthController;
+use App\Http\Controllers\ClientPortalController;
 use App\Http\Controllers\LeadAutomationController;
 use App\Http\Controllers\LeadController;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,7 @@ Route::get('/acceso-cliente', [ClientPortalAuthController::class, 'create'])->na
 Route::redirect('/cliente', '/acceso-cliente');
 Route::post('/acceso-cliente', [ClientPortalAuthController::class, 'store'])->middleware('throttle:10,1')->name('portal.login.store');
 Route::post('/logout', function () {
+    request()->session()->forget(['consulting_intake_client_id', 'consulting_intake_process_id']);
     Auth::logout();
 
     request()->session()->invalidate();
@@ -34,9 +36,14 @@ Route::view('/privacidad', 'legal.privacy')->name('privacy');
 Route::view('/tratamiento-datos', 'legal.data-processing')->name('data-processing');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/portal', [ClientPortalController::class, 'index'])->name('portal.index');
+    Route::get('/portal/procesos/{process}', [ClientPortalController::class, 'show'])->name('portal.process.show');
     Route::get('/levantamiento/{section}', [ConsultingIntakeController::class, 'section'])->name('consulting-intake.section');
     Route::post('/levantamiento/{section}', [ConsultingIntakeController::class, 'store'])->name('consulting-intake.store');
     Route::get('/levantamiento/ficha/{process}', [ConsultingIntakeController::class, 'show'])->name('consulting-intake.show');
+    Route::get('/levantamiento/ficha/{process}/pdf', [ConsultingIntakeController::class, 'pdf'])->name('consulting-intake.pdf');
+    Route::get('/levantamiento/ficha/{process}/markdown', [ConsultingIntakeController::class, 'markdown'])->name('consulting-intake.markdown');
+    Route::get('/levantamiento/ficha/{process}/json', [ConsultingIntakeController::class, 'json'])->name('consulting-intake.json');
 
     Route::get('/exports/lead/{lead}/markdown', [ExportController::class, 'markdown'])->name('exports.markdown');
     Route::get('/exports/lead/{lead}/json', [ExportController::class, 'json'])->name('exports.json');

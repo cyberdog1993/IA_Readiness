@@ -9,6 +9,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Select;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 
 class ProcessResource extends Resource
@@ -43,8 +44,9 @@ class ProcessResource extends Resource
             Tables\Columns\TextColumn::make('area')->label('Área'),
             Tables\Columns\TextColumn::make('owner')->label('Responsable'),
             Tables\Columns\TextColumn::make('status')->label('Estado'),
+            ViewColumn::make('exportar')->label('Exportar')->view('filament.tables.export-actions'),
         ])->actions([
-            Tables\Actions\EditAction::make()->label('Editar'),
+            Tables\Actions\EditAction::make()->label('Editar')->button(),
         ]);
     }
 

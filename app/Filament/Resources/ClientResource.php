@@ -10,6 +10,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 use Filament\Forms\Set;
 
@@ -66,8 +67,9 @@ class ClientResource extends Resource
             Tables\Columns\TextColumn::make('ruc')->label('RUC')->searchable(),
             Tables\Columns\TextColumn::make('industry')->label('Rubro'),
             Tables\Columns\TextColumn::make('status')->label('Estado'),
+            ViewColumn::make('exportar')->label('Exportar')->view('filament.tables.export-actions'),
         ])->actions([
-            Tables\Actions\EditAction::make()->label('Editar'),
+            Tables\Actions\EditAction::make()->label('Editar')->button(),
         ]);
     }
 
