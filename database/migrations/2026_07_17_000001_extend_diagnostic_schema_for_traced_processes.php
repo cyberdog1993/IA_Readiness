@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedInteger('version')->default(1)->after('status');
             $table->string('state')->default('borrador')->after('version');
             $table->string('consultant_name')->nullable()->after('state');
-            $table->foreignUuid('created_by')->nullable()->constrained('users')->nullOnDelete()->after('consultant_name');
-            $table->foreignUuid('updated_by')->nullable()->constrained('users')->nullOnDelete()->after('created_by');
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete()->after('consultant_name');
+            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete()->after('created_by');
             $table->timestamp('validated_at')->nullable()->after('updated_by');
             $table->timestamp('last_exported_at')->nullable()->after('validated_at');
             $table->string('priority')->nullable()->after('last_exported_at');
