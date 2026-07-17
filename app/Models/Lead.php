@@ -35,10 +35,14 @@ class Lead extends Model
         'privacy_consent',
         'maturity_score',
         'maturity_level',
+        'version',
+        'consultant_name',
         'diagnosis_brief',
         'opportunities_summary',
         'recommendation',
         'consulting_requested_at',
+        'last_exported_at',
+        'source',
         'status',
     ];
 
@@ -55,7 +59,9 @@ class Lead extends Model
         'automation_interest' => 'integer',
         'privacy_consent' => 'boolean',
         'maturity_score' => 'integer',
+        'version' => 'integer',
         'consulting_requested_at' => 'datetime',
+        'last_exported_at' => 'datetime',
     ];
 
     public function estimatedSavingsHours(): float

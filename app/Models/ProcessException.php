@@ -7,26 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CurrentProblem extends Model
+class ProcessException extends Model
 {
     use HasUuid;
     use SoftDeletes;
 
-    protected $table = 'current_problems';
-
     protected $fillable = [
         'process_id',
-        'description',
+        'step_id',
+        'system_integration_id',
         'trigger',
         'current_action',
+        'owner',
         'resolution_time_minutes',
-        'impact',
-        'frequency',
-        'risk',
         'severity',
         'retry_possible',
         'escalation_rule',
-        'comments',
     ];
 
     protected $casts = [
@@ -37,5 +33,15 @@ class CurrentProblem extends Model
     public function process(): BelongsTo
     {
         return $this->belongsTo(ProcessModel::class, 'process_id');
+    }
+
+    public function step(): BelongsTo
+    {
+        return $this->belongsTo(ProcessStep::class, 'step_id');
+    }
+
+    public function systemIntegration(): BelongsTo
+    {
+        return $this->belongsTo(SystemIntegration::class, 'system_integration_id');
     }
 }

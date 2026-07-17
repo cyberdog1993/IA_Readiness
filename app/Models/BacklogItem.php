@@ -16,6 +16,7 @@ class BacklogItem extends Model
 
     protected $fillable = [
         'process_id',
+        'epic',
         'type',
         'title',
         'description',
@@ -24,10 +25,15 @@ class BacklogItem extends Model
         'responsible',
         'status',
         'estimated_hours',
+        'dependencies',
+        'origin',
+        'phase',
+        'due_date',
     ];
 
     protected $casts = [
         'estimated_hours' => 'integer',
+        'due_date' => 'date',
     ];
 
     public function process(): BelongsTo
@@ -35,4 +41,3 @@ class BacklogItem extends Model
         return $this->belongsTo(ProcessModel::class, 'process_id');
     }
 }
-

@@ -7,35 +7,32 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class DocumentEvidence extends Model
+class ProcessDependency extends Model
 {
     use HasUuid;
     use SoftDeletes;
 
-    protected $table = 'document_evidences';
-
     protected $fillable = [
         'process_id',
-        'name',
+        'predecessor_step_id',
+        'successor_step_id',
         'type',
-        'format',
-        'location',
-        'owner',
-        'mandatory',
-        'direction',
-        'sensitivity',
-        'retention',
-        'schema_summary',
-        'example_reference',
+        'condition',
         'notes',
-    ];
-
-    protected $casts = [
-        'mandatory' => 'boolean',
     ];
 
     public function process(): BelongsTo
     {
         return $this->belongsTo(ProcessModel::class, 'process_id');
+    }
+
+    public function predecessorStep(): BelongsTo
+    {
+        return $this->belongsTo(ProcessStep::class, 'predecessor_step_id');
+    }
+
+    public function successorStep(): BelongsTo
+    {
+        return $this->belongsTo(ProcessStep::class, 'successor_step_id');
     }
 }

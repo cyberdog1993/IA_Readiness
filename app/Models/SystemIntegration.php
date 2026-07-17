@@ -20,15 +20,26 @@ class SystemIntegration extends Model
         'name',
         'url',
         'system_type',
+        'description',
         'has_api',
+        'api_available',
+        'api_type',
+        'api_version',
+        'documentation_url',
+        'webhooks_available',
+        'known_limits',
+        'environment',
         'auth_type',
         'access_owner',
         'access_status',
+        'access_status_detail',
+        'restrictions',
         'notes',
     ];
 
     protected $casts = [
         'has_api' => 'boolean',
+        'webhooks_available' => 'boolean',
     ];
 
     public function client(): BelongsTo
@@ -41,4 +52,3 @@ class SystemIntegration extends Model
         return $this->belongsTo(ProcessModel::class, 'process_id');
     }
 }
-

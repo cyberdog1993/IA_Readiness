@@ -19,12 +19,22 @@ class InternalEvaluation extends Model
         'complexity',
         'risk',
         'impact',
+        'confidence',
         'requires_mcp',
         'requires_hermes_skill',
         'requires_n8n',
         'requires_ai',
         'requires_ocr',
         'estimated_hours',
+        'integrations_required',
+        'security_requirements',
+        'hours_phase_1',
+        'hours_phase_2',
+        'hours_phase_3',
+        'responsible',
+        'review_state',
+        'candidate_technologies',
+        'dependencies',
         'technical_notes',
     ];
 
@@ -38,6 +48,11 @@ class InternalEvaluation extends Model
         'requires_ai' => 'boolean',
         'requires_ocr' => 'boolean',
         'estimated_hours' => 'integer',
+        'confidence' => 'integer',
+        'hours_phase_1' => 'integer',
+        'hours_phase_2' => 'integer',
+        'hours_phase_3' => 'integer',
+        'candidate_technologies' => 'array',
     ];
 
     public function process(): BelongsTo
@@ -45,4 +60,3 @@ class InternalEvaluation extends Model
         return $this->belongsTo(ProcessModel::class, 'process_id');
     }
 }
-

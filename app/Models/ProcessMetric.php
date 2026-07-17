@@ -7,31 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class DocumentEvidence extends Model
+class ProcessMetric extends Model
 {
     use HasUuid;
     use SoftDeletes;
 
-    protected $table = 'document_evidences';
-
     protected $fillable = [
         'process_id',
         'name',
-        'type',
-        'format',
-        'location',
-        'owner',
-        'mandatory',
-        'direction',
-        'sensitivity',
-        'retention',
-        'schema_summary',
-        'example_reference',
-        'notes',
+        'min_quantity',
+        'avg_quantity',
+        'max_quantity',
+        'unit',
+        'period',
+        'source',
+        'confirmed',
     ];
 
     protected $casts = [
-        'mandatory' => 'boolean',
+        'min_quantity' => 'integer',
+        'avg_quantity' => 'integer',
+        'max_quantity' => 'integer',
+        'confirmed' => 'boolean',
     ];
 
     public function process(): BelongsTo
